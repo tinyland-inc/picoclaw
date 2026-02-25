@@ -1,0 +1,30 @@
+{
+  "agents": {
+    "defaults": {
+      "workspace": "/workspace",
+      "restrict_to_workspace": false,
+      "model_name": "claude-haiku",
+      "max_tokens": 8192,
+      "temperature": 0.3,
+      "max_tool_iterations": 30
+    }
+  },
+  "model_list": [
+    {
+      "model_name": "claude-haiku",
+      "model": "anthropic/claude-haiku-4-5-20251001",
+      "api_key": "__ANTHROPIC_API_KEY__",
+      "api_base": "__ANTHROPIC_BASE_URL__"
+    },
+    {
+      "model_name": "claude-sonnet",
+      "model": "anthropic/claude-sonnet-4-20250514",
+      "api_key": "__ANTHROPIC_API_KEY__",
+      "api_base": "__ANTHROPIC_BASE_URL__"
+    }
+  ],
+  "gateway": {
+    "host": "0.0.0.0",
+    "port": 18790
+  }
+}
