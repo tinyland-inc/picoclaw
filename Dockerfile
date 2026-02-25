@@ -38,7 +38,8 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
 COPY --from=builder /src/build/picoclaw /usr/local/bin/picoclaw
 
 RUN addgroup -g 1000 picoclaw && \
-    adduser -D -u 1000 -G picoclaw picoclaw
+    adduser -D -u 1000 -G picoclaw picoclaw && \
+    mkdir -p /workspace && chown picoclaw:picoclaw /workspace
 
 USER picoclaw
 
@@ -51,8 +52,6 @@ RUN /usr/local/bin/picoclaw onboard
 # entrypoint.sh substitutes ANTHROPIC_API_KEY and ANTHROPIC_BASE_URL at startup.
 COPY --chown=picoclaw:picoclaw tinyland/config.json /home/picoclaw/.picoclaw/config.json
 COPY --chown=picoclaw:picoclaw tinyland/entrypoint.sh /usr/local/bin/entrypoint.sh
-
-RUN mkdir -p /workspace && chown picoclaw:picoclaw /workspace
 
 ENTRYPOINT ["entrypoint.sh"]
 CMD ["gateway"]
