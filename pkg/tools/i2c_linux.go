@@ -135,11 +135,14 @@ func (t *I2CTool) scan(args map[string]any) *ToolResult {
 		return SilentResult(fmt.Sprintf("No devices found on %s. Check wiring and pull-up resistors.", devPath))
 	}
 
-	result, _ := json.MarshalIndent(map[string]any{
+	result, err := json.MarshalIndent(map[string]any{
 		"bus":     devPath,
 		"devices": found,
 		"count":   len(found),
 	}, "", "  ")
+	if err != nil {
+		return ErrorResult(fmt.Sprintf("failed to marshal scan results: %v", err))
+	}
 	return SilentResult(fmt.Sprintf("Scan of %s:\n%s", devPath, string(result)))
 }
 
@@ -198,18 +201,21 @@ func (t *I2CTool) readDevice(args map[string]any) *ToolResult {
 	// Format as hex bytes
 	hexBytes := make([]string, n)
 	intBytes := make([]int, n)
-	for i := 0; i < n; i++ {
+	for i := range n {
 		hexBytes[i] = fmt.Sprintf("0x%02x", buf[i])
 		intBytes[i] = int(buf[i])
 	}
 
-	result, _ := json.MarshalIndent(map[string]any{
+	result, err := json.MarshalIndent(map[string]any{
 		"bus":     devPath,
 		"address": fmt.Sprintf("0x%02x", addr),
 		"bytes":   intBytes,
 		"hex":     hexBytes,
 		"length":  n,
 	}, "", "  ")
+	if err != nil {
+		return ErrorResult(fmt.Sprintf("failed to marshal read results: %v", err))
+	}
 	return SilentResult(string(result))
 }
 

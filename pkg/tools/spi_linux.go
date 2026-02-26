@@ -132,12 +132,15 @@ func (t *SPITool) transfer(args map[string]any) *ToolResult {
 		intBytes[i] = int(b)
 	}
 
-	result, _ := json.MarshalIndent(map[string]any{
+	result, err := json.MarshalIndent(map[string]any{
 		"device":   devPath,
 		"sent":     len(txBuf),
 		"received": intBytes,
 		"hex":      hexBytes,
 	}, "", "  ")
+	if err != nil {
+		return ErrorResult(fmt.Sprintf("failed to marshal transfer results: %v", err))
+	}
 	return SilentResult(string(result))
 }
 
@@ -188,11 +191,14 @@ func (t *SPITool) readDevice(args map[string]any) *ToolResult {
 		intBytes[i] = int(b)
 	}
 
-	result, _ := json.MarshalIndent(map[string]any{
+	result, err := json.MarshalIndent(map[string]any{
 		"device": devPath,
 		"bytes":  intBytes,
 		"hex":    hexBytes,
 		"length": len(rxBuf),
 	}, "", "  ")
+	if err != nil {
+		return ErrorResult(fmt.Sprintf("failed to marshal read results: %v", err))
+	}
 	return SilentResult(string(result))
 }
