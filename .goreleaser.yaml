@@ -98,6 +98,20 @@ changelog:
 #      compress: best
 #      lzma: true
 
+brews:
+  - ids: [tinyclaw]
+    repository:
+      owner: tinyland-inc
+      name: homebrew-tinyclaw
+    commit_author:
+      name: goreleaser
+      email: goreleaser@tinyland.dev
+    homepage: https://github.com/tinyland-inc/tinyclaw
+    description: "Ultra-lightweight personal AI agent"
+    license: MIT
+    install: |
+      bin.install "tinyclaw"
+
 release:
   footer: >-
 
