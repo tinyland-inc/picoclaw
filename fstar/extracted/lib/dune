@@ -1,4 +1,3 @@
 (library
- (name picoclaw_core)
- (wrapped false)
+ (name picoclaw_lib)
  (libraries yojson))

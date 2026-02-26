@@ -18,6 +18,10 @@ func TestConfigRoundtrip(t *testing.T) {
 		t.Skip("dhall-to-json not installed, skipping roundtrip test")
 	}
 
+	// The migration redacts API keys to env:PICOCLAW_API_KEY references;
+	// set it so dhall-to-json can resolve it.
+	t.Setenv("PICOCLAW_API_KEY", "test-key")
+
 	tmpDir := t.TempDir()
 
 	// Step 1: Save default config as JSON

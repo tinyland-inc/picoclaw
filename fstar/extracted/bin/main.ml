@@ -15,6 +15,7 @@
     - Gateway -> Core: execute_tool result (tool output)
     - Core -> Gateway: process_message result (final response + audit log) *)
 
+open Picoclaw_lib
 open Picoclaw_core
 
 (** ─── Session Store ─────────────────────────────────────────────── *)
