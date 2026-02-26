@@ -17,6 +17,7 @@
 
 open Picoclaw_lib
 open Picoclaw_core
+open AgentLoop
 
 (** ─── Session Store ─────────────────────────────────────────────── *)
 
