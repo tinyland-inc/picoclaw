@@ -15,13 +15,13 @@
       "model_name": "claude-haiku",
       "model": "anthropic/claude-haiku-4-5-20251001",
       "api_key": "__ANTHROPIC_API_KEY__",
-      "api_base": "__ANTHROPIC_BASE_URL__/v1"
+      "api_base": "__ANTHROPIC_BASE_URL__"
     },
     {
       "model_name": "claude-sonnet",
       "model": "anthropic/claude-sonnet-4-20250514",
       "api_key": "__ANTHROPIC_API_KEY__",
-      "api_base": "__ANTHROPIC_BASE_URL__/v1"
+      "api_base": "__ANTHROPIC_BASE_URL__"
     }
   ],
   "gateway": {
