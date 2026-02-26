@@ -205,13 +205,15 @@ func Execute(actions []Action, openclawHome, picoClawHome string) *Result {
 			}
 		case ActionSkip:
 			result.FilesSkipped++
+		case ActionMergeConfig:
+			// Not yet implemented
 		}
 	}
 
 	return result
 }
 
-func executeConfigMigration(srcConfigPath, dstConfigPath, picoClawHome string) error {
+func executeConfigMigration(srcConfigPath, dstConfigPath, _ string) error {
 	data, err := LoadOpenClawConfig(srcConfigPath)
 	if err != nil {
 		return err
@@ -269,6 +271,8 @@ func PrintPlan(actions []Action, warnings []string) {
 			skips++
 		case ActionCreateDir:
 			fmt.Printf("  [mkdir]   %s\n", action.Destination)
+		case ActionMergeConfig:
+			fmt.Printf("  [merge]   %s -> %s\n", action.Source, action.Destination)
 		}
 	}
 

@@ -289,11 +289,8 @@ func TestCreateProviderReturnsClaudeProviderForAnthropicOAuth(t *testing.T) {
 	if _, ok := provider.(*ClaudeProvider); !ok {
 		t.Fatalf("provider type = %T, want *ClaudeProvider", provider)
 	}
-	// TODO: Test custom APIBase when createClaudeAuthProvider supports it
 }
 
 func TestCreateProviderReturnsCodexProviderForOpenAIOAuth(t *testing.T) {
-	// TODO: This test requires openai protocol to support auth_method: "oauth"
-	// which is not yet implemented in the new factory_provider.go
 	t.Skip("OpenAI OAuth via model_list not yet implemented")
 }

@@ -1,6 +1,7 @@
 package campaign
 
 import (
+	"errors"
 	"testing"
 	"time"
 )
@@ -38,8 +39,8 @@ func TestGuardrailCheck_BudgetExhausted(t *testing.T) {
 	if err == nil {
 		t.Fatal("expected guardrail error for budget exhaustion")
 	}
-	ge, ok := err.(*GuardrailError)
-	if !ok {
+	var ge *GuardrailError
+	if !errors.As(err, &ge) {
 		t.Fatalf("expected *GuardrailError, got %T", err)
 	}
 	if ge.Reason != "budget_exhausted" {

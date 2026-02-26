@@ -83,20 +83,21 @@ func (r *ToolRegistry) ExecuteWithContext(
 	duration := time.Since(start)
 
 	// Log based on result type
-	if result.IsError {
+	switch {
+	case result.IsError:
 		logger.ErrorCF("tool", "Tool execution failed",
 			map[string]any{
 				"tool":     name,
 				"duration": duration.Milliseconds(),
 				"error":    result.ForLLM,
 			})
-	} else if result.Async {
+	case result.Async:
 		logger.InfoCF("tool", "Tool started (async)",
 			map[string]any{
 				"tool":     name,
 				"duration": duration.Milliseconds(),
 			})
-	} else {
+	default:
 		logger.InfoCF("tool", "Tool execution completed",
 			map[string]any{
 				"tool":          name,

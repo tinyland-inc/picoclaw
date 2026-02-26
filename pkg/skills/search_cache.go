@@ -204,13 +204,14 @@ func jaccardSimilarity(a, b []uint32) float64 {
 	intersection := 0
 
 	for i < len(a) && j < len(b) {
-		if a[i] == b[j] {
+		switch {
+		case a[i] == b[j]:
 			intersection++
 			i++
 			j++
-		} else if a[i] < b[j] {
+		case a[i] < b[j]:
 			i++
-		} else {
+		default:
 			j++
 		}
 	}

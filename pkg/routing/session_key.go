@@ -86,6 +86,8 @@ func BuildAgentPeerSessionKey(params SessionKeyParams) string {
 			if peerID != "" {
 				return fmt.Sprintf("agent:%s:direct:%s", agentID, peerID)
 			}
+		case DMScopeMain:
+			// Fall through to main session key
 		}
 		return BuildAgentMainSessionKey(agentID)
 	}

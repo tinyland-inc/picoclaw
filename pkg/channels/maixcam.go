@@ -124,7 +124,7 @@ func (c *MaixCamChannel) handleConnection(conn net.Conn, ctx context.Context) {
 	}
 }
 
-func (c *MaixCamChannel) processMessage(msg MaixCamMessage, conn net.Conn) {
+func (c *MaixCamChannel) processMessage(msg MaixCamMessage, _ net.Conn) {
 	switch msg.Type {
 	case "person_detected":
 		c.handlePersonDetection(msg)

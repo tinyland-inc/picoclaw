@@ -95,7 +95,7 @@ func (s *Service) Stop() {
 	logger.InfoC("devices", "Device event service stopped")
 }
 
-func (s *Service) handleEvents(kind events.Kind, eventCh <-chan *events.DeviceEvent) {
+func (s *Service) handleEvents(_ events.Kind, eventCh <-chan *events.DeviceEvent) {
 	for ev := range eventCh {
 		if ev == nil {
 			continue

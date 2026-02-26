@@ -252,6 +252,7 @@ func TestWebFetchTool_extractText(t *testing.T) {
 			name:  "preserves newlines between block elements",
 			input: "<html><body><h1>Title</h1>\n<p>Paragraph 1</p>\n<p>Paragraph 2</p></body></html>",
 			wantFunc: func(t *testing.T, got string) {
+				t.Helper()
 				lines := strings.Split(got, "\n")
 				if len(lines) < 2 {
 					t.Errorf("Expected multiple lines, got %d: %q", len(lines), got)
@@ -266,6 +267,7 @@ func TestWebFetchTool_extractText(t *testing.T) {
 			name:  "removes script and style tags",
 			input: "<script>alert('x');</script><style>body{}</style><p>Keep this</p>",
 			wantFunc: func(t *testing.T, got string) {
+				t.Helper()
 				if strings.Contains(got, "alert") || strings.Contains(got, "body{}") {
 					t.Errorf("Expected script/style content removed, got: %q", got)
 				}
@@ -278,6 +280,7 @@ func TestWebFetchTool_extractText(t *testing.T) {
 			name:  "collapses excessive blank lines",
 			input: "<p>A</p>\n\n\n\n\n<p>B</p>",
 			wantFunc: func(t *testing.T, got string) {
+				t.Helper()
 				if strings.Contains(got, "\n\n\n") {
 					t.Errorf("Expected excessive blank lines collapsed, got: %q", got)
 				}
@@ -287,6 +290,7 @@ func TestWebFetchTool_extractText(t *testing.T) {
 			name:  "collapses horizontal whitespace",
 			input: "<p>hello     world</p>",
 			wantFunc: func(t *testing.T, got string) {
+				t.Helper()
 				if strings.Contains(got, "     ") {
 					t.Errorf("Expected spaces collapsed, got: %q", got)
 				}
@@ -299,6 +303,7 @@ func TestWebFetchTool_extractText(t *testing.T) {
 			name:  "empty input",
 			input: "",
 			wantFunc: func(t *testing.T, got string) {
+				t.Helper()
 				if got != "" {
 					t.Errorf("Expected empty string, got: %q", got)
 				}

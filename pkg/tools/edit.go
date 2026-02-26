@@ -155,7 +155,9 @@ func appendFile(sysFs fileSystem, path, appendContent string) error {
 		return err
 	}
 
-	newContent := append(content, []byte(appendContent)...)
+	newContent := make([]byte, 0, len(content)+len(appendContent))
+	newContent = append(newContent, content...)
+	newContent = append(newContent, appendContent...)
 	return sysFs.WriteFile(path, newContent)
 }
 

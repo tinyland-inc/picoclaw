@@ -83,7 +83,7 @@ func skillsInstallFromRegistry(cfg *config.Config, registryName, slug string) er
 	defer cancel()
 
 	if err = os.MkdirAll(filepath.Join(workspace, "skills"), 0o755); err != nil {
-		return fmt.Errorf("\u2717 failed to create skills directory: %v", err)
+		return fmt.Errorf("failed to create skills directory: %w", err)
 	}
 
 	result, err := registry.DownloadAndInstall(ctx, slug, "", targetDir)

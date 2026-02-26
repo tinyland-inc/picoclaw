@@ -133,7 +133,7 @@ func (c *SlackChannel) Send(ctx context.Context, msg bus.OutboundMessage) error 
 	}
 
 	if ref, ok := c.pendingAcks.LoadAndDelete(msg.ChatID); ok {
-		msgRef := ref.(slackMessageRef)
+		msgRef, _ := ref.(slackMessageRef)
 		c.api.AddReaction("white_check_mark", slack.ItemRef{
 			Channel:   msgRef.ChannelID,
 			Timestamp: msgRef.Timestamp,
@@ -166,6 +166,8 @@ func (c *SlackChannel) eventLoop() {
 				if event.Request != nil {
 					c.socketClient.Ack(*event.Request)
 				}
+			default:
+				// Ignore other event types (connecting, disconnect, errors, etc.)
 			}
 		}
 	}

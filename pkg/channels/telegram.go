@@ -169,7 +169,8 @@ func (c *TelegramChannel) Send(ctx context.Context, msg bus.OutboundMessage) err
 	// Try to edit placeholder
 	if pID, ok := c.placeholders.Load(msg.ChatID); ok {
 		c.placeholders.Delete(msg.ChatID)
-		editMsg := tu.EditMessageText(tu.ID(chatID), pID.(int), htmlContent)
+		placeholderID, _ := pID.(int)
+		editMsg := tu.EditMessageText(tu.ID(chatID), placeholderID, htmlContent)
 		editMsg.ParseMode = telego.ModeHTML
 
 		if _, err = c.bot.EditMessageText(ctx, editMsg); err == nil {

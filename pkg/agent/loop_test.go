@@ -171,8 +171,14 @@ func TestToolRegistry_ToolRegistration(t *testing.T) {
 	// Verify tool is registered by checking it doesn't panic on GetStartupInfo
 	// (actual tool retrieval is tested in tools package tests)
 	info := al.GetStartupInfo()
-	toolsInfo := info["tools"].(map[string]any)
-	toolsList := toolsInfo["names"].([]string)
+	toolsInfo, ok := info["tools"].(map[string]any)
+	if !ok {
+		t.Fatal("Expected tools info in startup info")
+	}
+	toolsList, ok := toolsInfo["names"].([]string)
+	if !ok {
+		t.Fatal("Expected tools names list")
+	}
 
 	// Check that our custom tool name is in the list
 	found := false
@@ -246,8 +252,14 @@ func TestToolRegistry_GetDefinitions(t *testing.T) {
 	al.RegisterTool(testTool)
 
 	info := al.GetStartupInfo()
-	toolsInfo := info["tools"].(map[string]any)
-	toolsList := toolsInfo["names"].([]string)
+	toolsInfo, ok := info["tools"].(map[string]any)
+	if !ok {
+		t.Fatal("Expected tools info in startup info")
+	}
+	toolsList, ok := toolsInfo["names"].([]string)
+	if !ok {
+		t.Fatal("Expected tools names list")
+	}
 
 	// Check that our custom tool name is in the list
 	found := false
@@ -304,7 +316,11 @@ func TestAgentLoop_GetStartupInfo(t *testing.T) {
 	}
 
 	// Should have default tools registered
-	if count.(int) == 0 {
+	countInt, ok := count.(int)
+	if !ok {
+		t.Fatal("Expected count to be int")
+	}
+	if countInt == 0 {
 		t.Error("Expected at least some tools to be registered")
 	}
 }
@@ -424,6 +440,7 @@ type testHelper struct {
 }
 
 func (h testHelper) executeAndGetResponse(tb testing.TB, ctx context.Context, msg bus.InboundMessage) string {
+	tb.Helper()
 	// Use a short timeout to avoid hanging
 	timeoutCtx, cancel := context.WithTimeout(ctx, responseTimeout)
 	defer cancel()

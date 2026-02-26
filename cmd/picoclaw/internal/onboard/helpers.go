@@ -78,7 +78,7 @@ func copyEmbeddedToTarget(targetDir string) error {
 
 		new_path, err := filepath.Rel("workspace", path)
 		if err != nil {
-			return fmt.Errorf("Failed to get relative path for %s: %v\n", path, err)
+			return fmt.Errorf("failed to get relative path for %s: %w", path, err)
 		}
 
 		// Build target file path

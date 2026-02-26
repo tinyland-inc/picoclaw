@@ -2,10 +2,14 @@ package auth
 
 import (
 	"encoding/json"
+	"errors"
 	"os"
 	"path/filepath"
 	"time"
 )
+
+// ErrCredentialNotFound is returned when a credential is not found in the store.
+var ErrCredentialNotFound = errors.New("credential not found")
 
 type AuthCredential struct {
 	AccessToken  string    `json:"access_token"`
@@ -82,7 +86,7 @@ func GetCredential(provider string) (*AuthCredential, error) {
 	}
 	cred, ok := store.Credentials[provider]
 	if !ok {
-		return nil, nil
+		return nil, ErrCredentialNotFound
 	}
 	return cred, nil
 }
