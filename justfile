@@ -156,18 +156,29 @@ fstar-build: fstar-extract
 
 # Type-check Futhark programs
 futhark-check:
-    @echo "Futhark check not yet implemented (Sprint 3)"
-    @exit 1
+    @echo "Checking Futhark programs..."
+    @for f in futhark/src/*.fut; do \
+        echo "  Checking $$f..."; \
+        futhark check "$$f" || exit 1; \
+    done
+    @echo "Futhark type-check passed"
 
-# Build Futhark C backend
-futhark-build:
-    @echo "Futhark build not yet implemented (Sprint 3)"
-    @exit 1
+# Build Futhark C backend (portable CPU)
+futhark-build backend="c":
+    @echo "Building Futhark kernels ({{backend}} backend)..."
+    @mkdir -p futhark/build
+    @for f in futhark/src/*.fut; do \
+        name=$$(basename "$$f" .fut); \
+        echo "  Compiling $$name..."; \
+        futhark {{backend}} --library -o "futhark/build/$$name" "$$f" || exit 1; \
+    done
+    @echo "Futhark build complete: futhark/build/"
 
 # Run Futhark tests
 futhark-test:
-    @echo "Futhark tests not yet implemented (Sprint 3)"
-    @exit 1
+    @echo "Running Futhark tests..."
+    futhark test futhark/src/*.fut
+    @echo "Futhark tests passed"
 
 # ─── Nix ────────────────────────────────────────────────────────────────────────
 

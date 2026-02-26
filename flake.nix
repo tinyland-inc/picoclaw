@@ -91,6 +91,9 @@
             ocamlPackages.findlib
             ocamlPackages.yojson
 
+            # Futhark (parallel compute kernels)
+            futhark
+
             # Build system
             just
             jq
