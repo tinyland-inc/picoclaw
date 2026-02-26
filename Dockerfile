@@ -53,5 +53,9 @@ RUN /usr/local/bin/picoclaw onboard
 COPY --chown=picoclaw:picoclaw tinyland/config.json /home/picoclaw/.picoclaw/config.json
 COPY --chown=picoclaw:picoclaw tinyland/entrypoint.sh /usr/local/bin/entrypoint.sh
 
+# Workspace bootstrap files — copied to /workspace-defaults/ so the K8s init
+# container can seed the PVC on first boot without overwriting evolved state.
+COPY --chown=picoclaw:picoclaw tinyland/workspace/ /workspace-defaults/
+
 ENTRYPOINT ["entrypoint.sh"]
 CMD ["gateway"]

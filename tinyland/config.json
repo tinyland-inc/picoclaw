@@ -2,7 +2,7 @@
   "agents": {
     "defaults": {
       "workspace": "/workspace",
-      "restrict_to_workspace": false,
+      "restrict_to_workspace": true,
       "model_name": "claude-haiku",
       "max_tokens": 8192,
       "temperature": 0.3,
@@ -26,5 +26,19 @@
   "gateway": {
     "host": "0.0.0.0",
     "port": 18790
+  },
+  "heartbeat": {
+    "enabled": true,
+    "interval_minutes": 120,
+    "active_hours": {
+      "start": 6,
+      "end": 22
+    }
+  },
+  "web_search": {
+    "provider": "duckduckgo"
+  },
+  "skills": {
+    "enabled": ["github", "summarize"]
   }
 }
