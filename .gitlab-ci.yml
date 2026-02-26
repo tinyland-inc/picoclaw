@@ -1,0 +1,37 @@
+stages: [lint, test, build]
+
+variables:
+  CGO_ENABLED: "0"
+  GOFLAGS: "-tags=stdjson"
+
+lint:
+  stage: lint
+  tags: [docker, linux, amd64]
+  image: golangci/golangci-lint:latest
+  script:
+    - golangci-lint run
+
+test:
+  stage: test
+  tags: [docker, linux, amd64]
+  image: golang:1.25-alpine
+  script:
+    - go test ./...
+
+build:
+  stage: build
+  tags: [docker, linux, amd64]
+  image: golang:1.25-alpine
+  script:
+    - go build -o tinyclaw ./cmd/tinyclaw
+  artifacts:
+    paths: [tinyclaw]
+
+nix-build:
+  stage: build
+  tags: [nix, flakes]
+  script:
+    - nix build .#tinyclaw
+    - nix flake check
+  artifacts:
+    paths: [result/bin/tinyclaw]
