@@ -11,7 +11,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/sipeed/picoclaw/pkg/logger"
+	"github.com/tinyland-inc/picoclaw/pkg/logger"
 )
 
 // Status represents the current state of a campaign.

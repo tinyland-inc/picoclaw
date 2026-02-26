@@ -8,7 +8,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/sipeed/picoclaw/pkg/campaign"
+	"github.com/tinyland-inc/picoclaw/pkg/campaign"
 )
 
 // PicoClawAdapter dispatches campaign steps to the local PicoClaw agent loop.
