@@ -22,7 +22,7 @@ const (
 	StatusRunning   Status = "running"
 	StatusCompleted Status = "completed"
 	StatusFailed    Status = "failed"
-	StatusCanceled Status = "canceled"
+	StatusCanceled  Status = "canceled"
 )
 
 // FeedbackPolicy determines how campaign results are delivered.

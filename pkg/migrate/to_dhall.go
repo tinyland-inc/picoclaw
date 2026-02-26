@@ -331,9 +331,9 @@ func renderModelList(b *strings.Builder, models []config.ModelConfig, indent str
 
 func renderModelConfig(b *strings.Builder, mc *config.ModelConfig, indent string) {
 	// Use helpers for standard entries, redact credentials
-	apiBase := "None Text"
+	apiBase := "(None Text)"
 	if mc.APIBase != "" {
-		apiBase = fmt.Sprintf("Some %s", dhallText(mc.APIBase))
+		apiBase = fmt.Sprintf("(Some %s)", dhallText(mc.APIBase))
 	}
 
 	// Redact API keys in output
