@@ -497,12 +497,12 @@ func (c *LINEChannel) Send(ctx context.Context, msg bus.OutboundMessage) error {
 	// Load and consume quote token for this chat
 	var quoteToken string
 	if qt, ok := c.quoteTokens.LoadAndDelete(msg.ChatID); ok {
-		quoteToken = qt.(string)
+		quoteToken, _ = qt.(string)
 	}
 
 	// Try reply token first (free, valid for ~25 seconds)
 	if entry, ok := c.replyTokens.LoadAndDelete(msg.ChatID); ok {
-		tokenEntry := entry.(replyTokenEntry)
+		tokenEntry, _ := entry.(replyTokenEntry)
 		if time.Since(tokenEntry.timestamp) < lineReplyTokenMaxAge {
 			if err := c.sendReply(ctx, tokenEntry.token, msg.Content, quoteToken); err == nil {
 				logger.DebugCF("line", "Message sent via Reply API", map[string]any{

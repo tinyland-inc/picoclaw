@@ -33,7 +33,7 @@ func TestSplitMessage(t *testing.T) {
 			content:      longText,
 			maxLen:       2000,
 			expectChunks: 2,
-			checkContent: func(t *testing.T, chunks []string) {
+			checkContent: func(t *testing.T, chunks []string) { //nolint:thelper // table-driven check func
 				if len(chunks[0]) > 2000 {
 					t.Errorf("Chunk 0 too large: %d", len(chunks[0]))
 				}
@@ -52,7 +52,7 @@ func TestSplitMessage(t *testing.T) {
 			content:      strings.Repeat("a", 1750) + "\n" + strings.Repeat("b", 300),
 			maxLen:       2000,
 			expectChunks: 2,
-			checkContent: func(t *testing.T, chunks []string) {
+			checkContent: func(t *testing.T, chunks []string) { //nolint:thelper // table-driven check func
 				if len(chunks[0]) != 1750 {
 					t.Errorf("Expected chunk 0 to be 1750 length (split at newline), got %d", len(chunks[0]))
 				}
@@ -66,7 +66,7 @@ func TestSplitMessage(t *testing.T) {
 			content:      "Prefix\n" + longCode,
 			maxLen:       2000,
 			expectChunks: 2,
-			checkContent: func(t *testing.T, chunks []string) {
+			checkContent: func(t *testing.T, chunks []string) { //nolint:thelper // table-driven check func
 				// Check that first chunk ends with closing fence
 				if !strings.HasSuffix(chunks[0], "\n```") {
 					t.Error("First chunk should end with injected closing fence")
@@ -82,7 +82,7 @@ func TestSplitMessage(t *testing.T) {
 			content:      strings.Repeat("\u4e16", 1000), // 3000 bytes
 			maxLen:       2000,
 			expectChunks: 2,
-			checkContent: func(t *testing.T, chunks []string) {
+			checkContent: func(t *testing.T, chunks []string) { //nolint:thelper // table-driven check func
 				// Just verify we didn't panic and got valid strings.
 				// Go strings are UTF-8, if we split mid-rune it would be bad,
 				// but standard slicing might do that.

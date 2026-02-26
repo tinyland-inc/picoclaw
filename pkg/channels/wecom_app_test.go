@@ -57,7 +57,9 @@ func encryptTestMessageApp(message, aesKey string) (string, error) {
 	lenBytes := make([]byte, 4)
 	binary.BigEndian.PutUint32(lenBytes, msgLen)
 
-	plainText := append(random, lenBytes...)
+	plainText := make([]byte, 0, len(random)+len(lenBytes)+len(msgBytes)+len(corpID))
+	plainText = append(plainText, random...)
+	plainText = append(plainText, lenBytes...)
 	plainText = append(plainText, msgBytes...)
 	plainText = append(plainText, corpID...)
 
@@ -81,6 +83,8 @@ func encryptTestMessageApp(message, aesKey string) (string, error) {
 }
 
 // generateSignatureApp generates a signature for testing WeCom App
+//
+//nolint:unparam // token parameterized for testing flexibility
 func generateSignatureApp(token, timestamp, nonce, msgEncrypt string) string {
 	params := []string{token, timestamp, nonce, msgEncrypt}
 	sort.Strings(params)

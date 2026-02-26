@@ -58,7 +58,7 @@ func NewContextBuilder(workspace string) *ContextBuilder {
 }
 
 func (cb *ContextBuilder) getIdentity() string {
-	workspacePath, _ := filepath.Abs(filepath.Join(cb.workspace))
+	workspacePath, _ := filepath.Abs(cb.workspace)
 
 	return fmt.Sprintf(`# picoclaw 🦞
 

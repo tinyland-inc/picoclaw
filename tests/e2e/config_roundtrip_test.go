@@ -2,6 +2,7 @@ package e2e
 
 import (
 	"encoding/json"
+	"errors"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -46,9 +47,6 @@ func TestConfigRoundtrip(t *testing.T) {
 	dhallCfg, err := config.LoadDhallConfig(dhallPath)
 	if err != nil {
 		t.Fatalf("loading dhall config: %v", err)
-	}
-	if dhallCfg == nil {
-		t.Fatal("LoadDhallConfig returned nil (dhall-to-json should be available)")
 	}
 
 	// Step 4: Compare key structural fields
@@ -165,8 +163,8 @@ func TestConfigLoadAndSaveRoundtrip(t *testing.T) {
 	}
 }
 
-// TestDhallConfigLoaderFallback tests that LoadDhallConfig returns nil when
-// dhall-to-json is not found (simulated by clearing PATH).
+// TestDhallConfigLoaderFallback tests that LoadDhallConfig returns ErrDhallNotAvailable
+// when dhall-to-json is not found (simulated by clearing PATH).
 func TestDhallConfigLoaderFallback(t *testing.T) {
 	tmpDir := t.TempDir()
 	dhallPath := filepath.Join(tmpDir, "config.dhall")
@@ -178,8 +176,8 @@ func TestDhallConfigLoaderFallback(t *testing.T) {
 	defer os.Setenv("PATH", origPath)
 
 	cfg, err := config.LoadDhallConfig(dhallPath)
-	if err != nil {
-		t.Fatalf("unexpected error: %v", err)
+	if !errors.Is(err, config.ErrDhallNotAvailable) {
+		t.Fatalf("expected ErrDhallNotAvailable, got: %v", err)
 	}
 	if cfg != nil {
 		t.Error("expected nil config when dhall-to-json not available")

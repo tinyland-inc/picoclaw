@@ -161,7 +161,7 @@ func renderAgents(b *strings.Builder, agents *config.AgentsConfig, indent string
 	b.WriteString(indent + "  }\n")
 }
 
-func renderAgentConfig(b *strings.Builder, a *config.AgentConfig, indent string) {
+func renderAgentConfig(b *strings.Builder, a *config.AgentConfig, _ string) {
 	b.WriteString("{ id = " + dhallText(a.ID))
 	if a.Default {
 		b.WriteString(", default = True")
@@ -342,7 +342,8 @@ func renderModelConfig(b *strings.Builder, mc *config.ModelConfig, indent string
 		redactedKey = "env:PICOCLAW_API_KEY as Text"
 	}
 
-	if mc.AuthMethod != "" || mc.ConnectMode != "" || mc.Workspace != "" {
+	switch {
+	case mc.AuthMethod != "" || mc.ConnectMode != "" || mc.Workspace != "":
 		// Full record for special providers
 		b.WriteString("{ model_name = " + dhallText(mc.ModelName) + "\n")
 		b.WriteString(indent + ", model = " + dhallText(mc.Model) + "\n")
@@ -355,11 +356,11 @@ func renderModelConfig(b *strings.Builder, mc *config.ModelConfig, indent string
 		b.WriteString(indent + ", rpm = None Natural\n")
 		b.WriteString(indent + ", max_tokens_field = None Text\n")
 		b.WriteString(indent + "}")
-	} else if mc.APIKey != "" {
+	case mc.APIKey != "":
 		// Use mkModelConfig helper with env var
 		b.WriteString(fmt.Sprintf("H.mkModelConfig %s %s %s (%s)",
 			dhallText(mc.ModelName), dhallText(mc.Model), apiBase, redactedKey))
-	} else {
+	default:
 		// Use emptyModelConfig helper
 		b.WriteString(fmt.Sprintf("H.emptyModelConfig %s %s %s",
 			dhallText(mc.ModelName), dhallText(mc.Model), apiBase))

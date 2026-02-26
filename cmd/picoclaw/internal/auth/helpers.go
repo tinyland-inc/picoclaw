@@ -367,7 +367,7 @@ func authStatusCmd() error {
 
 func authModelsCmd() error {
 	cred, err := auth.GetCredential("google-antigravity")
-	if err != nil || cred == nil {
+	if err != nil {
 		return fmt.Errorf(
 			"not logged in to Google Antigravity.\nrun: picoclaw auth login --provider google-antigravity",
 		)

@@ -151,24 +151,25 @@ func (t *CronTool) addJob(args map[string]any) *ToolResult {
 	cronExpr, hasCron := args["cron_expr"].(string)
 
 	// Priority: at_seconds > every_seconds > cron_expr
-	if hasAt {
+	switch {
+	case hasAt:
 		atMS := time.Now().UnixMilli() + int64(atSeconds)*1000
 		schedule = cron.CronSchedule{
 			Kind: "at",
 			AtMS: &atMS,
 		}
-	} else if hasEvery {
+	case hasEvery:
 		everyMS := int64(everySeconds) * 1000
 		schedule = cron.CronSchedule{
 			Kind:    "every",
 			EveryMS: &everyMS,
 		}
-	} else if hasCron {
+	case hasCron:
 		schedule = cron.CronSchedule{
 			Kind: "cron",
 			Expr: cronExpr,
 		}
-	} else {
+	default:
 		return ErrorResult("one of at_seconds, every_seconds, or cron_expr is required")
 	}
 
@@ -221,13 +222,14 @@ func (t *CronTool) listJobs() *ToolResult {
 	result := "Scheduled jobs:\n"
 	for _, j := range jobs {
 		var scheduleInfo string
-		if j.Schedule.Kind == "every" && j.Schedule.EveryMS != nil {
+		switch {
+		case j.Schedule.Kind == "every" && j.Schedule.EveryMS != nil:
 			scheduleInfo = fmt.Sprintf("every %ds", *j.Schedule.EveryMS/1000)
-		} else if j.Schedule.Kind == "cron" {
+		case j.Schedule.Kind == "cron":
 			scheduleInfo = j.Schedule.Expr
-		} else if j.Schedule.Kind == "at" {
+		case j.Schedule.Kind == "at":
 			scheduleInfo = "one-time"
-		} else {
+		default:
 			scheduleInfo = "unknown"
 		}
 		result += fmt.Sprintf("- %s (id: %s, %s)\n", j.Name, j.ID, scheduleInfo)

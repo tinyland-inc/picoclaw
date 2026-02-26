@@ -16,6 +16,9 @@ import (
 // rrCounter is a global counter for round-robin load balancing across models.
 var rrCounter atomic.Uint64
 
+// ErrDhallNotAvailable is returned when dhall-to-json is not installed.
+var ErrDhallNotAvailable = errors.New("dhall-to-json not available")
+
 // FlexibleStringSlice is a []string that also accepts JSON numbers,
 // so allow_from can contain both "123" and 123.
 type FlexibleStringSlice []string
@@ -528,7 +531,7 @@ type ClawHubRegistryConfig struct {
 func LoadDhallConfig(path string) (*Config, error) {
 	dhallBin, err := exec.LookPath("dhall-to-json")
 	if errors.Is(err, exec.ErrNotFound) {
-		return nil, nil // dhall-to-json not installed, caller should fall back
+		return nil, ErrDhallNotAvailable
 	}
 	if err != nil {
 		return nil, fmt.Errorf("dhall-to-json lookup: %w", err)

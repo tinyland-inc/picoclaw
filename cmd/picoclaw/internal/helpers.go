@@ -1,6 +1,7 @@
 package internal
 
 import (
+	"errors"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -33,13 +34,14 @@ func LoadConfig() (*config.Config, error) {
 	dhallPath := GetDhallConfigPath()
 	if _, err := os.Stat(dhallPath); err == nil {
 		cfg, err := config.LoadDhallConfig(dhallPath)
-		if err != nil {
+		switch {
+		case errors.Is(err, config.ErrDhallNotAvailable):
+			// dhall-to-json not installed, fall through to JSON
+		case err != nil:
 			return nil, fmt.Errorf("error loading dhall config: %w", err)
-		}
-		if cfg != nil {
+		default:
 			return cfg, nil
 		}
-		// cfg == nil means dhall-to-json not installed, fall through to JSON
 	}
 
 	return config.LoadConfig(GetConfigPath())

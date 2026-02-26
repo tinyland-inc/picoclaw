@@ -257,7 +257,7 @@ func (c *WeComAppChannel) handleWebhook(w http.ResponseWriter, r *http.Request) 
 }
 
 // handleVerification handles the URL verification request from WeCom
-func (c *WeComAppChannel) handleVerification(ctx context.Context, w http.ResponseWriter, r *http.Request) {
+func (c *WeComAppChannel) handleVerification(_ context.Context, w http.ResponseWriter, r *http.Request) {
 	query := r.URL.Query()
 	msgSignature := query.Get("msg_signature")
 	timestamp := query.Get("timestamp")
@@ -393,7 +393,7 @@ func (c *WeComAppChannel) handleMessageCallback(ctx context.Context, w http.Resp
 }
 
 // processMessage processes the received message
-func (c *WeComAppChannel) processMessage(ctx context.Context, msg WeComXMLMessage) {
+func (c *WeComAppChannel) processMessage(_ context.Context, msg WeComXMLMessage) {
 	// Skip non-text messages for now (can be extended)
 	if msg.MsgType != "text" && msg.MsgType != "image" && msg.MsgType != "voice" {
 		logger.DebugCF("wecom_app", "Skipping non-supported message type", map[string]any{

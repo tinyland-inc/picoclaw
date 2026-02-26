@@ -153,10 +153,8 @@ func (c *OneBotChannel) Start(ctx context.Context) error {
 
 	if c.config.ReconnectInterval > 0 {
 		go c.reconnectLoop()
-	} else {
-		if c.conn == nil {
-			return fmt.Errorf("failed to connect to OneBot and reconnect is disabled")
-		}
+	} else if c.conn == nil {
+		return fmt.Errorf("failed to connect to OneBot and reconnect is disabled")
 	}
 
 	c.setRunning(true)

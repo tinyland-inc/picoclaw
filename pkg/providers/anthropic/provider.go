@@ -149,15 +149,16 @@ func buildParams(
 					// when the message was built by the agent loop (loop.go)
 					// which only sets Function.Arguments, not the map field.
 					var inputJSON []byte
-					if tc.Function != nil && tc.Function.Arguments != "" {
+					switch {
+					case tc.Function != nil && tc.Function.Arguments != "":
 						inputJSON = []byte(tc.Function.Arguments)
-					} else if tc.Arguments != nil {
+					case tc.Arguments != nil:
 						var err error
 						inputJSON, err = json.Marshal(tc.Arguments)
 						if err != nil {
 							return anthropic.MessageNewParams{}, fmt.Errorf("marshal tool_use input: %w", err)
 						}
-					} else {
+					default:
 						inputJSON = []byte("{}")
 					}
 					name := tc.Name
@@ -261,7 +262,10 @@ func parseResponse(resp *anthropic.Message) *LLMResponse {
 		finishReason = "tool_calls"
 	case anthropic.StopReasonMaxTokens:
 		finishReason = "length"
-	case anthropic.StopReasonEndTurn:
+	case anthropic.StopReasonEndTurn,
+		anthropic.StopReasonStopSequence,
+		anthropic.StopReasonPauseTurn,
+		anthropic.StopReasonRefusal:
 		finishReason = "stop"
 	}
 

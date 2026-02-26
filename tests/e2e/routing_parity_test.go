@@ -160,6 +160,8 @@ func TestRoutingCascade_PriorityOrder(t *testing.T) {
 
 // resolveAgent implements the 7-level routing cascade for testing.
 // This Go implementation is the reference for F* parity.
+//
+//nolint:unparam // guildID parameterized for testing flexibility
 func resolveAgent(cfg *config.Config, channel, accountID, guildID, teamID, peerID string) string {
 	// Level 1: Peer match (highest priority)
 	if peerID != "" {

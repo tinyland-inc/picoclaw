@@ -43,7 +43,7 @@ func NewManager(cfg *config.Config, messageBus *bus.MessageBus) (*Manager, error
 	return m, nil
 }
 
-func (m *Manager) initChannels() error {
+func (m *Manager) initChannels() error { //nolint:unparam // error return kept for future use
 	logger.InfoC("channels", "Initializing channel manager")
 
 	if m.config.Channels.Telegram.Enabled && m.config.Channels.Telegram.Token != "" {

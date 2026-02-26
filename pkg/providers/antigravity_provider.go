@@ -5,6 +5,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"math/rand"
@@ -206,7 +207,7 @@ type antigravityGenConfig struct {
 func (p *AntigravityProvider) buildRequest(
 	messages []Message,
 	tools []ToolDefinition,
-	model string,
+	_ string,
 	options map[string]any,
 ) antigravityRequest {
 	req := antigravityRequest{}
@@ -404,6 +405,7 @@ type antigravityJSONResponse struct {
 	} `json:"usageMetadata"`
 }
 
+//nolint:unparam // error return kept for interface consistency
 func (p *AntigravityProvider) parseSSEResponse(body string) (*LLMResponse, error) {
 	var contentParts []string
 	var toolCalls []ToolCall
@@ -562,13 +564,13 @@ func sanitizeSchemaForGemini(schema map[string]any) map[string]any {
 func createAntigravityTokenSource() func() (string, string, error) {
 	return func() (string, string, error) {
 		cred, err := auth.GetCredential("google-antigravity")
-		if err != nil {
-			return "", "", fmt.Errorf("loading auth credentials: %w", err)
-		}
-		if cred == nil {
+		if errors.Is(err, auth.ErrCredentialNotFound) {
 			return "", "", fmt.Errorf(
 				"no credentials for google-antigravity. Run: picoclaw auth login --provider google-antigravity",
 			)
+		}
+		if err != nil {
+			return "", "", fmt.Errorf("loading auth credentials: %w", err)
 		}
 
 		// Refresh if needed

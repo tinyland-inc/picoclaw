@@ -56,7 +56,9 @@ func encryptTestMessage(message, aesKey string) (string, error) {
 	lenBytes := make([]byte, 4)
 	binary.BigEndian.PutUint32(lenBytes, msgLen)
 
-	plainText := append(random, lenBytes...)
+	plainText := make([]byte, 0, len(random)+len(lenBytes)+len(msgBytes)+len(receiveID))
+	plainText = append(plainText, random...)
+	plainText = append(plainText, lenBytes...)
 	plainText = append(plainText, msgBytes...)
 	plainText = append(plainText, receiveID...)
 
@@ -80,6 +82,8 @@ func encryptTestMessage(message, aesKey string) (string, error) {
 }
 
 // generateSignature generates a signature for testing
+//
+//nolint:unparam // token parameterized for testing flexibility
 func generateSignature(token, timestamp, nonce, msgEncrypt string) string {
 	params := []string{token, timestamp, nonce, msgEncrypt}
 	sort.Strings(params)

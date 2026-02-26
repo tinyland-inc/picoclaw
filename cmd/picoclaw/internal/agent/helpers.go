@@ -3,6 +3,7 @@ package agent
 import (
 	"bufio"
 	"context"
+	"errors"
 	"fmt"
 	"io"
 	"os"
@@ -52,12 +53,16 @@ func agentCmd(message, sessionKey, model string, debug bool) error {
 
 	// Print agent startup info (only for interactive mode)
 	startupInfo := agentLoop.GetStartupInfo()
-	logger.InfoCF("agent", "Agent initialized",
-		map[string]any{
-			"tools_count":      startupInfo["tools"].(map[string]any)["count"],
-			"skills_total":     startupInfo["skills"].(map[string]any)["total"],
-			"skills_available": startupInfo["skills"].(map[string]any)["available"],
-		})
+	if toolsMap, ok := startupInfo["tools"].(map[string]any); ok {
+		if skillsMap, ok := startupInfo["skills"].(map[string]any); ok {
+			logger.InfoCF("agent", "Agent initialized",
+				map[string]any{
+					"tools_count":      toolsMap["count"],
+					"skills_total":     skillsMap["total"],
+					"skills_available": skillsMap["available"],
+				})
+		}
+	}
 
 	if message != "" {
 		ctx := context.Background()
@@ -96,7 +101,7 @@ func interactiveMode(agentLoop *agent.AgentLoop, sessionKey string) {
 	for {
 		line, err := rl.Readline()
 		if err != nil {
-			if err == readline.ErrInterrupt || err == io.EOF {
+			if errors.Is(err, readline.ErrInterrupt) || errors.Is(err, io.EOF) {
 				fmt.Println("\nGoodbye!")
 				return
 			}
@@ -131,7 +136,7 @@ func simpleInteractiveMode(agentLoop *agent.AgentLoop, sessionKey string) {
 		fmt.Print(fmt.Sprintf("%s You: ", internal.Logo))
 		line, err := reader.ReadString('\n')
 		if err != nil {
-			if err == io.EOF {
+			if errors.Is(err, io.EOF) {
 				fmt.Println("\nGoodbye!")
 				return
 			}

@@ -46,9 +46,13 @@ func createHTTPClient(proxyURL string, timeout time.Duration) (*http.Client, err
 		if proxy.Host == "" {
 			return nil, fmt.Errorf("invalid proxy URL: missing host")
 		}
-		client.Transport.(*http.Transport).Proxy = http.ProxyURL(proxy)
+		if transport, ok := client.Transport.(*http.Transport); ok {
+			transport.Proxy = http.ProxyURL(proxy)
+		}
 	} else {
-		client.Transport.(*http.Transport).Proxy = http.ProxyFromEnvironment
+		if transport, ok := client.Transport.(*http.Transport); ok {
+			transport.Proxy = http.ProxyFromEnvironment
+		}
 	}
 
 	return client, nil
@@ -244,6 +248,7 @@ func (p *DuckDuckGoSearchProvider) Search(ctx context.Context, query string, cou
 	return p.extractResults(string(body), count, query)
 }
 
+//nolint:unparam // error return kept for future use
 func (p *DuckDuckGoSearchProvider) extractResults(html string, count int, query string) (string, error) {
 	// Simple regex based extraction for DDG HTML
 	// Strategy: Find all result containers or key anchors directly
@@ -410,17 +415,18 @@ func NewWebSearchTool(opts WebSearchToolOptions) *WebSearchTool {
 	maxResults := 5
 
 	// Priority: Perplexity > Brave > Tavily > DuckDuckGo
-	if opts.PerplexityEnabled && opts.PerplexityAPIKey != "" {
+	switch {
+	case opts.PerplexityEnabled && opts.PerplexityAPIKey != "":
 		provider = &PerplexitySearchProvider{apiKey: opts.PerplexityAPIKey, proxy: opts.Proxy}
 		if opts.PerplexityMaxResults > 0 {
 			maxResults = opts.PerplexityMaxResults
 		}
-	} else if opts.BraveEnabled && opts.BraveAPIKey != "" {
+	case opts.BraveEnabled && opts.BraveAPIKey != "":
 		provider = &BraveSearchProvider{apiKey: opts.BraveAPIKey, proxy: opts.Proxy}
 		if opts.BraveMaxResults > 0 {
 			maxResults = opts.BraveMaxResults
 		}
-	} else if opts.TavilyEnabled && opts.TavilyAPIKey != "" {
+	case opts.TavilyEnabled && opts.TavilyAPIKey != "":
 		provider = &TavilySearchProvider{
 			apiKey:  opts.TavilyAPIKey,
 			baseURL: opts.TavilyBaseURL,
@@ -429,12 +435,12 @@ func NewWebSearchTool(opts WebSearchToolOptions) *WebSearchTool {
 		if opts.TavilyMaxResults > 0 {
 			maxResults = opts.TavilyMaxResults
 		}
-	} else if opts.DuckDuckGoEnabled {
+	case opts.DuckDuckGoEnabled:
 		provider = &DuckDuckGoSearchProvider{proxy: opts.Proxy}
 		if opts.DuckDuckGoMaxResults > 0 {
 			maxResults = opts.DuckDuckGoMaxResults
 		}
-	} else {
+	default:
 		return nil
 	}
 
@@ -606,7 +612,8 @@ func (t *WebFetchTool) Execute(ctx context.Context, args map[string]any) *ToolRe
 
 	var text, extractor string
 
-	if strings.Contains(contentType, "application/json") {
+	switch {
+	case strings.Contains(contentType, "application/json"):
 		var jsonData any
 		if err := json.Unmarshal(body, &jsonData); err == nil {
 			formatted, _ := json.MarshalIndent(jsonData, "", "  ")
@@ -616,11 +623,11 @@ func (t *WebFetchTool) Execute(ctx context.Context, args map[string]any) *ToolRe
 			text = string(body)
 			extractor = "raw"
 		}
-	} else if strings.Contains(contentType, "text/html") || len(body) > 0 &&
-		(strings.HasPrefix(string(body), "<!DOCTYPE") || strings.HasPrefix(strings.ToLower(string(body)), "<html")) {
+	case strings.Contains(contentType, "text/html") || len(body) > 0 &&
+		(strings.HasPrefix(string(body), "<!DOCTYPE") || strings.HasPrefix(strings.ToLower(string(body)), "<html")):
 		text = t.extractText(string(body))
 		extractor = "text"
-	} else {
+	default:
 		text = string(body)
 		extractor = "raw"
 	}

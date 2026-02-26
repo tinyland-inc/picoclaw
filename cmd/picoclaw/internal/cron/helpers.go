@@ -20,11 +20,12 @@ func cronListCmd(storePath string) {
 	fmt.Println("----------------")
 	for _, job := range jobs {
 		var schedule string
-		if job.Schedule.Kind == "every" && job.Schedule.EveryMS != nil {
+		switch {
+		case job.Schedule.Kind == "every" && job.Schedule.EveryMS != nil:
 			schedule = fmt.Sprintf("every %ds", *job.Schedule.EveryMS/1000)
-		} else if job.Schedule.Kind == "cron" {
+		case job.Schedule.Kind == "cron":
 			schedule = job.Schedule.Expr
-		} else {
+		default:
 			schedule = "one-time"
 		}
 

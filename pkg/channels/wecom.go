@@ -206,7 +206,7 @@ func (c *WeComBotChannel) handleWebhook(w http.ResponseWriter, r *http.Request) 
 }
 
 // handleVerification handles the URL verification request from WeCom
-func (c *WeComBotChannel) handleVerification(ctx context.Context, w http.ResponseWriter, r *http.Request) {
+func (c *WeComBotChannel) handleVerification(_ context.Context, w http.ResponseWriter, r *http.Request) {
 	query := r.URL.Query()
 	msgSignature := query.Get("msg_signature")
 	timestamp := query.Get("timestamp")
@@ -318,7 +318,7 @@ func (c *WeComBotChannel) handleMessageCallback(ctx context.Context, w http.Resp
 }
 
 // processMessage processes the received message
-func (c *WeComBotChannel) processMessage(ctx context.Context, msg WeComBotMessage) {
+func (c *WeComBotChannel) processMessage(_ context.Context, msg WeComBotMessage) {
 	// Skip unsupported message types
 	if msg.MsgType != "text" && msg.MsgType != "image" && msg.MsgType != "voice" && msg.MsgType != "file" &&
 		msg.MsgType != "mixed" {
@@ -413,7 +413,7 @@ func (c *WeComBotChannel) processMessage(ctx context.Context, msg WeComBotMessag
 }
 
 // sendWebhookReply sends a reply using the webhook URL
-func (c *WeComBotChannel) sendWebhookReply(ctx context.Context, userID, content string) error {
+func (c *WeComBotChannel) sendWebhookReply(ctx context.Context, _, content string) error {
 	reply := WeComBotReplyMessage{
 		MsgType: "text",
 	}

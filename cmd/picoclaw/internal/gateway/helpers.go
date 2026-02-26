@@ -71,8 +71,8 @@ func gatewayCmd(debug bool, mode GatewayMode) error {
 	// Print agent startup info
 	fmt.Println("\n📦 Agent Status:")
 	startupInfo := agentLoop.GetStartupInfo()
-	toolsInfo := startupInfo["tools"].(map[string]any)
-	skillsInfo := startupInfo["skills"].(map[string]any)
+	toolsInfo, _ := startupInfo["tools"].(map[string]any)
+	skillsInfo, _ := startupInfo["skills"].(map[string]any)
 	fmt.Printf("  • Tools: %d loaded\n", toolsInfo["count"])
 	fmt.Printf("  • Skills: %d/%d available\n",
 		skillsInfo["available"],
