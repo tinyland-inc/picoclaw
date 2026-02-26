@@ -12,9 +12,9 @@ import (
 	"sync"
 	"time"
 
-	"github.com/tinyland-inc/picoclaw/pkg/logger"
-	"github.com/tinyland-inc/picoclaw/pkg/providers"
-	"github.com/tinyland-inc/picoclaw/pkg/skills"
+	"github.com/tinyland-inc/tinyclaw/pkg/logger"
+	"github.com/tinyland-inc/tinyclaw/pkg/providers"
+	"github.com/tinyland-inc/tinyclaw/pkg/skills"
 )
 
 type ContextBuilder struct {
@@ -41,7 +41,7 @@ func getGlobalConfigDir() string {
 	if err != nil {
 		return ""
 	}
-	return filepath.Join(home, ".picoclaw")
+	return filepath.Join(home, ".tinyclaw")
 }
 
 func NewContextBuilder(workspace string) *ContextBuilder {
@@ -61,9 +61,9 @@ func NewContextBuilder(workspace string) *ContextBuilder {
 func (cb *ContextBuilder) getIdentity() string {
 	workspacePath, _ := filepath.Abs(cb.workspace)
 
-	return fmt.Sprintf(`# picoclaw 🦞
+	return fmt.Sprintf(`# tinyclaw 🦞
 
-You are picoclaw, a helpful AI assistant.
+You are tinyclaw, a helpful AI assistant.
 
 ## Workspace
 Your workspace is at: %s

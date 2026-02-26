@@ -1,4 +1,4 @@
-module github.com/tinyland-inc/picoclaw
+module github.com/tinyland-inc/tinyclaw
 
 go 1.25.7
 

@@ -1,6 +1,6 @@
-# PicoClaw (tinyland-inc/picoclaw) — standalone Dockerfile
+# TinyClaw (tinyland-inc/tinyclaw) — standalone Dockerfile
 #
-# Builds the PicoClaw-based agent with RemoteJuggler config:
+# Builds the TinyClaw-based agent with RemoteJuggler config:
 # - Multi-stage Go build
 # - Bakes in a config.json with Aperture API routing
 # - Health check on /health port 18790
@@ -9,7 +9,7 @@
 # GHCR workflow builds from main branch pushes.
 
 # ============================================================
-# Stage 1: Build the picoclaw binary
+# Stage 1: Build the tinyclaw binary
 # ============================================================
 FROM golang:1.25-alpine AS builder
 
@@ -25,8 +25,8 @@ RUN go mod download
 COPY . .
 RUN CGO_ENABLED=0 go generate ./... && \
     CGO_ENABLED=0 go build -v -tags stdjson \
-      -ldflags "-X github.com/tinyland-inc/picoclaw/cmd/picoclaw/internal.version=$(git describe --tags --always --dirty 2>/dev/null || echo dev) -s -w" \
-      -o build/picoclaw ./cmd/picoclaw
+      -ldflags "-X github.com/tinyland-inc/tinyclaw/cmd/tinyclaw/internal.version=$(git describe --tags --always --dirty 2>/dev/null || echo dev) -s -w" \
+      -o build/tinyclaw ./cmd/tinyclaw
 
 # ============================================================
 # Stage 2: Minimal runtime image
@@ -38,27 +38,27 @@ RUN apk add --no-cache ca-certificates tzdata curl
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
   CMD wget -q --spider http://localhost:18790/health || exit 1
 
-COPY --from=builder /src/build/picoclaw /usr/local/bin/picoclaw
+COPY --from=builder /src/build/tinyclaw /usr/local/bin/tinyclaw
 
-RUN addgroup -g 1000 picoclaw && \
-    adduser -D -u 1000 -G picoclaw picoclaw && \
-    mkdir -p /workspace && chown picoclaw:picoclaw /workspace
+RUN addgroup -g 1000 tinyclaw && \
+    adduser -D -u 1000 -G tinyclaw tinyclaw && \
+    mkdir -p /workspace && chown tinyclaw:tinyclaw /workspace
 
-USER picoclaw
+USER tinyclaw
 
 # Run onboard to create initial directories and config
-RUN /usr/local/bin/picoclaw onboard
+RUN /usr/local/bin/tinyclaw onboard
 
 # --- tinyland customizations ---
 
 # Bake config template with Aperture API routing placeholders.
 # entrypoint.sh substitutes ANTHROPIC_API_KEY and ANTHROPIC_BASE_URL at startup.
-COPY --chown=picoclaw:picoclaw tinyland/config.json /home/picoclaw/.picoclaw/config.json
-COPY --chown=picoclaw:picoclaw tinyland/entrypoint.sh /usr/local/bin/entrypoint.sh
+COPY --chown=tinyclaw:tinyclaw tinyland/config.json /home/tinyclaw/.tinyclaw/config.json
+COPY --chown=tinyclaw:tinyclaw tinyland/entrypoint.sh /usr/local/bin/entrypoint.sh
 
 # Workspace bootstrap files — copied to /workspace-defaults/ so the K8s init
 # container can seed the PVC on first boot without overwriting evolved state.
-COPY --chown=picoclaw:picoclaw tinyland/workspace/ /workspace-defaults/
+COPY --chown=tinyclaw:tinyclaw tinyland/workspace/ /workspace-defaults/
 
 ENTRYPOINT ["entrypoint.sh"]
 CMD ["gateway"]

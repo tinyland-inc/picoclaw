@@ -1,7 +1,7 @@
-// PicoClaw - Ultra-lightweight personal AI agent
+// TinyClaw - Ultra-lightweight personal AI agent
 // License: MIT
 //
-// Copyright (c) 2026 PicoClaw contributors
+// Copyright (c) 2026 TinyClaw contributors
 
 package providers
 
@@ -10,8 +10,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/tinyland-inc/picoclaw/pkg/config"
-	anthropicprovider "github.com/tinyland-inc/picoclaw/pkg/providers/anthropic"
+	"github.com/tinyland-inc/tinyclaw/pkg/config"
+	anthropicprovider "github.com/tinyland-inc/tinyclaw/pkg/providers/anthropic"
 )
 
 // createClaudeAuthProvider creates a Claude provider using OAuth credentials from auth store.
@@ -21,7 +21,7 @@ func createClaudeAuthProvider() (LLMProvider, error) {
 		return nil, fmt.Errorf("loading auth credentials: %w", err)
 	}
 	if cred == nil {
-		return nil, errors.New("no credentials for anthropic. Run: picoclaw auth login --provider anthropic")
+		return nil, errors.New("no credentials for anthropic. Run: tinyclaw auth login --provider anthropic")
 	}
 	return NewClaudeProviderWithTokenSource(cred.AccessToken, createClaudeTokenSource()), nil
 }
@@ -33,7 +33,7 @@ func createCodexAuthProvider() (LLMProvider, error) {
 		return nil, fmt.Errorf("loading auth credentials: %w", err)
 	}
 	if cred == nil {
-		return nil, errors.New("no credentials for openai. Run: picoclaw auth login --provider openai")
+		return nil, errors.New("no credentials for openai. Run: tinyclaw auth login --provider openai")
 	}
 	return NewCodexProviderWithTokenSource(cred.AccessToken, cred.AccountID, createCodexTokenSource()), nil
 }

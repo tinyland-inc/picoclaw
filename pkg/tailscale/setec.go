@@ -6,14 +6,14 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/tinyland-inc/picoclaw/pkg/logger"
+	"github.com/tinyland-inc/tinyclaw/pkg/logger"
 )
 
 // SetecConfig holds Tailscale Setec secret management configuration.
 type SetecConfig struct {
 	Enabled bool   `json:"enabled"`
 	BaseURL string `json:"base_url"` // Setec server URL on the tailnet
-	Prefix  string `json:"prefix"`   // Secret name prefix (default: picoclaw/)
+	Prefix  string `json:"prefix"`   // Secret name prefix (default: tinyclaw/)
 }
 
 // SetecClient provides access to secrets stored in Tailscale Setec.
@@ -28,7 +28,7 @@ type SetecClient struct {
 // NewSetecClient creates a new Setec client.
 func NewSetecClient(cfg SetecConfig) *SetecClient {
 	if cfg.Prefix == "" {
-		cfg.Prefix = "picoclaw/"
+		cfg.Prefix = "tinyclaw/"
 	}
 	return &SetecClient{
 		config: cfg,

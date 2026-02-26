@@ -6,7 +6,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/tinyland-inc/picoclaw/pkg/logger"
+	"github.com/tinyland-inc/tinyclaw/pkg/logger"
 )
 
 // CerbosConfig holds Cerbos PDP configuration for tool-level authorization.

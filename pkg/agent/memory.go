@@ -1,8 +1,8 @@
-// PicoClaw - Ultra-lightweight personal AI agent
-// Inspired by and based on nanobot: https://github.com/HKUDS/nanobot
+// TinyClaw - Ultra-lightweight personal AI agent
+// Inspired by Sipeed PicoClaw, itself inspired by OpenClaw
 // License: MIT
 //
-// Copyright (c) 2026 PicoClaw contributors
+// Copyright (c) 2026 TinyClaw contributors
 
 package agent
 

@@ -7,7 +7,7 @@ in  { id = "code-review-daily"
     , description = "Review recent commits for security issues, code quality, and documentation gaps"
     , targets =
       [ { agent_id = "code-reviewer"
-        , backend = "picoclaw"
+        , backend = "tinyclaw"
         , config_override = None Text
         }
       ]

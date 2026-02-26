@@ -8,9 +8,9 @@ import (
 	"net"
 	"sync"
 
-	"github.com/tinyland-inc/picoclaw/pkg/bus"
-	"github.com/tinyland-inc/picoclaw/pkg/config"
-	"github.com/tinyland-inc/picoclaw/pkg/logger"
+	"github.com/tinyland-inc/tinyclaw/pkg/bus"
+	"github.com/tinyland-inc/tinyclaw/pkg/config"
+	"github.com/tinyland-inc/tinyclaw/pkg/logger"
 )
 
 type MaixCamChannel struct {

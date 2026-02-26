@@ -1,8 +1,8 @@
-// PicoClaw - Ultra-lightweight personal AI agent
-// Inspired by and based on nanobot: https://github.com/HKUDS/nanobot
+// TinyClaw - Ultra-lightweight personal AI agent
+// Inspired by Sipeed PicoClaw, itself inspired by OpenClaw
 // License: MIT
 //
-// Copyright (c) 2026 PicoClaw contributors
+// Copyright (c) 2026 TinyClaw contributors
 
 package agent
 
@@ -16,17 +16,17 @@ import (
 	"time"
 	"unicode/utf8"
 
-	"github.com/tinyland-inc/picoclaw/pkg/bus"
-	"github.com/tinyland-inc/picoclaw/pkg/channels"
-	"github.com/tinyland-inc/picoclaw/pkg/config"
-	"github.com/tinyland-inc/picoclaw/pkg/constants"
-	"github.com/tinyland-inc/picoclaw/pkg/logger"
-	"github.com/tinyland-inc/picoclaw/pkg/providers"
-	"github.com/tinyland-inc/picoclaw/pkg/routing"
-	"github.com/tinyland-inc/picoclaw/pkg/skills"
-	"github.com/tinyland-inc/picoclaw/pkg/state"
-	"github.com/tinyland-inc/picoclaw/pkg/tools"
-	"github.com/tinyland-inc/picoclaw/pkg/utils"
+	"github.com/tinyland-inc/tinyclaw/pkg/bus"
+	"github.com/tinyland-inc/tinyclaw/pkg/channels"
+	"github.com/tinyland-inc/tinyclaw/pkg/config"
+	"github.com/tinyland-inc/tinyclaw/pkg/constants"
+	"github.com/tinyland-inc/tinyclaw/pkg/logger"
+	"github.com/tinyland-inc/tinyclaw/pkg/providers"
+	"github.com/tinyland-inc/tinyclaw/pkg/routing"
+	"github.com/tinyland-inc/tinyclaw/pkg/skills"
+	"github.com/tinyland-inc/tinyclaw/pkg/state"
+	"github.com/tinyland-inc/tinyclaw/pkg/tools"
+	"github.com/tinyland-inc/tinyclaw/pkg/utils"
 )
 
 type AgentLoop struct {
@@ -865,6 +865,15 @@ func (al *AgentLoop) GetStartupInfo() map[string]any {
 	}
 
 	return info
+}
+
+// GetToolDefinitions returns the schema definitions for all registered tools.
+func (al *AgentLoop) GetToolDefinitions() []map[string]any {
+	agent := al.registry.GetDefaultAgent()
+	if agent == nil {
+		return nil
+	}
+	return agent.Tools.GetDefinitions()
 }
 
 // formatMessagesForLog formats messages for logging

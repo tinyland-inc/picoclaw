@@ -5,20 +5,20 @@ version: 2
 before:
   hooks:
     - go mod tidy
-    - go generate ./cmd/picoclaw
+    - go generate ./cmd/tinyclaw
 
 builds:
-  - id: picoclaw
+  - id: tinyclaw
     env:
       - CGO_ENABLED=0
     tags:
       - stdjson
     ldflags:
       - -s -w
-      - -X github.com/tinyland-inc/picoclaw/cmd/picoclaw/internal.version={{ .Version }}
-      - -X github.com/tinyland-inc/picoclaw/cmd/picoclaw/internal.gitCommit={{ .ShortCommit }}
-      - -X github.com/tinyland-inc/picoclaw/cmd/picoclaw/internal.buildTime={{ .Date }}
-      - -X github.com/tinyland-inc/picoclaw/cmd/picoclaw/internal.goVersion={{ .Env.GOVERSION }}
+      - -X github.com/tinyland-inc/tinyclaw/cmd/tinyclaw/internal.version={{ .Version }}
+      - -X github.com/tinyland-inc/tinyclaw/cmd/tinyclaw/internal.gitCommit={{ .ShortCommit }}
+      - -X github.com/tinyland-inc/tinyclaw/cmd/tinyclaw/internal.buildTime={{ .Date }}
+      - -X github.com/tinyland-inc/tinyclaw/cmd/tinyclaw/internal.goVersion={{ .Env.GOVERSION }}
     goos:
       - linux
       - windows
@@ -30,18 +30,18 @@ builds:
       - riscv64
       - loong64
       - arm
-    main: ./cmd/picoclaw
+    main: ./cmd/tinyclaw
     ignore:
       - goos: windows
         goarch: arm
 
 dockers_v2:
-  - id: picoclaw
+  - id: tinyclaw
     dockerfile: Dockerfile.goreleaser
     ids:
-      - picoclaw
+      - tinyclaw
     images:
-      - "ghcr.io/{{ .Env.GITHUB_REPOSITORY_OWNER }}/picoclaw"
+      - "ghcr.io/{{ .Env.GITHUB_REPOSITORY_OWNER }}/tinyclaw"
       - "docker.io/{{ .Env.DOCKERHUB_IMAGE_NAME }}"
     tags:
       - "{{ .Tag }}"
@@ -67,8 +67,8 @@ archives:
         formats: [zip]
 
 nfpms:
-  - id: picoclaw
-    package_name: picoclaw
+  - id: tinyclaw
+    package_name: tinyclaw
     file_name_template: >-
       {{ .PackageName }}_
       {{- .Version }}_
@@ -76,10 +76,10 @@ nfpms:
       {{- else if eq .Arch "arm64" }}aarch64
       {{- else if eq .Arch "arm" }}armv{{ .Arm }}
       {{- else }}{{ .Arch }}{{ end }}
-    vendor: picoclaw
-    homepage: https://github.com/{{ .Env.GITHUB_REPOSITORY_OWNER }}/picoclaw
-    maintainer: picoclaw contributors
-    description: picoclaw - a tool for managing and running tasks
+    vendor: tinyclaw
+    homepage: https://github.com/{{ .Env.GITHUB_REPOSITORY_OWNER }}/tinyclaw
+    maintainer: tinyclaw contributors
+    description: tinyclaw - a tool for managing and running tasks
     license: MIT
     formats:
       - rpm

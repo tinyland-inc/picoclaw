@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/tinyland-inc/picoclaw/pkg/config"
+	"github.com/tinyland-inc/tinyclaw/pkg/config"
 )
 
 func TestCamelToSnake(t *testing.T) {
@@ -193,7 +193,7 @@ func TestConvertConfig(t *testing.T) {
 		if len(warnings) != 1 {
 			t.Fatalf("expected 1 warning, got %d", len(warnings))
 		}
-		if warnings[0] != "Provider 'unknown_provider' not supported in PicoClaw, skipping" {
+		if warnings[0] != "Provider 'unknown_provider' not supported in TinyClaw, skipping" {
 			t.Errorf("unexpected warning: %s", warnings[0])
 		}
 	})
@@ -247,7 +247,7 @@ func TestConvertConfig(t *testing.T) {
 		if len(warnings) != 1 {
 			t.Fatalf("expected 1 warning, got %d", len(warnings))
 		}
-		if warnings[0] != "Channel 'email' not supported in PicoClaw, skipping" {
+		if warnings[0] != "Channel 'email' not supported in TinyClaw, skipping" {
 			t.Errorf("unexpected warning: %s", warnings[0])
 		}
 	})
@@ -281,8 +281,8 @@ func TestConvertConfig(t *testing.T) {
 		if *cfg.Agents.Defaults.Temperature != 0.5 {
 			t.Errorf("Temperature = %f, want %f", *cfg.Agents.Defaults.Temperature, 0.5)
 		}
-		if cfg.Agents.Defaults.Workspace != "~/.picoclaw/workspace" {
-			t.Errorf("Workspace = %q, want %q", cfg.Agents.Defaults.Workspace, "~/.picoclaw/workspace")
+		if cfg.Agents.Defaults.Workspace != "~/.tinyclaw/workspace" {
+			t.Errorf("Workspace = %q, want %q", cfg.Agents.Defaults.Workspace, "~/.tinyclaw/workspace")
 		}
 	})
 
@@ -574,7 +574,7 @@ func TestRewriteWorkspacePath(t *testing.T) {
 		input string
 		want  string
 	}{
-		{"default path", "~/.openclaw/workspace", "~/.picoclaw/workspace"},
+		{"default path", "~/.openclaw/workspace", "~/.tinyclaw/workspace"},
 		{"custom path", "/custom/path", "/custom/path"},
 		{"empty", "", ""},
 	}
@@ -590,7 +590,7 @@ func TestRewriteWorkspacePath(t *testing.T) {
 
 func TestRunDryRun(t *testing.T) {
 	openclawHome := t.TempDir()
-	picoClawHome := t.TempDir()
+	tinyClawHome := t.TempDir()
 
 	wsDir := filepath.Join(openclawHome, "workspace")
 	os.MkdirAll(wsDir, 0o755)
@@ -613,7 +613,7 @@ func TestRunDryRun(t *testing.T) {
 	opts := Options{
 		DryRun:       true,
 		OpenClawHome: openclawHome,
-		PicoClawHome: picoClawHome,
+		TinyClawHome: tinyClawHome,
 	}
 
 	result, err := Run(opts)
@@ -621,11 +621,11 @@ func TestRunDryRun(t *testing.T) {
 		t.Fatalf("Run: %v", err)
 	}
 
-	picoWs := filepath.Join(picoClawHome, "workspace")
+	picoWs := filepath.Join(tinyClawHome, "workspace")
 	if _, err := os.Stat(filepath.Join(picoWs, "SOUL.md")); !os.IsNotExist(err) {
 		t.Error("dry run should not create files")
 	}
-	if _, err := os.Stat(filepath.Join(picoClawHome, "config.json")); !os.IsNotExist(err) {
+	if _, err := os.Stat(filepath.Join(tinyClawHome, "config.json")); !os.IsNotExist(err) {
 		t.Error("dry run should not create config")
 	}
 
@@ -634,7 +634,7 @@ func TestRunDryRun(t *testing.T) {
 
 func TestRunFullMigration(t *testing.T) {
 	openclawHome := t.TempDir()
-	picoClawHome := t.TempDir()
+	tinyClawHome := t.TempDir()
 
 	wsDir := filepath.Join(openclawHome, "workspace")
 	os.MkdirAll(wsDir, 0o755)
@@ -671,7 +671,7 @@ func TestRunFullMigration(t *testing.T) {
 	opts := Options{
 		Force:        true,
 		OpenClawHome: openclawHome,
-		PicoClawHome: picoClawHome,
+		TinyClawHome: tinyClawHome,
 	}
 
 	result, err := Run(opts)
@@ -679,7 +679,7 @@ func TestRunFullMigration(t *testing.T) {
 		t.Fatalf("Run: %v", err)
 	}
 
-	picoWs := filepath.Join(picoClawHome, "workspace")
+	picoWs := filepath.Join(tinyClawHome, "workspace")
 
 	soulData, err := os.ReadFile(filepath.Join(picoWs, "SOUL.md"))
 	if err != nil {
@@ -705,9 +705,9 @@ func TestRunFullMigration(t *testing.T) {
 		t.Errorf("MEMORY.md content = %q", string(memData))
 	}
 
-	picoConfig, err := config.LoadConfig(filepath.Join(picoClawHome, "config.json"))
+	picoConfig, err := config.LoadConfig(filepath.Join(tinyClawHome, "config.json"))
 	if err != nil {
-		t.Fatalf("loading PicoClaw config: %v", err)
+		t.Fatalf("loading TinyClaw config: %v", err)
 	}
 	if picoConfig.Providers.Anthropic.APIKey != "sk-ant-migrate-test" {
 		t.Errorf("Anthropic.APIKey = %q, want %q", picoConfig.Providers.Anthropic.APIKey, "sk-ant-migrate-test")
@@ -736,7 +736,7 @@ func TestRunFullMigration(t *testing.T) {
 func TestRunOpenClawNotFound(t *testing.T) {
 	opts := Options{
 		OpenClawHome: "/nonexistent/path/to/openclaw",
-		PicoClawHome: t.TempDir(),
+		TinyClawHome: t.TempDir(),
 	}
 
 	_, err := Run(opts)
@@ -798,7 +798,7 @@ func TestCopyFile(t *testing.T) {
 
 func TestRunConfigOnly(t *testing.T) {
 	openclawHome := t.TempDir()
-	picoClawHome := t.TempDir()
+	tinyClawHome := t.TempDir()
 
 	wsDir := filepath.Join(openclawHome, "workspace")
 	os.MkdirAll(wsDir, 0o755)
@@ -821,7 +821,7 @@ func TestRunConfigOnly(t *testing.T) {
 		Force:        true,
 		ConfigOnly:   true,
 		OpenClawHome: openclawHome,
-		PicoClawHome: picoClawHome,
+		TinyClawHome: tinyClawHome,
 	}
 
 	result, err := Run(opts)
@@ -833,7 +833,7 @@ func TestRunConfigOnly(t *testing.T) {
 		t.Error("config should have been migrated")
 	}
 
-	picoWs := filepath.Join(picoClawHome, "workspace")
+	picoWs := filepath.Join(tinyClawHome, "workspace")
 	if _, err := os.Stat(filepath.Join(picoWs, "SOUL.md")); !os.IsNotExist(err) {
 		t.Error("config-only should not copy workspace files")
 	}
@@ -841,7 +841,7 @@ func TestRunConfigOnly(t *testing.T) {
 
 func TestRunWorkspaceOnly(t *testing.T) {
 	openclawHome := t.TempDir()
-	picoClawHome := t.TempDir()
+	tinyClawHome := t.TempDir()
 
 	wsDir := filepath.Join(openclawHome, "workspace")
 	os.MkdirAll(wsDir, 0o755)
@@ -864,7 +864,7 @@ func TestRunWorkspaceOnly(t *testing.T) {
 		Force:         true,
 		WorkspaceOnly: true,
 		OpenClawHome:  openclawHome,
-		PicoClawHome:  picoClawHome,
+		TinyClawHome:  tinyClawHome,
 	}
 
 	result, err := Run(opts)
@@ -876,7 +876,7 @@ func TestRunWorkspaceOnly(t *testing.T) {
 		t.Error("workspace-only should not migrate config")
 	}
 
-	picoWs := filepath.Join(picoClawHome, "workspace")
+	picoWs := filepath.Join(tinyClawHome, "workspace")
 	soulData, err := os.ReadFile(filepath.Join(picoWs, "SOUL.md"))
 	if err != nil {
 		t.Fatalf("reading SOUL.md: %v", err)

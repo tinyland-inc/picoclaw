@@ -34,14 +34,14 @@ func (a *testAdapter) Name() string { return a.name }
 
 func TestRunner_StartAndComplete(t *testing.T) {
 	runner := NewRunner()
-	adapter := &testAdapter{name: "picoclaw"}
-	runner.RegisterAdapter("picoclaw", adapter)
+	adapter := &testAdapter{name: "tinyclaw"}
+	runner.RegisterAdapter("tinyclaw", adapter)
 
 	def := &Definition{
 		ID:   "test-1",
 		Name: "Test Campaign",
 		Targets: []Target{
-			{AgentID: "agent-1", Backend: "picoclaw"},
+			{AgentID: "agent-1", Backend: "tinyclaw"},
 		},
 		Steps: []Step{
 			{Name: "step-1", Prompt: "do something", Tools: []string{"web_search"}, TimeoutMinutes: 5},
@@ -75,14 +75,14 @@ func TestRunner_StartAndComplete(t *testing.T) {
 
 func TestRunner_MultiStep(t *testing.T) {
 	runner := NewRunner()
-	adapter := &testAdapter{name: "picoclaw"}
-	runner.RegisterAdapter("picoclaw", adapter)
+	adapter := &testAdapter{name: "tinyclaw"}
+	runner.RegisterAdapter("tinyclaw", adapter)
 
 	def := &Definition{
 		ID:   "multi-step",
 		Name: "Multi-Step",
 		Targets: []Target{
-			{AgentID: "agent-1", Backend: "picoclaw"},
+			{AgentID: "agent-1", Backend: "tinyclaw"},
 		},
 		Steps: []Step{
 			{Name: "step-1", Prompt: "first", TimeoutMinutes: 5},
@@ -107,14 +107,14 @@ func TestRunner_MultiStep(t *testing.T) {
 
 func TestRunner_KillSwitch(t *testing.T) {
 	runner := NewRunner()
-	adapter := &testAdapter{name: "picoclaw", delay: 500 * time.Millisecond}
-	runner.RegisterAdapter("picoclaw", adapter)
+	adapter := &testAdapter{name: "tinyclaw", delay: 500 * time.Millisecond}
+	runner.RegisterAdapter("tinyclaw", adapter)
 
 	def := &Definition{
 		ID:   "killable",
 		Name: "Killable",
 		Targets: []Target{
-			{AgentID: "agent-1", Backend: "picoclaw"},
+			{AgentID: "agent-1", Backend: "tinyclaw"},
 		},
 		Steps: []Step{
 			{Name: "slow-step", Prompt: "slow", TimeoutMinutes: 5},
@@ -142,14 +142,14 @@ func TestRunner_KillSwitch(t *testing.T) {
 
 func TestRunner_DuplicateID(t *testing.T) {
 	runner := NewRunner()
-	adapter := &testAdapter{name: "picoclaw", delay: 200 * time.Millisecond}
-	runner.RegisterAdapter("picoclaw", adapter)
+	adapter := &testAdapter{name: "tinyclaw", delay: 200 * time.Millisecond}
+	runner.RegisterAdapter("tinyclaw", adapter)
 
 	def := &Definition{
 		ID:   "dup",
 		Name: "Dup",
 		Targets: []Target{
-			{AgentID: "agent-1", Backend: "picoclaw"},
+			{AgentID: "agent-1", Backend: "tinyclaw"},
 		},
 		Steps: []Step{
 			{Name: "step", Prompt: "x", TimeoutMinutes: 5},
@@ -182,7 +182,7 @@ func TestRunner_NoSteps(t *testing.T) {
 	_, err := runner.Start(context.Background(), &Definition{
 		ID:         "no-steps",
 		Name:       "Empty",
-		Targets:    []Target{{AgentID: "a", Backend: "picoclaw"}},
+		Targets:    []Target{{AgentID: "a", Backend: "tinyclaw"}},
 		Steps:      []Step{},
 		Guardrails: DefaultGuardrails(),
 	})
@@ -226,15 +226,15 @@ func TestRunner_MissingAdapter(t *testing.T) {
 
 func TestRunner_ListExecutions(t *testing.T) {
 	runner := NewRunner()
-	adapter := &testAdapter{name: "picoclaw"}
-	runner.RegisterAdapter("picoclaw", adapter)
+	adapter := &testAdapter{name: "tinyclaw"}
+	runner.RegisterAdapter("tinyclaw", adapter)
 
 	for i := range 3 {
 		def := &Definition{
 			ID:   fmt.Sprintf("list-%d", i),
 			Name: fmt.Sprintf("Campaign %d", i),
 			Targets: []Target{
-				{AgentID: "agent-1", Backend: "picoclaw"},
+				{AgentID: "agent-1", Backend: "tinyclaw"},
 			},
 			Steps: []Step{
 				{Name: "step", Prompt: "test", TimeoutMinutes: 5},

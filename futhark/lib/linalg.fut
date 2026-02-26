@@ -1,4 +1,4 @@
--- Linear algebra primitives for PicoClaw compute kernels.
+-- Linear algebra primitives for TinyClaw compute kernels.
 
 -- Dot product of two vectors.
 let dotprod [n] (a: [n]f32) (b: [n]f32) : f32 =

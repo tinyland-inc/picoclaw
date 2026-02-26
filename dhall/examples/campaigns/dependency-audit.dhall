@@ -7,7 +7,7 @@ in  { id = "dependency-audit"
     , description = "Scan project dependencies for known vulnerabilities and license compliance"
     , targets =
       [ { agent_id = "security-auditor"
-        , backend = "picoclaw"
+        , backend = "tinyclaw"
         , config_override = None Text
         }
       ]

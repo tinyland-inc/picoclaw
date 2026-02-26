@@ -13,8 +13,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/tinyland-inc/picoclaw/pkg/auth"
-	"github.com/tinyland-inc/picoclaw/pkg/logger"
+	"github.com/tinyland-inc/tinyclaw/pkg/auth"
+	"github.com/tinyland-inc/tinyclaw/pkg/logger"
 )
 
 const (
@@ -575,7 +575,7 @@ func createAntigravityTokenSource() func() (string, string, error) {
 		cred, err := auth.GetCredential("google-antigravity")
 		if errors.Is(err, auth.ErrCredentialNotFound) {
 			return "", "", errors.New(
-				"no credentials for google-antigravity. Run: picoclaw auth login --provider google-antigravity",
+				"no credentials for google-antigravity. Run: tinyclaw auth login --provider google-antigravity",
 			)
 		}
 		if err != nil {
@@ -601,7 +601,7 @@ func createAntigravityTokenSource() func() (string, string, error) {
 
 		if cred.IsExpired() {
 			return "", "", errors.New(
-				"antigravity credentials expired. Run: picoclaw auth login --provider google-antigravity",
+				"antigravity credentials expired. Run: tinyclaw auth login --provider google-antigravity",
 			)
 		}
 

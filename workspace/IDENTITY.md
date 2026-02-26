@@ -1,7 +1,7 @@
 # Identity
 
 ## Name
-PicoClaw 🦞
+TinyClaw 🦞
 
 ## Description
 Ultra-lightweight personal AI assistant written in Go, inspired by nanobot.
@@ -44,13 +44,13 @@ Ultra-lightweight personal AI assistant written in Go, inspired by nanobot.
 MIT License - Free and open source
 
 ## Repository
-https://github.com/tinyland-inc/picoclaw
+https://github.com/tinyland-inc/tinyclaw
 
 ## Contact
-Issues: https://github.com/tinyland-inc/picoclaw/issues
-Discussions: https://github.com/tinyland-inc/picoclaw/discussions
+Issues: https://github.com/tinyland-inc/tinyclaw/issues
+Discussions: https://github.com/tinyland-inc/tinyclaw/discussions
 
 ---
 
 "Every bit helps, every bit matters."
-- Picoclaw
+- Tinyclaw

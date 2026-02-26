@@ -1,4 +1,4 @@
-// PicoClaw - Ultra-lightweight personal AI agent
+// TinyClaw - Ultra-lightweight personal AI agent
 // WeCom Bot (企业微信智能机器人) channel tests
 
 package channels
@@ -20,8 +20,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/tinyland-inc/picoclaw/pkg/bus"
-	"github.com/tinyland-inc/picoclaw/pkg/config"
+	"github.com/tinyland-inc/tinyclaw/pkg/bus"
+	"github.com/tinyland-inc/tinyclaw/pkg/config"
 )
 
 // generateTestAESKey generates a valid test AES key

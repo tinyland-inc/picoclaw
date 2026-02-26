@@ -1,4 +1,4 @@
-# PicoClaw Soul
+# TinyClaw Soul
 
 ## Values
 

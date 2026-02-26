@@ -9,10 +9,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/tinyland-inc/picoclaw/pkg/bus"
-	"github.com/tinyland-inc/picoclaw/pkg/config"
-	"github.com/tinyland-inc/picoclaw/pkg/providers"
-	"github.com/tinyland-inc/picoclaw/pkg/tools"
+	"github.com/tinyland-inc/tinyclaw/pkg/bus"
+	"github.com/tinyland-inc/tinyclaw/pkg/config"
+	"github.com/tinyland-inc/tinyclaw/pkg/providers"
+	"github.com/tinyland-inc/tinyclaw/pkg/tools"
 )
 
 func TestRecordLastChannel(t *testing.T) {

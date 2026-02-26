@@ -4,8 +4,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/tinyland-inc/picoclaw/pkg/auth"
-	"github.com/tinyland-inc/picoclaw/pkg/config"
+	"github.com/tinyland-inc/tinyclaw/pkg/auth"
+	"github.com/tinyland-inc/tinyclaw/pkg/config"
 )
 
 func TestResolveProviderSelection(t *testing.T) {

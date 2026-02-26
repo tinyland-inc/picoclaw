@@ -215,4 +215,4 @@ api_key or api_base is required for HTTP-based protocol "xxx"
 
 ## Need Help?
 
-- [GitHub Issues](https://github.com/tinyland-inc/picoclaw/issues)
+- [GitHub Issues](https://github.com/tinyland-inc/tinyclaw/issues)

@@ -6,7 +6,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/tinyland-inc/picoclaw/pkg/config"
+	"github.com/tinyland-inc/tinyclaw/pkg/config"
 )
 
 func TestConfigToDhall_DefaultConfig(t *testing.T) {
@@ -56,7 +56,7 @@ func TestConfigToDhall_CredentialRedaction(t *testing.T) {
 	}
 
 	// Should contain env var reference
-	if !strings.Contains(dhall, "env:PICOCLAW_API_KEY") {
+	if !strings.Contains(dhall, "env:TINYCLAW_API_KEY") {
 		t.Error("expected env var reference for redacted key")
 	}
 

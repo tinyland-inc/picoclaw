@@ -1,6 +1,6 @@
-// Package tailscale provides Tailscale integration for the PicoClaw gateway.
+// Package tailscale provides Tailscale integration for the TinyClaw gateway.
 //
-// When enabled, the gateway joins the tailnet as a picoclaw-gateway node via
+// When enabled, the gateway joins the tailnet as a tinyclaw-gateway node via
 // tsnet, inheriting zero-trust identity for authentication. All LLM API calls
 // can be optionally routed through Tailscale Aperture for centralized API key
 // management and usage metering.
@@ -16,18 +16,18 @@ import (
 	"path/filepath"
 	"sync"
 
-	"github.com/tinyland-inc/picoclaw/pkg/logger"
+	"github.com/tinyland-inc/tinyclaw/pkg/logger"
 )
 
 // Config holds Tailscale tsnet configuration.
 type Config struct {
 	Enabled  bool   `json:"enabled"`
-	Hostname string `json:"hostname"`  // Tailscale node name (default: picoclaw-gateway)
-	StateDir string `json:"state_dir"` // Directory for tsnet state (default: ~/.picoclaw/tsnet)
+	Hostname string `json:"hostname"`  // Tailscale node name (default: tinyclaw-gateway)
+	StateDir string `json:"state_dir"` // Directory for tsnet state (default: ~/.tinyclaw/tsnet)
 	AuthKey  string `json:"auth_key"`  // Optional pre-auth key for headless setup
 }
 
-// Server wraps a tsnet.Server for the picoclaw gateway.
+// Server wraps a tsnet.Server for the tinyclaw gateway.
 // When tsnet is not available (build without tsnet tag), it provides a no-op
 // fallback that uses standard net.Listen.
 type Server struct {
@@ -40,11 +40,11 @@ type Server struct {
 // NewServer creates a new Tailscale server with the given config.
 func NewServer(cfg Config) *Server {
 	if cfg.Hostname == "" {
-		cfg.Hostname = "picoclaw-gateway"
+		cfg.Hostname = "tinyclaw-gateway"
 	}
 	if cfg.StateDir == "" {
 		home, _ := os.UserHomeDir()
-		cfg.StateDir = filepath.Join(home, ".picoclaw", "tsnet")
+		cfg.StateDir = filepath.Join(home, ".tinyclaw", "tsnet")
 	}
 	return &Server{config: cfg}
 }

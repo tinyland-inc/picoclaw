@@ -3,7 +3,7 @@
 -- and which are denied by default.
 --
 -- This is the Dhall source of truth for tool authorization.
--- F*-verified enforcement lives in fstar/src/PicoClaw.ToolAuth.fst.
+-- F*-verified enforcement lives in fstar/src/TinyClaw.ToolAuth.fst.
 
 let ToolGrant =
       { tool_name : Text

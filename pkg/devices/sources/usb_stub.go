@@ -5,7 +5,7 @@ package sources
 import (
 	"context"
 
-	"github.com/tinyland-inc/picoclaw/pkg/devices/events"
+	"github.com/tinyland-inc/tinyclaw/pkg/devices/events"
 )
 
 type USBMonitor struct{}

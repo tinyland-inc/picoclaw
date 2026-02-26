@@ -1,7 +1,7 @@
 {
   "agents": {
     "defaults": {
-      "workspace": "~/.picoclaw/workspace",
+      "workspace": "~/.tinyclaw/workspace",
       "restrict_to_workspace": true,
       "model": "glm-4.7",
       "max_tokens": 8192,
@@ -93,7 +93,7 @@
   },
   "tailscale": {
     "enabled": false,
-    "hostname": "picoclaw",
+    "hostname": "tinyclaw",
     "state_dir": "",
     "auth_key": ""
   },

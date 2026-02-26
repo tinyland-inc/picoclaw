@@ -4,8 +4,8 @@ import (
 	"context"
 	"testing"
 
-	"github.com/tinyland-inc/picoclaw/pkg/config"
-	"github.com/tinyland-inc/picoclaw/pkg/providers"
+	"github.com/tinyland-inc/tinyclaw/pkg/config"
+	"github.com/tinyland-inc/tinyclaw/pkg/providers"
 )
 
 type mockRegistryProvider struct{}
@@ -28,7 +28,7 @@ func testCfg(agents []config.AgentConfig) *config.Config {
 	return &config.Config{
 		Agents: config.AgentsConfig{
 			Defaults: config.AgentDefaults{
-				Workspace:         "/tmp/picoclaw-test-registry",
+				Workspace:         "/tmp/tinyclaw-test-registry",
 				Model:             "gpt-4",
 				MaxTokens:         8192,
 				MaxToolIterations: 10,

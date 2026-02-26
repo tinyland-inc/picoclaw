@@ -1,4 +1,4 @@
-# PicoClaw Long-Term Memory
+# TinyClaw Long-Term Memory
 
 ## Platform Architecture
 
@@ -9,8 +9,8 @@
 
 ## Repository Status
 
-- **Repo**: tinyland-inc/picoclaw (standalone, based on sipeed/picoclaw)
-- **Reference**: sipeed/picoclaw (monitored for useful patterns)
+- **Repo**: tinyland-inc/tinyclaw (standalone, based on sipeed/tinyclaw)
+- **Reference**: sipeed/tinyclaw (monitored for useful patterns)
 - **Customizations**: Dockerfile, config.json, entrypoint.sh, workspace files, skills
 - **Last reference check**: (not yet performed)
 

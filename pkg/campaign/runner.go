@@ -1,6 +1,6 @@
 // Package campaign implements campaign-driven agent orchestration.
 //
-// A campaign dispatches structured tasks to picoclaw agent instances
+// A campaign dispatches structured tasks to tinyclaw agent instances
 // with full guardrail enforcement (budget, duration, killSwitch, tool limits).
 // Results are stored and optionally fed back as GitHub issues/PRs.
 package campaign
@@ -12,7 +12,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/tinyland-inc/picoclaw/pkg/logger"
+	"github.com/tinyland-inc/tinyclaw/pkg/logger"
 )
 
 // Status represents the current state of a campaign.
@@ -62,7 +62,7 @@ func DefaultGuardrails() Guardrails {
 // Target specifies an agent backend to dispatch to.
 type Target struct {
 	AgentID        string `json:"agent_id"`
-	Backend        string `json:"backend"` // "picoclaw", "ironclaw", "hexstrike"
+	Backend        string `json:"backend"` // "tinyclaw", "ironclaw", "hexstrike"
 	ConfigOverride string `json:"config_override,omitempty"`
 }
 

@@ -1,7 +1,7 @@
-# PicoClaw Reference Project Tracking
+# TinyClaw Reference Project Tracking
 
-Repository: tinyland-inc/picoclaw (standalone, based on PicoClaw)
-Reference: sipeed/picoclaw (monitored for useful patterns)
+Repository: tinyland-inc/tinyclaw (standalone, based on TinyClaw)
+Reference: sipeed/tinyclaw (monitored for useful patterns)
 
 ## Current State
 - Reference project HEAD: (populated by pc-upstream-sync campaign)
@@ -9,7 +9,7 @@ Reference: sipeed/picoclaw (monitored for useful patterns)
 - Last reference check: never
 
 ## Reference Changes to Evaluate
-<!-- Populated by pc-upstream-sync campaign monitoring sipeed/picoclaw -->
+<!-- Populated by pc-upstream-sync campaign monitoring sipeed/tinyclaw -->
 
 ## Our Customizations
 - Custom Dockerfile with multi-stage Go build

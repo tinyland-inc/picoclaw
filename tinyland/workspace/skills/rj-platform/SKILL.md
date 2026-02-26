@@ -7,7 +7,7 @@ tags: [credentials, secrets, audit]
 
 # RemoteJuggler Platform
 
-Tools accessed via the adapter's tool proxy (bridges rj-gateway MCP to PicoClaw's native format).
+Tools accessed via the adapter's tool proxy (bridges rj-gateway MCP to TinyClaw's native format).
 
 ## Key Tools
 - `juggler_resolve_composite(query="<name>")` -- resolve secrets from multiple backends

@@ -7,8 +7,8 @@ build/
 *.dylib
 *.test
 *.out
-/picoclaw
-/picoclaw-test
+/tinyclaw
+/tinyclaw-test
 cmd/**/workspace
 
 # ─── Dhall ──────────────────────────────────────────────────────────────────────
@@ -21,10 +21,10 @@ fstar/**/*.checked
 fstar/**/*.krml
 fstar/hints/
 fstar/extracted/_build/
-# Auto-extracted F* modules (case-insensitive: also matches picoclaw_*)
-fstar/extracted/lib/PicoClaw_*.ml
+# Auto-extracted F* modules (case-insensitive: also matches tinyclaw_*)
+fstar/extracted/lib/TinyClaw_*.ml
 # Preserve hand-written OCaml files
-!fstar/extracted/lib/picoclaw_core.ml
+!fstar/extracted/lib/tinyclaw_core.ml
 !fstar/extracted/lib/json_codec.ml
 !fstar/extracted/lib/futhark_bindings.ml
 
@@ -50,8 +50,8 @@ result
 result-*
 .direnv/
 
-# ─── PicoClaw ───────────────────────────────────────────────────────────────────
-.picoclaw/
+# ─── TinyClaw ───────────────────────────────────────────────────────────────────
+.tinyclaw/
 /config.json
 sessions/
 

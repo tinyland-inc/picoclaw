@@ -1,4 +1,4 @@
-# PicoClaw Heartbeat Checklist
+# TinyClaw Heartbeat Checklist
 
 Runs every 120 minutes during active hours (06:00-22:00).
 
@@ -12,8 +12,8 @@ Runs every 120 minutes during active hours (06:00-22:00).
 ## Periodic Tasks
 
 ### Weekly (Monday): Upstream Sync Check
-- Fetch sipeed/picoclaw main HEAD via campaign
-- Compare with tinyland-inc/picoclaw tinyland HEAD
+- Fetch sipeed/tinyclaw main HEAD via campaign
+- Compare with tinyland-inc/tinyclaw tinyland HEAD
 - Log delta to MEMORY.md
 
 ### Daily: Memory Compaction

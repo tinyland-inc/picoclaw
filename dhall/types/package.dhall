@@ -1,4 +1,4 @@
--- Re-export all PicoClaw types
+-- Re-export all TinyClaw types
 
 let Agent = ./Agent.dhall
 let Aperture = ./Aperture.dhall

@@ -1,12 +1,12 @@
-# Attic binary cache configuration for PicoClaw.
+# Attic binary cache configuration for TinyClaw.
 #
 # Pushes Nix build artifacts to an Attic cache server, following the
 # gloriousflywheel watch-store pattern. This enables fast CI builds
 # by sharing build outputs across machines.
 #
 # Usage:
-#   nix build .#picoclaw
-#   attic push picoclaw ./result
+#   nix build .#tinyclaw
+#   attic push tinyclaw ./result
 #
 # Or via justfile:
 #   just attic-push
@@ -16,12 +16,12 @@ let
   # Attic cache configuration
   cacheConfig = {
     server = "https://cache.tinyland.dev";
-    cache = "picoclaw";
+    cache = "tinyclaw";
     # Auth token should be provided via ATTIC_TOKEN env var
   };
 
   # Script to push build results to Attic
-  pushScript = pkgs.writeShellScriptBin "picoclaw-attic-push" ''
+  pushScript = pkgs.writeShellScriptBin "tinyclaw-attic-push" ''
     set -euo pipefail
 
     ATTIC_SERVER="''${ATTIC_SERVER:-${cacheConfig.server}}"
@@ -33,10 +33,10 @@ let
     fi
 
     # Configure attic
-    ${pkgs.attic-client}/bin/attic login picoclaw "$ATTIC_SERVER" "$ATTIC_TOKEN"
+    ${pkgs.attic-client}/bin/attic login tinyclaw "$ATTIC_SERVER" "$ATTIC_TOKEN"
 
     # Push all flake outputs
-    for output in picoclaw dhall-config picoclaw-bundle; do
+    for output in tinyclaw dhall-config tinyclaw-bundle; do
       echo "Pushing $output..."
       nix build ".#$output" --no-link --print-out-paths | \
         xargs ${pkgs.attic-client}/bin/attic push "$ATTIC_CACHE" 2>/dev/null || \
@@ -47,17 +47,17 @@ let
   '';
 
   # Script to verify fixed-point build
-  fixedPointCheck = pkgs.writeShellScriptBin "picoclaw-fixed-point-check" ''
+  fixedPointCheck = pkgs.writeShellScriptBin "tinyclaw-fixed-point-check" ''
     set -euo pipefail
 
     echo "Verifying fixed-point build..."
 
     # Build once
-    FIRST=$(nix build .#picoclaw --no-link --print-out-paths)
+    FIRST=$(nix build .#tinyclaw --no-link --print-out-paths)
     FIRST_HASH=$(nix hash path "$FIRST")
 
     # Build again (should be identical)
-    SECOND=$(nix build .#picoclaw --no-link --print-out-paths --rebuild)
+    SECOND=$(nix build .#tinyclaw --no-link --print-out-paths --rebuild)
     SECOND_HASH=$(nix hash path "$SECOND")
 
     if [ "$FIRST_HASH" = "$SECOND_HASH" ]; then
