@@ -13,6 +13,7 @@ import (
 
 type Server struct {
 	server    *http.Server
+	mux       *http.ServeMux
 	mu        sync.RWMutex
 	ready     bool
 	checks    map[string]Check
@@ -35,6 +36,7 @@ type StatusResponse struct {
 func NewServer(host string, port int) *Server {
 	mux := http.NewServeMux()
 	s := &Server{
+		mux:       mux,
 		ready:     false,
 		checks:    make(map[string]Check),
 		startTime: time.Now(),
@@ -47,11 +49,17 @@ func NewServer(host string, port int) *Server {
 	s.server = &http.Server{
 		Addr:         addr,
 		Handler:      mux,
-		ReadTimeout:  5 * time.Second,
-		WriteTimeout: 5 * time.Second,
+		ReadTimeout:  30 * time.Second,
+		WriteTimeout: 10 * time.Second,
 	}
 
 	return s
+}
+
+// HandleFunc registers a handler on the underlying ServeMux, allowing
+// external packages to add routes to the health server.
+func (s *Server) HandleFunc(pattern string, handler func(http.ResponseWriter, *http.Request)) {
+	s.mux.HandleFunc(pattern, handler)
 }
 
 func (s *Server) Start() error {

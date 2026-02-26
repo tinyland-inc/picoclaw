@@ -867,6 +867,15 @@ func (al *AgentLoop) GetStartupInfo() map[string]any {
 	return info
 }
 
+// GetToolDefinitions returns the schema definitions for all registered tools.
+func (al *AgentLoop) GetToolDefinitions() []map[string]any {
+	agent := al.registry.GetDefaultAgent()
+	if agent == nil {
+		return nil
+	}
+	return agent.Tools.GetDefinitions()
+}
+
 // formatMessagesForLog formats messages for logging
 func formatMessagesForLog(messages []providers.Message) string {
 	if len(messages) == 0 {

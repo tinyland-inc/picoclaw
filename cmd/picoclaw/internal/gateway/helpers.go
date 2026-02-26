@@ -14,6 +14,7 @@ import (
 	"github.com/tinyland-inc/picoclaw/cmd/picoclaw/internal"
 	"github.com/tinyland-inc/picoclaw/pkg/agent"
 	"github.com/tinyland-inc/picoclaw/pkg/aperture"
+	"github.com/tinyland-inc/picoclaw/pkg/api"
 	"github.com/tinyland-inc/picoclaw/pkg/bus"
 	"github.com/tinyland-inc/picoclaw/pkg/channels"
 	"github.com/tinyland-inc/picoclaw/pkg/config"
@@ -258,12 +259,14 @@ func gatewayCmd(debug bool, mode GatewayMode) error {
 	}
 
 	healthServer := health.NewServer(cfg.Gateway.Host, cfg.Gateway.Port)
+	apiHandlers := api.NewHandlers(agentLoop)
+	apiHandlers.Register(healthServer)
 	go func() {
 		if err := healthServer.Start(); err != nil && !errors.Is(err, http.ErrServerClosed) {
 			logger.ErrorCF("health", "Health server error", map[string]any{"error": err.Error()})
 		}
 	}()
-	fmt.Printf("✓ Health endpoints available at http://%s:%d/health and /ready\n", cfg.Gateway.Host, cfg.Gateway.Port)
+	fmt.Printf("✓ Health + API endpoints available at http://%s:%d\n", cfg.Gateway.Host, cfg.Gateway.Port)
 
 	go agentLoop.Run(ctx)
 

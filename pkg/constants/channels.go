@@ -7,6 +7,7 @@ var internalChannels = map[string]struct{}{
 	"cli":      {},
 	"system":   {},
 	"subagent": {},
+	"api":      {},
 }
 
 // IsInternalChannel returns true if the channel is an internal channel.
