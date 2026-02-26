@@ -1,4 +1,4 @@
-(** PicoClaw Verified Core -- STDIO JSON-RPC entry point.
+(** TinyClaw Verified Core -- STDIO JSON-RPC entry point.
 
     This binary is spawned by the Go gateway as a subprocess.
     Communication is via JSON-RPC 2.0 over STDIO (stdin/stdout).
@@ -15,8 +15,8 @@
     - Gateway -> Core: execute_tool result (tool output)
     - Core -> Gateway: process_message result (final response + audit log) *)
 
-open Picoclaw_lib
-open Picoclaw_core
+open Tinyclaw_lib
+open Tinyclaw_core
 open AgentLoop
 
 (** ─── Session Store ─────────────────────────────────────────────── *)
@@ -259,5 +259,5 @@ let () =
   with
   | End_of_file -> () (* Gateway closed connection *)
   | exn ->
-    Printf.eprintf "picoclaw-core: fatal error: %s\n" (Printexc.to_string exn);
+    Printf.eprintf "tinyclaw-core: fatal error: %s\n" (Printexc.to_string exn);
     exit 1

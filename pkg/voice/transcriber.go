@@ -12,8 +12,8 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/tinyland-inc/picoclaw/pkg/logger"
-	"github.com/tinyland-inc/picoclaw/pkg/utils"
+	"github.com/tinyland-inc/tinyclaw/pkg/logger"
+	"github.com/tinyland-inc/tinyclaw/pkg/utils"
 )
 
 type GroqTranscriber struct {

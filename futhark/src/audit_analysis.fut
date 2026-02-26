@@ -6,7 +6,7 @@
 -- - Temporal anomaly detection (burst detection)
 -- - Hash chain validation
 
--- Audit event type tags (matching PicoClaw.AuditLog)
+-- Audit event type tags (matching TinyClaw.AuditLog)
 let event_route_resolved: i32    = 0
 let event_tool_authorized: i32   = 1
 let event_tool_denied: i32       = 2

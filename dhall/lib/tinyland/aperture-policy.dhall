@@ -1,6 +1,6 @@
 -- Shared Aperture policy types for the Tinyland ecosystem.
 --
--- Used by picoclaw, remote-juggler, and tailnet-acl to define
+-- Used by tinyclaw, remote-juggler, and tailnet-acl to define
 -- consistent Aperture access rules.
 
 let ACL = ./acl.dhall

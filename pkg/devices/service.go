@@ -5,12 +5,12 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/tinyland-inc/picoclaw/pkg/bus"
-	"github.com/tinyland-inc/picoclaw/pkg/constants"
-	"github.com/tinyland-inc/picoclaw/pkg/devices/events"
-	"github.com/tinyland-inc/picoclaw/pkg/devices/sources"
-	"github.com/tinyland-inc/picoclaw/pkg/logger"
-	"github.com/tinyland-inc/picoclaw/pkg/state"
+	"github.com/tinyland-inc/tinyclaw/pkg/bus"
+	"github.com/tinyland-inc/tinyclaw/pkg/constants"
+	"github.com/tinyland-inc/tinyclaw/pkg/devices/events"
+	"github.com/tinyland-inc/tinyclaw/pkg/devices/sources"
+	"github.com/tinyland-inc/tinyclaw/pkg/logger"
+	"github.com/tinyland-inc/tinyclaw/pkg/state"
 )
 
 type Service struct {

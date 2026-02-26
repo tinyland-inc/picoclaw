@@ -6,8 +6,8 @@ import (
 	"context"
 	"errors"
 
-	"github.com/tinyland-inc/picoclaw/pkg/bus"
-	"github.com/tinyland-inc/picoclaw/pkg/config"
+	"github.com/tinyland-inc/tinyclaw/pkg/bus"
+	"github.com/tinyland-inc/tinyclaw/pkg/config"
 )
 
 // FeishuChannel is a stub implementation for 32-bit architectures

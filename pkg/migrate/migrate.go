@@ -8,7 +8,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/tinyland-inc/picoclaw/pkg/config"
+	"github.com/tinyland-inc/tinyclaw/pkg/config"
 )
 
 type ActionType int
@@ -29,7 +29,7 @@ type Options struct {
 	Force         bool
 	Refresh       bool
 	OpenClawHome  string
-	PicoClawHome  string
+	TinyClawHome  string
 }
 
 type Action struct {
@@ -63,7 +63,7 @@ func Run(opts Options) (*Result, error) {
 		return nil, err
 	}
 
-	picoClawHome, err := resolvePicoClawHome(opts.PicoClawHome)
+	tinyClawHome, err := resolveTinyClawHome(opts.TinyClawHome)
 	if err != nil {
 		return nil, err
 	}
@@ -72,14 +72,14 @@ func Run(opts Options) (*Result, error) {
 		return nil, fmt.Errorf("OpenClaw installation not found at %s", openclawHome)
 	}
 
-	actions, warnings, err := Plan(opts, openclawHome, picoClawHome)
+	actions, warnings, err := Plan(opts, openclawHome, tinyClawHome)
 	if err != nil {
 		return nil, err
 	}
 
-	fmt.Println("Migrating from OpenClaw to PicoClaw")
+	fmt.Println("Migrating from OpenClaw to TinyClaw")
 	fmt.Printf("  Source:      %s\n", openclawHome)
-	fmt.Printf("  Destination: %s\n", picoClawHome)
+	fmt.Printf("  Destination: %s\n", tinyClawHome)
 	fmt.Println()
 
 	if opts.DryRun {
@@ -96,13 +96,13 @@ func Run(opts Options) (*Result, error) {
 		fmt.Println()
 	}
 
-	result := Execute(actions, openclawHome, picoClawHome)
+	result := Execute(actions, openclawHome, tinyClawHome)
 	result.Warnings = warnings
 	return result, nil
 }
 
 //nolint:nestif // migration planning: conditional action building with nested checks
-func Plan(opts Options, openclawHome, picoClawHome string) ([]Action, []string, error) {
+func Plan(opts Options, openclawHome, tinyClawHome string) ([]Action, []string, error) {
 	var actions []Action
 	var warnings []string
 
@@ -119,8 +119,8 @@ func Plan(opts Options, openclawHome, picoClawHome string) ([]Action, []string, 
 			actions = append(actions, Action{
 				Type:        ActionConvertConfig,
 				Source:      configPath,
-				Destination: filepath.Join(picoClawHome, "config.json"),
-				Description: "convert OpenClaw config to PicoClaw format",
+				Destination: filepath.Join(tinyClawHome, "config.json"),
+				Description: "convert OpenClaw config to TinyClaw format",
 			})
 
 			data, err := LoadOpenClawConfig(configPath)
@@ -133,7 +133,7 @@ func Plan(opts Options, openclawHome, picoClawHome string) ([]Action, []string, 
 
 	if !opts.ConfigOnly {
 		srcWorkspace := resolveWorkspace(openclawHome)
-		dstWorkspace := resolveWorkspace(picoClawHome)
+		dstWorkspace := resolveWorkspace(tinyClawHome)
 
 		if _, err := os.Stat(srcWorkspace); err == nil {
 			wsActions, err := PlanWorkspaceMigration(srcWorkspace, dstWorkspace, force)
@@ -150,13 +150,13 @@ func Plan(opts Options, openclawHome, picoClawHome string) ([]Action, []string, 
 }
 
 //nolint:gocognit // executes migration actions: handles many action types with error accumulation
-func Execute(actions []Action, openclawHome, picoClawHome string) *Result {
+func Execute(actions []Action, openclawHome, tinyClawHome string) *Result {
 	result := &Result{}
 
 	for _, action := range actions {
 		switch action.Type {
 		case ActionConvertConfig:
-			if err := executeConfigMigration(action.Source, action.Destination, picoClawHome); err != nil {
+			if err := executeConfigMigration(action.Source, action.Destination, tinyClawHome); err != nil {
 				result.Errors = append(result.Errors, fmt.Errorf("config migration: %w", err))
 				fmt.Printf("  ✗ Config migration failed: %v\n", err)
 			} else {
@@ -230,7 +230,7 @@ func executeConfigMigration(srcConfigPath, dstConfigPath, _ string) error {
 	if _, err := os.Stat(dstConfigPath); err == nil {
 		existing, err := config.LoadConfig(dstConfigPath)
 		if err != nil {
-			return fmt.Errorf("loading existing PicoClaw config: %w", err)
+			return fmt.Errorf("loading existing TinyClaw config: %w", err)
 		}
 		incoming = MergeConfig(existing, incoming)
 	}
@@ -337,18 +337,18 @@ func resolveOpenClawHome(override string) (string, error) {
 	return filepath.Join(home, ".openclaw"), nil
 }
 
-func resolvePicoClawHome(override string) (string, error) {
+func resolveTinyClawHome(override string) (string, error) {
 	if override != "" {
 		return expandHome(override), nil
 	}
-	if envHome := os.Getenv("PICOCLAW_HOME"); envHome != "" {
+	if envHome := os.Getenv("TINYCLAW_HOME"); envHome != "" {
 		return expandHome(envHome), nil
 	}
 	home, err := os.UserHomeDir()
 	if err != nil {
 		return "", fmt.Errorf("resolving home directory: %w", err)
 	}
-	return filepath.Join(home, ".picoclaw"), nil
+	return filepath.Join(home, ".tinyclaw"), nil
 }
 
 func resolveWorkspace(homeDir string) string {

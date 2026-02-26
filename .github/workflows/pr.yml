@@ -126,15 +126,15 @@ jobs:
           CGO_ENABLED: 0
         run: |
           go build -v -tags stdjson \
-            -ldflags "-X github.com/tinyland-inc/picoclaw/cmd/picoclaw/internal.version=$(git describe --tags --always --dirty 2>/dev/null || echo dev) -s -w" \
-            -o build/picoclaw-${{ matrix.goos }}-${{ matrix.goarch }} \
-            ./cmd/picoclaw
+            -ldflags "-X github.com/tinyland-inc/tinyclaw/cmd/tinyclaw/internal.version=$(git describe --tags --always --dirty 2>/dev/null || echo dev) -s -w" \
+            -o build/tinyclaw-${{ matrix.goos }}-${{ matrix.goarch }} \
+            ./cmd/tinyclaw
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: picoclaw-${{ matrix.goos }}-${{ matrix.goarch }}
-          path: build/picoclaw-*
+          name: tinyclaw-${{ matrix.goos }}-${{ matrix.goarch }}
+          path: build/tinyclaw-*
 
   verified-core:
     name: Build Verified Core (OCaml)
@@ -159,7 +159,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: picoclaw-core
+          name: tinyclaw-core
           path: fstar/extracted/_build/default/bin/main.exe
 
   nix-check:

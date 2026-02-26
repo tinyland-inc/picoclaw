@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/tinyland-inc/picoclaw/pkg/providers/protocoltypes"
+	"github.com/tinyland-inc/tinyclaw/pkg/providers/protocoltypes"
 )
 
 type (

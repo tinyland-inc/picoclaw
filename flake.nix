@@ -1,5 +1,5 @@
 {
-  description = "PicoClaw - Verified agent framework";
+  description = "TinyClaw - Verified agent framework";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -17,27 +17,27 @@
           else "dev";
 
         ldflags = [
-          "-X github.com/tinyland-inc/picoclaw/cmd/picoclaw/internal.version=${version}"
-          "-X github.com/tinyland-inc/picoclaw/cmd/picoclaw/internal.gitCommit=${version}"
+          "-X github.com/tinyland-inc/tinyclaw/cmd/tinyclaw/internal.version=${version}"
+          "-X github.com/tinyland-inc/tinyclaw/cmd/tinyclaw/internal.gitCommit=${version}"
           "-s" "-w"
         ];
       in
       {
         packages = {
           # Go gateway binary
-          picoclaw = pkgs.buildGoModule {
-            pname = "picoclaw";
+          tinyclaw = pkgs.buildGoModule {
+            pname = "tinyclaw";
             inherit version;
             src = ./.;
             vendorHash = "sha256-K3VY1oBTfb0suCHDYvR9zmSvXMNW31qiRH0R5BFsY9A=";
             env.CGO_ENABLED = "0";
             tags = [ "stdjson" ];
             inherit ldflags;
-            subPackages = [ "cmd/picoclaw" ];
+            subPackages = [ "cmd/tinyclaw" ];
 
             preBuild = ''
               # go:generate copies workspace/ into onboard package for embedding
-              cp -r workspace cmd/picoclaw/internal/onboard/workspace
+              cp -r workspace cmd/tinyclaw/internal/onboard/workspace
             '';
 
             # Skip tests that require network
@@ -51,7 +51,7 @@
 
           # Dhall config package - renders all configs to JSON
           dhall-config = pkgs.stdenv.mkDerivation {
-            pname = "picoclaw-dhall-config";
+            pname = "tinyclaw-dhall-config";
             inherit version;
             src = ./dhall;
 
@@ -70,38 +70,38 @@
             '';
 
             installPhase = ''
-              mkdir -p $out/share/picoclaw
-              cp -r rendered/* $out/share/picoclaw/
-              cp -r types $out/share/picoclaw/types
+              mkdir -p $out/share/tinyclaw
+              cp -r rendered/* $out/share/tinyclaw/
+              cp -r types $out/share/tinyclaw/types
             '';
           };
 
           # Full bundle: gateway + dhall config + default rendered configs
-          picoclaw-bundle = pkgs.symlinkJoin {
-            name = "picoclaw-bundle-${version}";
+          tinyclaw-bundle = pkgs.symlinkJoin {
+            name = "tinyclaw-bundle-${version}";
             paths = [
-              self.packages.${system}.picoclaw
+              self.packages.${system}.tinyclaw
               self.packages.${system}.dhall-config
             ];
             postBuild = ''
               # Verify both components are present
-              test -x $out/bin/picoclaw || (echo "Missing picoclaw binary" && exit 1)
-              test -d $out/share/picoclaw || (echo "Missing dhall config" && exit 1)
+              test -x $out/bin/tinyclaw || (echo "Missing tinyclaw binary" && exit 1)
+              test -d $out/share/tinyclaw || (echo "Missing dhall config" && exit 1)
             '';
           };
 
           # Docker image via pkgs.dockerTools
-          picoclaw-docker = pkgs.dockerTools.buildLayeredImage {
-            name = "picoclaw";
+          tinyclaw-docker = pkgs.dockerTools.buildLayeredImage {
+            name = "tinyclaw";
             tag = version;
             contents = [
-              self.packages.${system}.picoclaw
+              self.packages.${system}.tinyclaw
               self.packages.${system}.dhall-config
               pkgs.cacert
               pkgs.tzdata
             ];
             config = {
-              Cmd = [ "/bin/picoclaw" "gateway" ];
+              Cmd = [ "/bin/tinyclaw" "gateway" ];
               Env = [
                 "SSL_CERT_FILE=${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt"
                 "TZDIR=${pkgs.tzdata}/share/zoneinfo"
@@ -113,8 +113,8 @@
           };
 
           # F*-extracted verified core binary (OCaml)
-          picoclaw-core = pkgs.stdenv.mkDerivation {
-            pname = "picoclaw-core";
+          tinyclaw-core = pkgs.stdenv.mkDerivation {
+            pname = "tinyclaw-core";
             inherit version;
             src = ./fstar/extracted;
 
@@ -131,43 +131,43 @@
 
             installPhase = ''
               mkdir -p $out/bin
-              cp _build/default/bin/main.exe $out/bin/picoclaw-core
+              cp _build/default/bin/main.exe $out/bin/tinyclaw-core
             '';
 
             meta = {
-              description = "PicoClaw verified core (F*-extracted)";
+              description = "TinyClaw verified core (F*-extracted)";
               license = pkgs.lib.licenses.mit;
             };
           };
 
           # Full verified bundle: gateway + core + dhall config
-          picoclaw-verified-bundle = pkgs.symlinkJoin {
-            name = "picoclaw-verified-bundle-${version}";
+          tinyclaw-verified-bundle = pkgs.symlinkJoin {
+            name = "tinyclaw-verified-bundle-${version}";
             paths = [
-              self.packages.${system}.picoclaw
-              self.packages.${system}.picoclaw-core
+              self.packages.${system}.tinyclaw
+              self.packages.${system}.tinyclaw-core
               self.packages.${system}.dhall-config
             ];
             postBuild = ''
-              test -x $out/bin/picoclaw || (echo "Missing gateway binary" && exit 1)
-              test -x $out/bin/picoclaw-core || (echo "Missing verified core binary" && exit 1)
-              test -d $out/share/picoclaw || (echo "Missing dhall config" && exit 1)
+              test -x $out/bin/tinyclaw || (echo "Missing gateway binary" && exit 1)
+              test -x $out/bin/tinyclaw-core || (echo "Missing verified core binary" && exit 1)
+              test -d $out/share/tinyclaw || (echo "Missing dhall config" && exit 1)
             '';
           };
 
           # Docker image with verified core
-          picoclaw-verified-docker = pkgs.dockerTools.buildLayeredImage {
-            name = "picoclaw-verified";
+          tinyclaw-verified-docker = pkgs.dockerTools.buildLayeredImage {
+            name = "tinyclaw-verified";
             tag = version;
             contents = [
-              self.packages.${system}.picoclaw
-              self.packages.${system}.picoclaw-core
+              self.packages.${system}.tinyclaw
+              self.packages.${system}.tinyclaw-core
               self.packages.${system}.dhall-config
               pkgs.cacert
               pkgs.tzdata
             ];
             config = {
-              Cmd = [ "/bin/picoclaw" "gateway" "--verified" ];
+              Cmd = [ "/bin/tinyclaw" "gateway" "--verified" ];
               Env = [
                 "SSL_CERT_FILE=${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt"
                 "TZDIR=${pkgs.tzdata}/share/zoneinfo"
@@ -178,7 +178,7 @@
             };
           };
 
-          default = self.packages.${system}.picoclaw;
+          default = self.packages.${system}.tinyclaw;
         };
 
         devShells.default = pkgs.mkShell {
@@ -212,7 +212,7 @@
           ];
 
           shellHook = ''
-            echo "picoclaw dev shell"
+            echo "tinyclaw dev shell"
             echo "  just --list    # available targets"
           '';
         };
@@ -220,7 +220,7 @@
         # Flake checks
         checks = {
           dhall-typecheck = pkgs.stdenv.mkDerivation {
-            pname = "picoclaw-dhall-check";
+            pname = "tinyclaw-dhall-check";
             inherit version;
             src = ./dhall;
             nativeBuildInputs = with pkgs; [ dhall dhall-json ];
@@ -231,7 +231,7 @@
           };
 
           go-tests = pkgs.stdenv.mkDerivation {
-            pname = "picoclaw-go-tests";
+            pname = "tinyclaw-go-tests";
             inherit version;
             src = ./.;
             nativeBuildInputs = with pkgs; [ go ];

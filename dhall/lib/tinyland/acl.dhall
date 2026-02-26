@@ -1,4 +1,4 @@
--- Shared ACL rule types used across picoclaw, tailnet-acl, and remote-juggler.
+-- Shared ACL rule types used across tinyclaw, tailnet-acl, and remote-juggler.
 --
 -- These fragments follow the tailnet-acl composition pattern: each rule
 -- is a self-contained record that can be composed into larger policy sets.

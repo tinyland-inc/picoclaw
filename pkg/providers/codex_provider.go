@@ -12,8 +12,8 @@ import (
 	"github.com/openai/openai-go/v3/option"
 	"github.com/openai/openai-go/v3/responses"
 
-	"github.com/tinyland-inc/picoclaw/pkg/auth"
-	"github.com/tinyland-inc/picoclaw/pkg/logger"
+	"github.com/tinyland-inc/tinyclaw/pkg/auth"
+	"github.com/tinyland-inc/tinyclaw/pkg/logger"
 )
 
 const (
@@ -418,7 +418,7 @@ func createCodexTokenSource() func() (string, string, error) {
 	return func() (string, string, error) {
 		cred, err := auth.GetCredential("openai")
 		if errors.Is(err, auth.ErrCredentialNotFound) {
-			return "", "", errors.New("no credentials for openai. Run: picoclaw auth login --provider openai")
+			return "", "", errors.New("no credentials for openai. Run: tinyclaw auth login --provider openai")
 		}
 		if err != nil {
 			return "", "", fmt.Errorf("loading auth credentials: %w", err)

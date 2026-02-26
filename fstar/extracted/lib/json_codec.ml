@@ -1,10 +1,10 @@
-(** JSON serialization/deserialization for the PicoClaw wire protocol.
+(** JSON serialization/deserialization for the TinyClaw wire protocol.
 
-    Translates between OCaml types (from picoclaw_core.ml) and JSON
+    Translates between OCaml types (from tinyclaw_core.ml) and JSON
     (via Yojson). This module handles the JSON-RPC boundary between
     the verified core and the Go gateway. *)
 
-open Picoclaw_core
+open Tinyclaw_core
 
 (** ─── JSON -> OCaml ─────────────────────────────────────────────── *)
 

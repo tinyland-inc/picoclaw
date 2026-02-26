@@ -10,8 +10,8 @@ on:
 env:
   REGISTRY: ghcr.io
   OWNER: tinyland-inc
-  # Change this per repo: ironclaw, picoclaw, or hexstrike-ai
-  REPO_NAME: picoclaw
+  # Change this per repo: ironclaw, tinyclaw, or hexstrike-ai
+  REPO_NAME: tinyclaw
 
 permissions:
   contents: read

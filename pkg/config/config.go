@@ -176,17 +176,17 @@ type SessionConfig struct {
 }
 
 type AgentDefaults struct {
-	Workspace           string   `env:"PICOCLAW_AGENTS_DEFAULTS_WORKSPACE"             json:"workspace"`
-	RestrictToWorkspace bool     `env:"PICOCLAW_AGENTS_DEFAULTS_RESTRICT_TO_WORKSPACE" json:"restrict_to_workspace"`
-	Provider            string   `env:"PICOCLAW_AGENTS_DEFAULTS_PROVIDER"              json:"provider"`
-	ModelName           string   `env:"PICOCLAW_AGENTS_DEFAULTS_MODEL_NAME"            json:"model_name,omitempty"`
-	Model               string   `env:"PICOCLAW_AGENTS_DEFAULTS_MODEL"                 json:"model,omitempty"`                 // Deprecated: use model_name instead
+	Workspace           string   `env:"TINYCLAW_AGENTS_DEFAULTS_WORKSPACE"             json:"workspace"`
+	RestrictToWorkspace bool     `env:"TINYCLAW_AGENTS_DEFAULTS_RESTRICT_TO_WORKSPACE" json:"restrict_to_workspace"`
+	Provider            string   `env:"TINYCLAW_AGENTS_DEFAULTS_PROVIDER"              json:"provider"`
+	ModelName           string   `env:"TINYCLAW_AGENTS_DEFAULTS_MODEL_NAME"            json:"model_name,omitempty"`
+	Model               string   `env:"TINYCLAW_AGENTS_DEFAULTS_MODEL"                 json:"model,omitempty"`                 // Deprecated: use model_name instead
 	ModelFallbacks      []string `                                                     json:"model_fallbacks,omitempty"`       //nolint:tagalign // golines conflict
-	ImageModel          string   `env:"PICOCLAW_AGENTS_DEFAULTS_IMAGE_MODEL"           json:"image_model,omitempty"`           //nolint:tagalign // golines conflict
+	ImageModel          string   `env:"TINYCLAW_AGENTS_DEFAULTS_IMAGE_MODEL"           json:"image_model,omitempty"`           //nolint:tagalign // golines conflict
 	ImageModelFallbacks []string `                                                     json:"image_model_fallbacks,omitempty"` //nolint:tagalign // golines conflict
-	MaxTokens           int      `env:"PICOCLAW_AGENTS_DEFAULTS_MAX_TOKENS"            json:"max_tokens"`
-	Temperature         *float64 `env:"PICOCLAW_AGENTS_DEFAULTS_TEMPERATURE"           json:"temperature,omitempty"`
-	MaxToolIterations   int      `env:"PICOCLAW_AGENTS_DEFAULTS_MAX_TOOL_ITERATIONS"   json:"max_tool_iterations"`
+	MaxTokens           int      `env:"TINYCLAW_AGENTS_DEFAULTS_MAX_TOKENS"            json:"max_tokens"`
+	Temperature         *float64 `env:"TINYCLAW_AGENTS_DEFAULTS_TEMPERATURE"           json:"temperature,omitempty"`
+	MaxToolIterations   int      `env:"TINYCLAW_AGENTS_DEFAULTS_MAX_TOOL_ITERATIONS"   json:"max_tool_iterations"`
 }
 
 // GetModelName returns the effective model name for the agent defaults.
@@ -214,132 +214,132 @@ type ChannelsConfig struct {
 }
 
 type WhatsAppConfig struct {
-	Enabled   bool                `env:"PICOCLAW_CHANNELS_WHATSAPP_ENABLED"    json:"enabled"`
-	BridgeURL string              `env:"PICOCLAW_CHANNELS_WHATSAPP_BRIDGE_URL" json:"bridge_url"`
-	AllowFrom FlexibleStringSlice `env:"PICOCLAW_CHANNELS_WHATSAPP_ALLOW_FROM" json:"allow_from"`
+	Enabled   bool                `env:"TINYCLAW_CHANNELS_WHATSAPP_ENABLED"    json:"enabled"`
+	BridgeURL string              `env:"TINYCLAW_CHANNELS_WHATSAPP_BRIDGE_URL" json:"bridge_url"`
+	AllowFrom FlexibleStringSlice `env:"TINYCLAW_CHANNELS_WHATSAPP_ALLOW_FROM" json:"allow_from"`
 }
 
 type TelegramConfig struct {
-	Enabled   bool                `env:"PICOCLAW_CHANNELS_TELEGRAM_ENABLED"    json:"enabled"`
-	Token     string              `env:"PICOCLAW_CHANNELS_TELEGRAM_TOKEN"      json:"token"`
-	Proxy     string              `env:"PICOCLAW_CHANNELS_TELEGRAM_PROXY"      json:"proxy"`
-	AllowFrom FlexibleStringSlice `env:"PICOCLAW_CHANNELS_TELEGRAM_ALLOW_FROM" json:"allow_from"`
+	Enabled   bool                `env:"TINYCLAW_CHANNELS_TELEGRAM_ENABLED"    json:"enabled"`
+	Token     string              `env:"TINYCLAW_CHANNELS_TELEGRAM_TOKEN"      json:"token"`
+	Proxy     string              `env:"TINYCLAW_CHANNELS_TELEGRAM_PROXY"      json:"proxy"`
+	AllowFrom FlexibleStringSlice `env:"TINYCLAW_CHANNELS_TELEGRAM_ALLOW_FROM" json:"allow_from"`
 }
 
 type FeishuConfig struct {
-	Enabled           bool                `env:"PICOCLAW_CHANNELS_FEISHU_ENABLED"            json:"enabled"`
-	AppID             string              `env:"PICOCLAW_CHANNELS_FEISHU_APP_ID"             json:"app_id"`
-	AppSecret         string              `env:"PICOCLAW_CHANNELS_FEISHU_APP_SECRET"         json:"app_secret"`
-	EncryptKey        string              `env:"PICOCLAW_CHANNELS_FEISHU_ENCRYPT_KEY"        json:"encrypt_key"`
-	VerificationToken string              `env:"PICOCLAW_CHANNELS_FEISHU_VERIFICATION_TOKEN" json:"verification_token"`
-	AllowFrom         FlexibleStringSlice `env:"PICOCLAW_CHANNELS_FEISHU_ALLOW_FROM"         json:"allow_from"`
+	Enabled           bool                `env:"TINYCLAW_CHANNELS_FEISHU_ENABLED"            json:"enabled"`
+	AppID             string              `env:"TINYCLAW_CHANNELS_FEISHU_APP_ID"             json:"app_id"`
+	AppSecret         string              `env:"TINYCLAW_CHANNELS_FEISHU_APP_SECRET"         json:"app_secret"`
+	EncryptKey        string              `env:"TINYCLAW_CHANNELS_FEISHU_ENCRYPT_KEY"        json:"encrypt_key"`
+	VerificationToken string              `env:"TINYCLAW_CHANNELS_FEISHU_VERIFICATION_TOKEN" json:"verification_token"`
+	AllowFrom         FlexibleStringSlice `env:"TINYCLAW_CHANNELS_FEISHU_ALLOW_FROM"         json:"allow_from"`
 }
 
 type DiscordConfig struct {
-	Enabled     bool                `env:"PICOCLAW_CHANNELS_DISCORD_ENABLED"      json:"enabled"`
-	Token       string              `env:"PICOCLAW_CHANNELS_DISCORD_TOKEN"        json:"token"`
-	AllowFrom   FlexibleStringSlice `env:"PICOCLAW_CHANNELS_DISCORD_ALLOW_FROM"   json:"allow_from"`
-	MentionOnly bool                `env:"PICOCLAW_CHANNELS_DISCORD_MENTION_ONLY" json:"mention_only"`
+	Enabled     bool                `env:"TINYCLAW_CHANNELS_DISCORD_ENABLED"      json:"enabled"`
+	Token       string              `env:"TINYCLAW_CHANNELS_DISCORD_TOKEN"        json:"token"`
+	AllowFrom   FlexibleStringSlice `env:"TINYCLAW_CHANNELS_DISCORD_ALLOW_FROM"   json:"allow_from"`
+	MentionOnly bool                `env:"TINYCLAW_CHANNELS_DISCORD_MENTION_ONLY" json:"mention_only"`
 }
 
 type MaixCamConfig struct {
-	Enabled   bool                `env:"PICOCLAW_CHANNELS_MAIXCAM_ENABLED"    json:"enabled"`
-	Host      string              `env:"PICOCLAW_CHANNELS_MAIXCAM_HOST"       json:"host"`
-	Port      int                 `env:"PICOCLAW_CHANNELS_MAIXCAM_PORT"       json:"port"`
-	AllowFrom FlexibleStringSlice `env:"PICOCLAW_CHANNELS_MAIXCAM_ALLOW_FROM" json:"allow_from"`
+	Enabled   bool                `env:"TINYCLAW_CHANNELS_MAIXCAM_ENABLED"    json:"enabled"`
+	Host      string              `env:"TINYCLAW_CHANNELS_MAIXCAM_HOST"       json:"host"`
+	Port      int                 `env:"TINYCLAW_CHANNELS_MAIXCAM_PORT"       json:"port"`
+	AllowFrom FlexibleStringSlice `env:"TINYCLAW_CHANNELS_MAIXCAM_ALLOW_FROM" json:"allow_from"`
 }
 
 type QQConfig struct {
-	Enabled   bool                `env:"PICOCLAW_CHANNELS_QQ_ENABLED"    json:"enabled"`
-	AppID     string              `env:"PICOCLAW_CHANNELS_QQ_APP_ID"     json:"app_id"`
-	AppSecret string              `env:"PICOCLAW_CHANNELS_QQ_APP_SECRET" json:"app_secret"`
-	AllowFrom FlexibleStringSlice `env:"PICOCLAW_CHANNELS_QQ_ALLOW_FROM" json:"allow_from"`
+	Enabled   bool                `env:"TINYCLAW_CHANNELS_QQ_ENABLED"    json:"enabled"`
+	AppID     string              `env:"TINYCLAW_CHANNELS_QQ_APP_ID"     json:"app_id"`
+	AppSecret string              `env:"TINYCLAW_CHANNELS_QQ_APP_SECRET" json:"app_secret"`
+	AllowFrom FlexibleStringSlice `env:"TINYCLAW_CHANNELS_QQ_ALLOW_FROM" json:"allow_from"`
 }
 
 type DingTalkConfig struct {
-	Enabled      bool                `env:"PICOCLAW_CHANNELS_DINGTALK_ENABLED"       json:"enabled"`
-	ClientID     string              `env:"PICOCLAW_CHANNELS_DINGTALK_CLIENT_ID"     json:"client_id"`
-	ClientSecret string              `env:"PICOCLAW_CHANNELS_DINGTALK_CLIENT_SECRET" json:"client_secret"`
-	AllowFrom    FlexibleStringSlice `env:"PICOCLAW_CHANNELS_DINGTALK_ALLOW_FROM"    json:"allow_from"`
+	Enabled      bool                `env:"TINYCLAW_CHANNELS_DINGTALK_ENABLED"       json:"enabled"`
+	ClientID     string              `env:"TINYCLAW_CHANNELS_DINGTALK_CLIENT_ID"     json:"client_id"`
+	ClientSecret string              `env:"TINYCLAW_CHANNELS_DINGTALK_CLIENT_SECRET" json:"client_secret"`
+	AllowFrom    FlexibleStringSlice `env:"TINYCLAW_CHANNELS_DINGTALK_ALLOW_FROM"    json:"allow_from"`
 }
 
 type SlackConfig struct {
-	Enabled   bool                `env:"PICOCLAW_CHANNELS_SLACK_ENABLED"    json:"enabled"`
-	BotToken  string              `env:"PICOCLAW_CHANNELS_SLACK_BOT_TOKEN"  json:"bot_token"`
-	AppToken  string              `env:"PICOCLAW_CHANNELS_SLACK_APP_TOKEN"  json:"app_token"`
-	AllowFrom FlexibleStringSlice `env:"PICOCLAW_CHANNELS_SLACK_ALLOW_FROM" json:"allow_from"`
+	Enabled   bool                `env:"TINYCLAW_CHANNELS_SLACK_ENABLED"    json:"enabled"`
+	BotToken  string              `env:"TINYCLAW_CHANNELS_SLACK_BOT_TOKEN"  json:"bot_token"`
+	AppToken  string              `env:"TINYCLAW_CHANNELS_SLACK_APP_TOKEN"  json:"app_token"`
+	AllowFrom FlexibleStringSlice `env:"TINYCLAW_CHANNELS_SLACK_ALLOW_FROM" json:"allow_from"`
 }
 
 type LINEConfig struct {
-	Enabled            bool                `env:"PICOCLAW_CHANNELS_LINE_ENABLED"              json:"enabled"`
-	ChannelSecret      string              `env:"PICOCLAW_CHANNELS_LINE_CHANNEL_SECRET"       json:"channel_secret"`
-	ChannelAccessToken string              `env:"PICOCLAW_CHANNELS_LINE_CHANNEL_ACCESS_TOKEN" json:"channel_access_token"`
-	WebhookHost        string              `env:"PICOCLAW_CHANNELS_LINE_WEBHOOK_HOST"         json:"webhook_host"`
-	WebhookPort        int                 `env:"PICOCLAW_CHANNELS_LINE_WEBHOOK_PORT"         json:"webhook_port"`
-	WebhookPath        string              `env:"PICOCLAW_CHANNELS_LINE_WEBHOOK_PATH"         json:"webhook_path"`
-	AllowFrom          FlexibleStringSlice `env:"PICOCLAW_CHANNELS_LINE_ALLOW_FROM"           json:"allow_from"`
+	Enabled            bool                `env:"TINYCLAW_CHANNELS_LINE_ENABLED"              json:"enabled"`
+	ChannelSecret      string              `env:"TINYCLAW_CHANNELS_LINE_CHANNEL_SECRET"       json:"channel_secret"`
+	ChannelAccessToken string              `env:"TINYCLAW_CHANNELS_LINE_CHANNEL_ACCESS_TOKEN" json:"channel_access_token"`
+	WebhookHost        string              `env:"TINYCLAW_CHANNELS_LINE_WEBHOOK_HOST"         json:"webhook_host"`
+	WebhookPort        int                 `env:"TINYCLAW_CHANNELS_LINE_WEBHOOK_PORT"         json:"webhook_port"`
+	WebhookPath        string              `env:"TINYCLAW_CHANNELS_LINE_WEBHOOK_PATH"         json:"webhook_path"`
+	AllowFrom          FlexibleStringSlice `env:"TINYCLAW_CHANNELS_LINE_ALLOW_FROM"           json:"allow_from"`
 }
 
 type OneBotConfig struct {
-	Enabled            bool                `env:"PICOCLAW_CHANNELS_ONEBOT_ENABLED"              json:"enabled"`
-	WSUrl              string              `env:"PICOCLAW_CHANNELS_ONEBOT_WS_URL"               json:"ws_url"`
-	AccessToken        string              `env:"PICOCLAW_CHANNELS_ONEBOT_ACCESS_TOKEN"         json:"access_token"`
-	ReconnectInterval  int                 `env:"PICOCLAW_CHANNELS_ONEBOT_RECONNECT_INTERVAL"   json:"reconnect_interval"`
-	GroupTriggerPrefix []string            `env:"PICOCLAW_CHANNELS_ONEBOT_GROUP_TRIGGER_PREFIX" json:"group_trigger_prefix"`
-	AllowFrom          FlexibleStringSlice `env:"PICOCLAW_CHANNELS_ONEBOT_ALLOW_FROM"           json:"allow_from"`
+	Enabled            bool                `env:"TINYCLAW_CHANNELS_ONEBOT_ENABLED"              json:"enabled"`
+	WSUrl              string              `env:"TINYCLAW_CHANNELS_ONEBOT_WS_URL"               json:"ws_url"`
+	AccessToken        string              `env:"TINYCLAW_CHANNELS_ONEBOT_ACCESS_TOKEN"         json:"access_token"`
+	ReconnectInterval  int                 `env:"TINYCLAW_CHANNELS_ONEBOT_RECONNECT_INTERVAL"   json:"reconnect_interval"`
+	GroupTriggerPrefix []string            `env:"TINYCLAW_CHANNELS_ONEBOT_GROUP_TRIGGER_PREFIX" json:"group_trigger_prefix"`
+	AllowFrom          FlexibleStringSlice `env:"TINYCLAW_CHANNELS_ONEBOT_ALLOW_FROM"           json:"allow_from"`
 }
 
 type WeComConfig struct {
-	Enabled        bool                `env:"PICOCLAW_CHANNELS_WECOM_ENABLED"          json:"enabled"`
-	Token          string              `env:"PICOCLAW_CHANNELS_WECOM_TOKEN"            json:"token"`
-	EncodingAESKey string              `env:"PICOCLAW_CHANNELS_WECOM_ENCODING_AES_KEY" json:"encoding_aes_key"`
-	WebhookURL     string              `env:"PICOCLAW_CHANNELS_WECOM_WEBHOOK_URL"      json:"webhook_url"`
-	WebhookHost    string              `env:"PICOCLAW_CHANNELS_WECOM_WEBHOOK_HOST"     json:"webhook_host"`
-	WebhookPort    int                 `env:"PICOCLAW_CHANNELS_WECOM_WEBHOOK_PORT"     json:"webhook_port"`
-	WebhookPath    string              `env:"PICOCLAW_CHANNELS_WECOM_WEBHOOK_PATH"     json:"webhook_path"`
-	AllowFrom      FlexibleStringSlice `env:"PICOCLAW_CHANNELS_WECOM_ALLOW_FROM"       json:"allow_from"`
-	ReplyTimeout   int                 `env:"PICOCLAW_CHANNELS_WECOM_REPLY_TIMEOUT"    json:"reply_timeout"`
+	Enabled        bool                `env:"TINYCLAW_CHANNELS_WECOM_ENABLED"          json:"enabled"`
+	Token          string              `env:"TINYCLAW_CHANNELS_WECOM_TOKEN"            json:"token"`
+	EncodingAESKey string              `env:"TINYCLAW_CHANNELS_WECOM_ENCODING_AES_KEY" json:"encoding_aes_key"`
+	WebhookURL     string              `env:"TINYCLAW_CHANNELS_WECOM_WEBHOOK_URL"      json:"webhook_url"`
+	WebhookHost    string              `env:"TINYCLAW_CHANNELS_WECOM_WEBHOOK_HOST"     json:"webhook_host"`
+	WebhookPort    int                 `env:"TINYCLAW_CHANNELS_WECOM_WEBHOOK_PORT"     json:"webhook_port"`
+	WebhookPath    string              `env:"TINYCLAW_CHANNELS_WECOM_WEBHOOK_PATH"     json:"webhook_path"`
+	AllowFrom      FlexibleStringSlice `env:"TINYCLAW_CHANNELS_WECOM_ALLOW_FROM"       json:"allow_from"`
+	ReplyTimeout   int                 `env:"TINYCLAW_CHANNELS_WECOM_REPLY_TIMEOUT"    json:"reply_timeout"`
 }
 
 type WeComAppConfig struct {
-	Enabled        bool                `env:"PICOCLAW_CHANNELS_WECOM_APP_ENABLED"          json:"enabled"`
-	CorpID         string              `env:"PICOCLAW_CHANNELS_WECOM_APP_CORP_ID"          json:"corp_id"`
-	CorpSecret     string              `env:"PICOCLAW_CHANNELS_WECOM_APP_CORP_SECRET"      json:"corp_secret"`
-	AgentID        int64               `env:"PICOCLAW_CHANNELS_WECOM_APP_AGENT_ID"         json:"agent_id"`
-	Token          string              `env:"PICOCLAW_CHANNELS_WECOM_APP_TOKEN"            json:"token"`
-	EncodingAESKey string              `env:"PICOCLAW_CHANNELS_WECOM_APP_ENCODING_AES_KEY" json:"encoding_aes_key"`
-	WebhookHost    string              `env:"PICOCLAW_CHANNELS_WECOM_APP_WEBHOOK_HOST"     json:"webhook_host"`
-	WebhookPort    int                 `env:"PICOCLAW_CHANNELS_WECOM_APP_WEBHOOK_PORT"     json:"webhook_port"`
-	WebhookPath    string              `env:"PICOCLAW_CHANNELS_WECOM_APP_WEBHOOK_PATH"     json:"webhook_path"`
-	AllowFrom      FlexibleStringSlice `env:"PICOCLAW_CHANNELS_WECOM_APP_ALLOW_FROM"       json:"allow_from"`
-	ReplyTimeout   int                 `env:"PICOCLAW_CHANNELS_WECOM_APP_REPLY_TIMEOUT"    json:"reply_timeout"`
+	Enabled        bool                `env:"TINYCLAW_CHANNELS_WECOM_APP_ENABLED"          json:"enabled"`
+	CorpID         string              `env:"TINYCLAW_CHANNELS_WECOM_APP_CORP_ID"          json:"corp_id"`
+	CorpSecret     string              `env:"TINYCLAW_CHANNELS_WECOM_APP_CORP_SECRET"      json:"corp_secret"`
+	AgentID        int64               `env:"TINYCLAW_CHANNELS_WECOM_APP_AGENT_ID"         json:"agent_id"`
+	Token          string              `env:"TINYCLAW_CHANNELS_WECOM_APP_TOKEN"            json:"token"`
+	EncodingAESKey string              `env:"TINYCLAW_CHANNELS_WECOM_APP_ENCODING_AES_KEY" json:"encoding_aes_key"`
+	WebhookHost    string              `env:"TINYCLAW_CHANNELS_WECOM_APP_WEBHOOK_HOST"     json:"webhook_host"`
+	WebhookPort    int                 `env:"TINYCLAW_CHANNELS_WECOM_APP_WEBHOOK_PORT"     json:"webhook_port"`
+	WebhookPath    string              `env:"TINYCLAW_CHANNELS_WECOM_APP_WEBHOOK_PATH"     json:"webhook_path"`
+	AllowFrom      FlexibleStringSlice `env:"TINYCLAW_CHANNELS_WECOM_APP_ALLOW_FROM"       json:"allow_from"`
+	ReplyTimeout   int                 `env:"TINYCLAW_CHANNELS_WECOM_APP_REPLY_TIMEOUT"    json:"reply_timeout"`
 }
 
 type HeartbeatConfig struct {
-	Enabled  bool `env:"PICOCLAW_HEARTBEAT_ENABLED"  json:"enabled"`
-	Interval int  `env:"PICOCLAW_HEARTBEAT_INTERVAL" json:"interval"` // minutes, min 5
+	Enabled  bool `env:"TINYCLAW_HEARTBEAT_ENABLED"  json:"enabled"`
+	Interval int  `env:"TINYCLAW_HEARTBEAT_INTERVAL" json:"interval"` // minutes, min 5
 }
 
 type DevicesConfig struct {
-	Enabled    bool `env:"PICOCLAW_DEVICES_ENABLED"     json:"enabled"`
-	MonitorUSB bool `env:"PICOCLAW_DEVICES_MONITOR_USB" json:"monitor_usb"`
+	Enabled    bool `env:"TINYCLAW_DEVICES_ENABLED"     json:"enabled"`
+	MonitorUSB bool `env:"TINYCLAW_DEVICES_MONITOR_USB" json:"monitor_usb"`
 }
 
 // TailscaleConfig holds Tailscale tsnet integration settings.
 type TailscaleConfig struct {
-	Enabled  bool   `env:"PICOCLAW_TAILSCALE_ENABLED"   json:"enabled"`
-	Hostname string `env:"PICOCLAW_TAILSCALE_HOSTNAME"  json:"hostname"`
-	StateDir string `env:"PICOCLAW_TAILSCALE_STATE_DIR" json:"state_dir"`
-	AuthKey  string `env:"PICOCLAW_TAILSCALE_AUTH_KEY"  json:"auth_key"`
+	Enabled  bool   `env:"TINYCLAW_TAILSCALE_ENABLED"   json:"enabled"`
+	Hostname string `env:"TINYCLAW_TAILSCALE_HOSTNAME"  json:"hostname"`
+	StateDir string `env:"TINYCLAW_TAILSCALE_STATE_DIR" json:"state_dir"`
+	AuthKey  string `env:"TINYCLAW_TAILSCALE_AUTH_KEY"  json:"auth_key"`
 }
 
 // ApertureConfig holds Tailscale Aperture proxy integration settings.
 type ApertureConfig struct {
-	Enabled    bool   `env:"PICOCLAW_APERTURE_ENABLED"     json:"enabled"`
-	ProxyURL   string `env:"PICOCLAW_APERTURE_PROXY_URL"   json:"proxy_url"`
-	WebhookURL string `env:"PICOCLAW_APERTURE_WEBHOOK_URL" json:"webhook_url"`
-	WebhookKey string `env:"PICOCLAW_APERTURE_WEBHOOK_KEY" json:"webhook_key"`
-	CerbosURL  string `env:"PICOCLAW_APERTURE_CERBOS_URL"  json:"cerbos_url"`
+	Enabled    bool   `env:"TINYCLAW_APERTURE_ENABLED"     json:"enabled"`
+	ProxyURL   string `env:"TINYCLAW_APERTURE_PROXY_URL"   json:"proxy_url"`
+	WebhookURL string `env:"TINYCLAW_APERTURE_WEBHOOK_URL" json:"webhook_url"`
+	WebhookKey string `env:"TINYCLAW_APERTURE_WEBHOOK_KEY" json:"webhook_key"`
+	CerbosURL  string `env:"TINYCLAW_APERTURE_CERBOS_URL"  json:"cerbos_url"`
 }
 
 type ProvidersConfig struct {
@@ -399,17 +399,17 @@ func (p ProvidersConfig) MarshalJSON() ([]byte, error) {
 }
 
 type ProviderConfig struct {
-	APIKey      string `env:"PICOCLAW_PROVIDERS_{{.Name}}_API_KEY"      json:"api_key"`
-	APIBase     string `env:"PICOCLAW_PROVIDERS_{{.Name}}_API_BASE"     json:"api_base"`
-	Proxy       string `env:"PICOCLAW_PROVIDERS_{{.Name}}_PROXY"        json:"proxy,omitempty"`
-	AuthMethod  string `env:"PICOCLAW_PROVIDERS_{{.Name}}_AUTH_METHOD"  json:"auth_method,omitempty"`
-	ConnectMode string `env:"PICOCLAW_PROVIDERS_{{.Name}}_CONNECT_MODE" json:"connect_mode,omitempty"` // only for Github Copilot, `stdio` or `grpc`
+	APIKey      string `env:"TINYCLAW_PROVIDERS_{{.Name}}_API_KEY"      json:"api_key"`
+	APIBase     string `env:"TINYCLAW_PROVIDERS_{{.Name}}_API_BASE"     json:"api_base"`
+	Proxy       string `env:"TINYCLAW_PROVIDERS_{{.Name}}_PROXY"        json:"proxy,omitempty"`
+	AuthMethod  string `env:"TINYCLAW_PROVIDERS_{{.Name}}_AUTH_METHOD"  json:"auth_method,omitempty"`
+	ConnectMode string `env:"TINYCLAW_PROVIDERS_{{.Name}}_CONNECT_MODE" json:"connect_mode,omitempty"` // only for Github Copilot, `stdio` or `grpc`
 }
 
 type OpenAIProviderConfig struct {
 	ProviderConfig
 
-	WebSearch bool `env:"PICOCLAW_PROVIDERS_OPENAI_WEB_SEARCH" json:"web_search"`
+	WebSearch bool `env:"TINYCLAW_PROVIDERS_OPENAI_WEB_SEARCH" json:"web_search"`
 }
 
 // ModelConfig represents a model-centric provider configuration.
@@ -449,32 +449,32 @@ func (c *ModelConfig) Validate() error {
 }
 
 type GatewayConfig struct {
-	Host string `env:"PICOCLAW_GATEWAY_HOST" json:"host"`
-	Port int    `env:"PICOCLAW_GATEWAY_PORT" json:"port"`
+	Host string `env:"TINYCLAW_GATEWAY_HOST" json:"host"`
+	Port int    `env:"TINYCLAW_GATEWAY_PORT" json:"port"`
 }
 
 type BraveConfig struct {
-	Enabled    bool   `env:"PICOCLAW_TOOLS_WEB_BRAVE_ENABLED"     json:"enabled"`
-	APIKey     string `env:"PICOCLAW_TOOLS_WEB_BRAVE_API_KEY"     json:"api_key"`
-	MaxResults int    `env:"PICOCLAW_TOOLS_WEB_BRAVE_MAX_RESULTS" json:"max_results"`
+	Enabled    bool   `env:"TINYCLAW_TOOLS_WEB_BRAVE_ENABLED"     json:"enabled"`
+	APIKey     string `env:"TINYCLAW_TOOLS_WEB_BRAVE_API_KEY"     json:"api_key"`
+	MaxResults int    `env:"TINYCLAW_TOOLS_WEB_BRAVE_MAX_RESULTS" json:"max_results"`
 }
 
 type TavilyConfig struct {
-	Enabled    bool   `env:"PICOCLAW_TOOLS_WEB_TAVILY_ENABLED"     json:"enabled"`
-	APIKey     string `env:"PICOCLAW_TOOLS_WEB_TAVILY_API_KEY"     json:"api_key"`
-	BaseURL    string `env:"PICOCLAW_TOOLS_WEB_TAVILY_BASE_URL"    json:"base_url"`
-	MaxResults int    `env:"PICOCLAW_TOOLS_WEB_TAVILY_MAX_RESULTS" json:"max_results"`
+	Enabled    bool   `env:"TINYCLAW_TOOLS_WEB_TAVILY_ENABLED"     json:"enabled"`
+	APIKey     string `env:"TINYCLAW_TOOLS_WEB_TAVILY_API_KEY"     json:"api_key"`
+	BaseURL    string `env:"TINYCLAW_TOOLS_WEB_TAVILY_BASE_URL"    json:"base_url"`
+	MaxResults int    `env:"TINYCLAW_TOOLS_WEB_TAVILY_MAX_RESULTS" json:"max_results"`
 }
 
 type DuckDuckGoConfig struct {
-	Enabled    bool `env:"PICOCLAW_TOOLS_WEB_DUCKDUCKGO_ENABLED"     json:"enabled"`
-	MaxResults int  `env:"PICOCLAW_TOOLS_WEB_DUCKDUCKGO_MAX_RESULTS" json:"max_results"`
+	Enabled    bool `env:"TINYCLAW_TOOLS_WEB_DUCKDUCKGO_ENABLED"     json:"enabled"`
+	MaxResults int  `env:"TINYCLAW_TOOLS_WEB_DUCKDUCKGO_MAX_RESULTS" json:"max_results"`
 }
 
 type PerplexityConfig struct {
-	Enabled    bool   `env:"PICOCLAW_TOOLS_WEB_PERPLEXITY_ENABLED"     json:"enabled"`
-	APIKey     string `env:"PICOCLAW_TOOLS_WEB_PERPLEXITY_API_KEY"     json:"api_key"`
-	MaxResults int    `env:"PICOCLAW_TOOLS_WEB_PERPLEXITY_MAX_RESULTS" json:"max_results"`
+	Enabled    bool   `env:"TINYCLAW_TOOLS_WEB_PERPLEXITY_ENABLED"     json:"enabled"`
+	APIKey     string `env:"TINYCLAW_TOOLS_WEB_PERPLEXITY_API_KEY"     json:"api_key"`
+	MaxResults int    `env:"TINYCLAW_TOOLS_WEB_PERPLEXITY_MAX_RESULTS" json:"max_results"`
 }
 
 type WebToolsConfig struct {
@@ -484,16 +484,16 @@ type WebToolsConfig struct {
 	Perplexity PerplexityConfig `json:"perplexity"`
 	// Proxy is an optional proxy URL for web tools (http/https/socks5/socks5h).
 	// For authenticated proxies, prefer HTTP_PROXY/HTTPS_PROXY env vars instead of embedding credentials in config.
-	Proxy string `env:"PICOCLAW_TOOLS_WEB_PROXY" json:"proxy,omitempty"`
+	Proxy string `env:"TINYCLAW_TOOLS_WEB_PROXY" json:"proxy,omitempty"`
 }
 
 type CronToolsConfig struct {
-	ExecTimeoutMinutes int `env:"PICOCLAW_TOOLS_CRON_EXEC_TIMEOUT_MINUTES" json:"exec_timeout_minutes"` // 0 means no timeout
+	ExecTimeoutMinutes int `env:"TINYCLAW_TOOLS_CRON_EXEC_TIMEOUT_MINUTES" json:"exec_timeout_minutes"` // 0 means no timeout
 }
 
 type ExecConfig struct {
-	EnableDenyPatterns bool     `env:"PICOCLAW_TOOLS_EXEC_ENABLE_DENY_PATTERNS" json:"enable_deny_patterns"`
-	CustomDenyPatterns []string `env:"PICOCLAW_TOOLS_EXEC_CUSTOM_DENY_PATTERNS" json:"custom_deny_patterns"`
+	EnableDenyPatterns bool     `env:"TINYCLAW_TOOLS_EXEC_ENABLE_DENY_PATTERNS" json:"enable_deny_patterns"`
+	CustomDenyPatterns []string `env:"TINYCLAW_TOOLS_EXEC_CUSTOM_DENY_PATTERNS" json:"custom_deny_patterns"`
 }
 
 type ToolsConfig struct {
@@ -505,13 +505,13 @@ type ToolsConfig struct {
 
 type SkillsToolsConfig struct {
 	Registries            SkillsRegistriesConfig `json:"registries"`
-	MaxConcurrentSearches int                    `json:"max_concurrent_searches" env:"PICOCLAW_SKILLS_MAX_CONCURRENT_SEARCHES"` //nolint:tagalign // golines conflict
+	MaxConcurrentSearches int                    `json:"max_concurrent_searches" env:"TINYCLAW_SKILLS_MAX_CONCURRENT_SEARCHES"` //nolint:tagalign // golines conflict
 	SearchCache           SearchCacheConfig      `json:"search_cache"`
 }
 
 type SearchCacheConfig struct {
-	MaxSize    int `env:"PICOCLAW_SKILLS_SEARCH_CACHE_MAX_SIZE"    json:"max_size"`
-	TTLSeconds int `env:"PICOCLAW_SKILLS_SEARCH_CACHE_TTL_SECONDS" json:"ttl_seconds"`
+	MaxSize    int `env:"TINYCLAW_SKILLS_SEARCH_CACHE_MAX_SIZE"    json:"max_size"`
+	TTLSeconds int `env:"TINYCLAW_SKILLS_SEARCH_CACHE_TTL_SECONDS" json:"ttl_seconds"`
 }
 
 type SkillsRegistriesConfig struct {
@@ -519,15 +519,15 @@ type SkillsRegistriesConfig struct {
 }
 
 type ClawHubRegistryConfig struct {
-	Enabled         bool   `env:"PICOCLAW_SKILLS_REGISTRIES_CLAWHUB_ENABLED"           json:"enabled"`
-	BaseURL         string `env:"PICOCLAW_SKILLS_REGISTRIES_CLAWHUB_BASE_URL"          json:"base_url"`
-	AuthToken       string `env:"PICOCLAW_SKILLS_REGISTRIES_CLAWHUB_AUTH_TOKEN"        json:"auth_token"`
-	SearchPath      string `env:"PICOCLAW_SKILLS_REGISTRIES_CLAWHUB_SEARCH_PATH"       json:"search_path"`
-	SkillsPath      string `env:"PICOCLAW_SKILLS_REGISTRIES_CLAWHUB_SKILLS_PATH"       json:"skills_path"`
-	DownloadPath    string `env:"PICOCLAW_SKILLS_REGISTRIES_CLAWHUB_DOWNLOAD_PATH"     json:"download_path"`
-	Timeout         int    `env:"PICOCLAW_SKILLS_REGISTRIES_CLAWHUB_TIMEOUT"           json:"timeout"`
-	MaxZipSize      int    `env:"PICOCLAW_SKILLS_REGISTRIES_CLAWHUB_MAX_ZIP_SIZE"      json:"max_zip_size"`
-	MaxResponseSize int    `env:"PICOCLAW_SKILLS_REGISTRIES_CLAWHUB_MAX_RESPONSE_SIZE" json:"max_response_size"`
+	Enabled         bool   `env:"TINYCLAW_SKILLS_REGISTRIES_CLAWHUB_ENABLED"           json:"enabled"`
+	BaseURL         string `env:"TINYCLAW_SKILLS_REGISTRIES_CLAWHUB_BASE_URL"          json:"base_url"`
+	AuthToken       string `env:"TINYCLAW_SKILLS_REGISTRIES_CLAWHUB_AUTH_TOKEN"        json:"auth_token"`
+	SearchPath      string `env:"TINYCLAW_SKILLS_REGISTRIES_CLAWHUB_SEARCH_PATH"       json:"search_path"`
+	SkillsPath      string `env:"TINYCLAW_SKILLS_REGISTRIES_CLAWHUB_SKILLS_PATH"       json:"skills_path"`
+	DownloadPath    string `env:"TINYCLAW_SKILLS_REGISTRIES_CLAWHUB_DOWNLOAD_PATH"     json:"download_path"`
+	Timeout         int    `env:"TINYCLAW_SKILLS_REGISTRIES_CLAWHUB_TIMEOUT"           json:"timeout"`
+	MaxZipSize      int    `env:"TINYCLAW_SKILLS_REGISTRIES_CLAWHUB_MAX_ZIP_SIZE"      json:"max_zip_size"`
+	MaxResponseSize int    `env:"TINYCLAW_SKILLS_REGISTRIES_CLAWHUB_MAX_RESPONSE_SIZE" json:"max_response_size"`
 }
 
 // LoadDhallConfig loads configuration from a .dhall file by invoking dhall-to-json

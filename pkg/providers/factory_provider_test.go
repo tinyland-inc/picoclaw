@@ -1,14 +1,14 @@
-// PicoClaw - Ultra-lightweight personal AI agent
+// TinyClaw - Ultra-lightweight personal AI agent
 // License: MIT
 //
-// Copyright (c) 2026 PicoClaw contributors
+// Copyright (c) 2026 TinyClaw contributors
 
 package providers
 
 import (
 	"testing"
 
-	"github.com/tinyland-inc/picoclaw/pkg/config"
+	"github.com/tinyland-inc/tinyclaw/pkg/config"
 )
 
 func TestExtractProtocol(t *testing.T) {

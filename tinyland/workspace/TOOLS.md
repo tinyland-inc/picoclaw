@@ -1,9 +1,9 @@
-# PicoClaw Tool Reference
+# TinyClaw Tool Reference
 
 ## Platform Tools via Adapter Proxy (51 total: 15 gateway + 36 Chapel)
 
 Tools are provided by the adapter sidecar's tool proxy, which bridges
-rj-gateway MCP tools into PicoClaw's native ToolRegistry format.
+rj-gateway MCP tools into TinyClaw's native ToolRegistry format.
 
 Gateway endpoint: `http://rj-gateway.fuzzy-dev.svc.cluster.local:8080/mcp`
 
@@ -114,7 +114,7 @@ Gateway endpoint: `http://rj-gateway.fuzzy-dev.svc.cluster.local:8080/mcp`
 juggler_resolve_composite(query="github-token")
 
 # Fetch a file from GitHub
-github_fetch(owner="tinyland-inc", repo="picoclaw", path="go.mod")
+github_fetch(owner="tinyland-inc", repo="tinyclaw", path="go.mod")
 
 # Check identity status
 juggler_status()

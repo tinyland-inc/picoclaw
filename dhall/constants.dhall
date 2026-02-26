@@ -16,7 +16,7 @@ let defaults
     : ./types/Config.dhall
     = { agents =
         { defaults =
-          { workspace = "~/.picoclaw/workspace"
+          { workspace = "~/.tinyclaw/workspace"
           , restrict_to_workspace = True
           , provider = ""
           , model_name = None Text
@@ -169,7 +169,7 @@ let defaults
       , devices = { enabled = False, monitor_usb = True }
       , tailscale =
         { enabled = False
-        , hostname = "picoclaw"
+        , hostname = "tinyclaw"
         , state_dir = ""
         , auth_key{- -} = ""
         }

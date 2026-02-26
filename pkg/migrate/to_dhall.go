@@ -8,13 +8,13 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/tinyland-inc/picoclaw/pkg/config"
+	"github.com/tinyland-inc/tinyclaw/pkg/config"
 )
 
 // ToDhallOptions controls JSON-to-Dhall config migration.
 type ToDhallOptions struct {
-	ConfigPath string // JSON config path (default: ~/.picoclaw/config.json)
-	OutputPath string // Dhall output path (default: ~/.picoclaw/config.dhall)
+	ConfigPath string // JSON config path (default: ~/.tinyclaw/config.json)
+	OutputPath string // Dhall output path (default: ~/.tinyclaw/config.dhall)
 	DryRun     bool
 	Force      bool
 }
@@ -33,7 +33,7 @@ func RunToDhall(opts ToDhallOptions) (*ToDhallResult, error) {
 		if err != nil {
 			return nil, fmt.Errorf("resolving home directory: %w", err)
 		}
-		configPath = filepath.Join(home, ".picoclaw", "config.json")
+		configPath = filepath.Join(home, ".tinyclaw", "config.json")
 	}
 
 	outputPath := opts.OutputPath
@@ -79,12 +79,12 @@ func RunToDhall(opts ToDhallOptions) (*ToDhallResult, error) {
 func configToDhall(cfg *config.Config, result *ToDhallResult) string {
 	var b strings.Builder
 
-	b.WriteString("-- PicoClaw configuration (generated from JSON)\n")
+	b.WriteString("-- TinyClaw configuration (generated from JSON)\n")
 	b.WriteString("-- Edit this file to manage your configuration as typed Dhall.\n\n")
 	b.WriteString(
-		"let Types = https://raw.githubusercontent.com/tinyland-inc/picoclaw/main/dhall/types/package.dhall\n",
+		"let Types = https://raw.githubusercontent.com/tinyland-inc/tinyclaw/main/dhall/types/package.dhall\n",
 	)
-	b.WriteString("let H = https://raw.githubusercontent.com/tinyland-inc/picoclaw/main/dhall/helpers.dhall\n\n")
+	b.WriteString("let H = https://raw.githubusercontent.com/tinyland-inc/tinyclaw/main/dhall/helpers.dhall\n\n")
 
 	b.WriteString("let emptyStrings = [] : List Text\n\n")
 
@@ -344,7 +344,7 @@ func renderModelConfig(b *strings.Builder, mc *config.ModelConfig, indent string
 	// Redact API keys in output
 	redactedKey := ""
 	if mc.APIKey != "" {
-		redactedKey = "env:PICOCLAW_API_KEY as Text"
+		redactedKey = "env:TINYCLAW_API_KEY as Text"
 	}
 
 	switch {

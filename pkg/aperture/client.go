@@ -1,7 +1,7 @@
-// Package aperture provides Tailscale Aperture integration for PicoClaw.
+// Package aperture provides Tailscale Aperture integration for TinyClaw.
 //
 // Aperture acts as a proxy for LLM API calls, providing:
-// - Centralized API key management (no keys in picoclaw config)
+// - Centralized API key management (no keys in tinyclaw config)
 // - Per-request token usage metering via webhooks
 // - Request ID correlation with the F* core audit log
 package aperture
@@ -16,7 +16,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/tinyland-inc/picoclaw/pkg/logger"
+	"github.com/tinyland-inc/tinyclaw/pkg/logger"
 )
 
 // Config holds Aperture proxy configuration.

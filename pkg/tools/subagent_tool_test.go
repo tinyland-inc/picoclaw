@@ -5,8 +5,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/tinyland-inc/picoclaw/pkg/bus"
-	"github.com/tinyland-inc/picoclaw/pkg/providers"
+	"github.com/tinyland-inc/tinyclaw/pkg/bus"
+	"github.com/tinyland-inc/tinyclaw/pkg/providers"
 )
 
 // MockLLMProvider is a test implementation of LLMProvider

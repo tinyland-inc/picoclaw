@@ -1,8 +1,8 @@
-// PicoClaw - Ultra-lightweight personal AI agent
-// Inspired by and based on nanobot: https://github.com/HKUDS/nanobot
+// TinyClaw - Ultra-lightweight personal AI agent
+// Inspired by Sipeed PicoClaw, itself inspired by OpenClaw
 // License: MIT
 //
-// Copyright (c) 2026 PicoClaw contributors
+// Copyright (c) 2026 TinyClaw contributors
 
 package heartbeat
 
@@ -14,11 +14,11 @@ import (
 	"sync"
 	"time"
 
-	"github.com/tinyland-inc/picoclaw/pkg/bus"
-	"github.com/tinyland-inc/picoclaw/pkg/constants"
-	"github.com/tinyland-inc/picoclaw/pkg/logger"
-	"github.com/tinyland-inc/picoclaw/pkg/state"
-	"github.com/tinyland-inc/picoclaw/pkg/tools"
+	"github.com/tinyland-inc/tinyclaw/pkg/bus"
+	"github.com/tinyland-inc/tinyclaw/pkg/constants"
+	"github.com/tinyland-inc/tinyclaw/pkg/logger"
+	"github.com/tinyland-inc/tinyclaw/pkg/state"
+	"github.com/tinyland-inc/tinyclaw/pkg/tools"
 )
 
 const (

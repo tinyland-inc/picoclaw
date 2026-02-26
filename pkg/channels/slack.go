@@ -13,11 +13,11 @@ import (
 	"github.com/slack-go/slack/slackevents"
 	"github.com/slack-go/slack/socketmode"
 
-	"github.com/tinyland-inc/picoclaw/pkg/bus"
-	"github.com/tinyland-inc/picoclaw/pkg/config"
-	"github.com/tinyland-inc/picoclaw/pkg/logger"
-	"github.com/tinyland-inc/picoclaw/pkg/utils"
-	"github.com/tinyland-inc/picoclaw/pkg/voice"
+	"github.com/tinyland-inc/tinyclaw/pkg/bus"
+	"github.com/tinyland-inc/tinyclaw/pkg/config"
+	"github.com/tinyland-inc/tinyclaw/pkg/logger"
+	"github.com/tinyland-inc/tinyclaw/pkg/utils"
+	"github.com/tinyland-inc/tinyclaw/pkg/voice"
 )
 
 type SlackChannel struct {

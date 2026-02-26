@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/tinyland-inc/picoclaw/pkg/skills"
+	"github.com/tinyland-inc/tinyclaw/pkg/skills"
 )
 
 // FindSkillsTool allows the LLM agent to search for installable skills from registries.

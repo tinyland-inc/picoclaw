@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-// AuditEntry mirrors the F* PicoClaw.AuditLog audit_entry type.
+// AuditEntry mirrors the F* TinyClaw.AuditLog audit_entry type.
 type AuditEntry struct {
 	Sequence   int64
 	Timestamp  int64

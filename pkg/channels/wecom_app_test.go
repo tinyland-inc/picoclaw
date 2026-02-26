@@ -1,4 +1,4 @@
-// PicoClaw - Ultra-lightweight personal AI agent
+// TinyClaw - Ultra-lightweight personal AI agent
 // WeCom App (企业微信自建应用) channel tests
 
 package channels
@@ -21,8 +21,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/tinyland-inc/picoclaw/pkg/bus"
-	"github.com/tinyland-inc/picoclaw/pkg/config"
+	"github.com/tinyland-inc/tinyclaw/pkg/bus"
+	"github.com/tinyland-inc/tinyclaw/pkg/config"
 )
 
 // generateTestAESKeyApp generates a valid test AES key for WeCom App

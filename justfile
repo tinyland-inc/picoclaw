@@ -1,18 +1,18 @@
-# PicoClaw Verified Core - Build System
+# TinyClaw Verified Core - Build System
 # Subsystems: Go gateway, Dhall config, F* core, Futhark kernels, Nix packaging
 
 # ─── Variables ──────────────────────────────────────────────────────────────────
 
-binary_name := "picoclaw"
+binary_name := "tinyclaw"
 build_dir := "build"
 cmd_dir := "cmd/" + binary_name
-internal := "github.com/tinyland-inc/picoclaw/cmd/picoclaw/internal"
+internal := "github.com/tinyland-inc/tinyclaw/cmd/tinyclaw/internal"
 
 install_prefix := env("INSTALL_PREFIX", env("HOME", "") + "/.local")
 install_bin := install_prefix + "/bin"
 
-picoclaw_home := env("PICOCLAW_HOME", env("HOME", "") + "/.picoclaw")
-workspace_dir := env("WORKSPACE_DIR", picoclaw_home + "/workspace")
+tinyclaw_home := env("TINYCLAW_HOME", env("HOME", "") + "/.tinyclaw")
+workspace_dir := env("WORKSPACE_DIR", tinyclaw_home + "/workspace")
 
 # Version info from git
 version := `git describe --tags --always --dirty 2>/dev/null || echo "dev"`
@@ -186,19 +186,19 @@ fstar-extract-c:
     @echo "Extracting F* to C via KaRaMeL..."
     @mkdir -p fstar/extracted/c
     krml --skip_compilation \
-        -bundle PicoClaw.* \
-        -add-include '"picoclaw_ffi.h"' \
+        -bundle TinyClaw.* \
+        -add-include '"tinyclaw_ffi.h"' \
         -tmpdir fstar/extracted/c \
-        fstar/src/PicoClaw.Types.fst \
-        fstar/src/PicoClaw.Routing.fst \
-        fstar/src/PicoClaw.ToolAuth.fst \
-        fstar/src/PicoClaw.Session.fst \
-        fstar/src/PicoClaw.AuditLog.fst \
-        fstar/src/PicoClaw.AgentLoop.fst \
-        fstar/src/PicoClaw.Protocol.fst \
-        fstar/src/PicoClaw.Campaign.fst \
-        fstar/src/PicoClaw.Network.fst \
-        fstar/src/PicoClaw.Tailscale.fst
+        fstar/src/TinyClaw.Types.fst \
+        fstar/src/TinyClaw.Routing.fst \
+        fstar/src/TinyClaw.ToolAuth.fst \
+        fstar/src/TinyClaw.Session.fst \
+        fstar/src/TinyClaw.AuditLog.fst \
+        fstar/src/TinyClaw.AgentLoop.fst \
+        fstar/src/TinyClaw.Protocol.fst \
+        fstar/src/TinyClaw.Campaign.fst \
+        fstar/src/TinyClaw.Network.fst \
+        fstar/src/TinyClaw.Tailscale.fst
     @echo "C extraction complete: fstar/extracted/c/"
 
 # Build verified C binary (KaRaMeL extraction + Futhark C kernels)
@@ -211,13 +211,13 @@ fstar-build-verified: fstar-extract-c futhark-build
         fstar/extracted/c/*.c \
         futhark/build/*.c \
         -lm -lpthread \
-        -o {{build_dir}}/picoclaw-verified
-    @echo "Verified binary: {{build_dir}}/picoclaw-verified"
+        -o {{build_dir}}/tinyclaw-verified
+    @echo "Verified binary: {{build_dir}}/tinyclaw-verified"
 
-# Verify F* security proofs (PicoClaw.Proof module)
+# Verify F* security proofs (TinyClaw.Proof module)
 fstar-proof:
     @echo "Verifying security proofs..."
-    fstar.exe --include fstar/src fstar/src/PicoClaw.Proof.fst
+    fstar.exe --include fstar/src fstar/src/TinyClaw.Proof.fst
     @echo "All security proofs verified"
 
 # ─── Futhark Compute Kernels ──────────────────────────────────────────────────
@@ -260,12 +260,12 @@ nix-check:
 
 # Build Docker image via Nix dockerTools
 nix-docker:
-    nix build .#picoclaw-docker
+    nix build .#tinyclaw-docker
     @echo "Docker image built: result (load with docker load < result)"
 
 # Build full bundle (gateway + dhall config)
 nix-bundle:
-    nix build .#picoclaw-bundle
+    nix build .#tinyclaw-bundle
     @echo "Bundle built: result/"
 
 # ─── Campaign ──────────────────────────────────────────────────────────────────
@@ -297,16 +297,16 @@ drift-check config="" dhall="":
 # Push Nix build artifacts to Attic cache
 attic-push:
     @echo "Pushing to Attic cache..."
-    nix build .#picoclaw --no-link --print-out-paths | xargs attic push picoclaw
-    nix build .#dhall-config --no-link --print-out-paths | xargs attic push picoclaw
+    nix build .#tinyclaw --no-link --print-out-paths | xargs attic push tinyclaw
+    nix build .#dhall-config --no-link --print-out-paths | xargs attic push tinyclaw
     @echo "Push complete"
 
 # Verify fixed-point build (rebuild produces identical output)
 fixed-point-check:
     @echo "Verifying fixed-point build..."
-    @FIRST=$$(nix build .#picoclaw --no-link --print-out-paths) && \
+    @FIRST=$$(nix build .#tinyclaw --no-link --print-out-paths) && \
     FIRST_HASH=$$(nix hash path "$$FIRST") && \
-    SECOND=$$(nix build .#picoclaw --no-link --print-out-paths --rebuild) && \
+    SECOND=$$(nix build .#tinyclaw --no-link --print-out-paths --rebuild) && \
     SECOND_HASH=$$(nix hash path "$$SECOND") && \
     if [ "$$FIRST_HASH" = "$$SECOND_HASH" ]; then \
         echo "Fixed-point verified: $$FIRST_HASH"; \
@@ -333,8 +333,8 @@ uninstall:
 
 # Remove binary and all data
 uninstall-all: uninstall
-    @rm -rf {{picoclaw_home}}
-    @echo "Removed {{picoclaw_home}}"
+    @rm -rf {{tinyclaw_home}}
+    @echo "Removed {{tinyclaw_home}}"
 
 # ─── Utilities ──────────────────────────────────────────────────────────────────
 

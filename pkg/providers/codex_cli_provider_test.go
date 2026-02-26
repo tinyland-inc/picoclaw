@@ -560,8 +560,8 @@ func TestCodexCliProvider_EmptyCommand(t *testing.T) {
 // --- Integration Test (requires real codex CLI with valid auth) ---
 
 func TestCodexCliProvider_Integration(t *testing.T) {
-	if os.Getenv("PICOCLAW_INTEGRATION_TESTS") == "" {
-		t.Skip("skipping integration test (set PICOCLAW_INTEGRATION_TESTS=1 to enable)")
+	if os.Getenv("TINYCLAW_INTEGRATION_TESTS") == "" {
+		t.Skip("skipping integration test (set TINYCLAW_INTEGRATION_TESTS=1 to enable)")
 	}
 
 	// Verify codex is available

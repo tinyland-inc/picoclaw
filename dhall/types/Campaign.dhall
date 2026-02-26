@@ -22,7 +22,7 @@ let FeedbackPolicy =
 
 let CampaignTarget =
       { agent_id : Text
-      , backend : Text       -- "picoclaw" | "ironclaw" | "hexstrike"
+      , backend : Text       -- "tinyclaw" | "ironclaw" | "hexstrike"
       , config_override : Optional Text  -- JSON config overlay
       }
 

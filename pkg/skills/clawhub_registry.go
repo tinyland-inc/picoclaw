@@ -11,7 +11,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/tinyland-inc/picoclaw/pkg/utils"
+	"github.com/tinyland-inc/tinyclaw/pkg/utils"
 )
 
 const (

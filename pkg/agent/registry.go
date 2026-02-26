@@ -3,10 +3,10 @@ package agent
 import (
 	"sync"
 
-	"github.com/tinyland-inc/picoclaw/pkg/config"
-	"github.com/tinyland-inc/picoclaw/pkg/logger"
-	"github.com/tinyland-inc/picoclaw/pkg/providers"
-	"github.com/tinyland-inc/picoclaw/pkg/routing"
+	"github.com/tinyland-inc/tinyclaw/pkg/config"
+	"github.com/tinyland-inc/tinyclaw/pkg/logger"
+	"github.com/tinyland-inc/tinyclaw/pkg/providers"
+	"github.com/tinyland-inc/tinyclaw/pkg/routing"
 )
 
 // AgentRegistry manages multiple agent instances and routes messages to them.

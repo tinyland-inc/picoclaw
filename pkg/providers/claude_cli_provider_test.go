@@ -10,7 +10,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/tinyland-inc/picoclaw/pkg/config"
+	"github.com/tinyland-inc/tinyclaw/pkg/config"
 )
 
 // --- Compile-time interface check ---

@@ -4,7 +4,7 @@
 .direnv/
 build/
 result
-.picoclaw/
+.tinyclaw/
 config/
 .env
 .env.example

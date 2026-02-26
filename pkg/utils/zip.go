@@ -9,7 +9,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/tinyland-inc/picoclaw/pkg/logger"
+	"github.com/tinyland-inc/tinyclaw/pkg/logger"
 )
 
 // ExtractZipFile extracts a ZIP archive from disk to targetDir.

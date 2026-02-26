@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Config drift detection for PicoClaw.
+"""Config drift detection for TinyClaw.
 
-Compares the running PicoClaw config against the Dhall source of truth.
+Compares the running TinyClaw config against the Dhall source of truth.
 Reports any divergence between the rendered Dhall config and the active
 JSON config.
 
@@ -78,15 +78,15 @@ def diff_dicts(a: dict, b: dict, path: str = "") -> list[str]:
 
 
 def main():
-    parser = argparse.ArgumentParser(description="PicoClaw config drift detection")
+    parser = argparse.ArgumentParser(description="TinyClaw config drift detection")
     parser.add_argument(
         "--config",
-        default=os.path.expanduser("~/.picoclaw/config.json"),
+        default=os.path.expanduser("~/.tinyclaw/config.json"),
         help="Path to active JSON config",
     )
     parser.add_argument(
         "--dhall",
-        default=os.path.expanduser("~/.picoclaw/config.dhall"),
+        default=os.path.expanduser("~/.tinyclaw/config.dhall"),
         help="Path to Dhall source of truth",
     )
     parser.add_argument(

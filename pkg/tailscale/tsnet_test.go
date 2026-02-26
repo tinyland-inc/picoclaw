@@ -8,8 +8,8 @@ import (
 func TestNewServer_Defaults(t *testing.T) {
 	s := NewServer(Config{})
 
-	if s.config.Hostname != "picoclaw-gateway" {
-		t.Errorf("hostname: got %q, want %q", s.config.Hostname, "picoclaw-gateway")
+	if s.config.Hostname != "tinyclaw-gateway" {
+		t.Errorf("hostname: got %q, want %q", s.config.Hostname, "tinyclaw-gateway")
 	}
 	if s.config.StateDir == "" {
 		t.Error("expected non-empty state dir")
@@ -85,8 +85,8 @@ func TestSetecClient_Disabled(t *testing.T) {
 
 func TestSetecClient_DefaultPrefix(t *testing.T) {
 	c := NewSetecClient(SetecConfig{})
-	if c.config.Prefix != "picoclaw/" {
-		t.Errorf("prefix: got %q, want %q", c.config.Prefix, "picoclaw/")
+	if c.config.Prefix != "tinyclaw/" {
+		t.Errorf("prefix: got %q, want %q", c.config.Prefix, "tinyclaw/")
 	}
 }
 

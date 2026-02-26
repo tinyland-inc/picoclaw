@@ -1,4 +1,4 @@
-// Package api provides HTTP handlers for the PicoClaw API.
+// Package api provides HTTP handlers for the TinyClaw API.
 package api
 
 import (

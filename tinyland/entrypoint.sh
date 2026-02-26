@@ -1,8 +1,8 @@
 #!/bin/sh
-# Substitute environment variables into PicoClaw config at startup.
-# This runs before the PicoClaw gateway binary.
+# Substitute environment variables into TinyClaw config at startup.
+# This runs before the TinyClaw gateway binary.
 
-CONFIG="/home/picoclaw/.picoclaw/config.json"
+CONFIG="/home/tinyclaw/.tinyclaw/config.json"
 
 if [ -f "$CONFIG" ]; then
   sed -i \
@@ -11,4 +11,4 @@ if [ -f "$CONFIG" ]; then
     "$CONFIG"
 fi
 
-exec picoclaw "$@"
+exec tinyclaw "$@"

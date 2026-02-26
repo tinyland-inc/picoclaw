@@ -1,7 +1,7 @@
 // Package adapters provides backend adapter interfaces for campaign dispatch.
 //
 // Each adapter implements the BackendAdapter interface, allowing campaigns
-// to target different agent backends (PicoClaw, IronClaw, HexStrike-AI).
+// to target different agent backends (TinyClaw, IronClaw, HexStrike-AI).
 package adapters
 
 import (
@@ -9,33 +9,33 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/tinyland-inc/picoclaw/pkg/campaign"
+	"github.com/tinyland-inc/tinyclaw/pkg/campaign"
 )
 
-// PicoClawAdapter dispatches campaign steps to the local PicoClaw agent loop.
-type PicoClawAdapter struct {
+// TinyClawAdapter dispatches campaign steps to the local TinyClaw agent loop.
+type TinyClawAdapter struct {
 	// ProcessFn is the function to call for processing a message.
 	// This is wired to agent.AgentLoop.ProcessDirect at gateway startup.
 	ProcessFn func(ctx context.Context, prompt, sessionKey string) (string, error)
 }
 
-// NewPicoClawAdapter creates a new adapter for the local PicoClaw agent.
-func NewPicoClawAdapter() *PicoClawAdapter {
-	return &PicoClawAdapter{}
+// NewTinyClawAdapter creates a new adapter for the local TinyClaw agent.
+func NewTinyClawAdapter() *TinyClawAdapter {
+	return &TinyClawAdapter{}
 }
 
-func (a *PicoClawAdapter) Execute(ctx context.Context, agentID, prompt string, tools []string) (string, error) {
+func (a *TinyClawAdapter) Execute(ctx context.Context, agentID, prompt string, tools []string) (string, error) {
 	if a.ProcessFn == nil {
-		return "", errors.New("picoclaw adapter not initialized: ProcessFn is nil")
+		return "", errors.New("tinyclaw adapter not initialized: ProcessFn is nil")
 	}
 	sessionKey := "campaign:" + agentID
 	return a.ProcessFn(ctx, prompt, sessionKey)
 }
 
-func (a *PicoClawAdapter) Name() string { return "picoclaw" }
+func (a *TinyClawAdapter) Name() string { return "tinyclaw" }
 
-// Ensure PicoClawAdapter implements BackendAdapter
-var _ campaign.BackendAdapter = (*PicoClawAdapter)(nil)
+// Ensure TinyClawAdapter implements BackendAdapter
+var _ campaign.BackendAdapter = (*TinyClawAdapter)(nil)
 
 // StubAdapter is a test/development adapter that returns canned responses.
 type StubAdapter struct {
