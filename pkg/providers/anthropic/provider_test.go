@@ -262,6 +262,107 @@ func TestProvider_ChatUsesTokenSource(t *testing.T) {
 	}
 }
 
+// TestBuildParams_ToolCallFromAgentLoop reproduces the bug where the agent
+// loop (loop.go) builds assistant messages with Function.Arguments (string)
+// populated but Arguments (map) nil. Before the fix, buildParams would
+// marshal nil → "null" and the API would reject with 400:
+//   "tool_use.input: Input should be a valid dictionary"
+func TestBuildParams_ToolCallFromAgentLoop(t *testing.T) {
+	messages := []Message{
+		{Role: "user", Content: "run date"},
+		{
+			Role: "assistant",
+			ToolCalls: []ToolCall{
+				{
+					ID:   "toolu_01",
+					Type: "function",
+					Name: "exec",
+					// Arguments intentionally nil — this is how loop.go builds it
+					Function: &FunctionCall{
+						Name:      "exec",
+						Arguments: `{"command":"date -u"}`,
+					},
+				},
+			},
+		},
+		{Role: "tool", Content: "Tue Feb 25 12:00:00 UTC 2026", ToolCallID: "toolu_01"},
+		{Role: "user", Content: "thanks"},
+	}
+
+	params, err := buildParams(messages, nil, "claude-sonnet-4.6", map[string]any{})
+	if err != nil {
+		t.Fatalf("buildParams() error: %v", err)
+	}
+
+	// Verify the params can be marshaled to valid JSON (this is what the SDK does)
+	b, err := json.Marshal(params)
+	if err != nil {
+		t.Fatalf("json.Marshal(params) error: %v", err)
+	}
+
+	// The serialized JSON must contain the tool_use input as an object, not null
+	jsonStr := string(b)
+	if !contains(jsonStr, `"command"`) {
+		t.Errorf("serialized params should contain tool_use input with command field, got: %s", truncate(jsonStr, 500))
+	}
+	if contains(jsonStr, `"input":null`) {
+		t.Errorf("serialized params must NOT contain null input for tool_use block")
+	}
+}
+
+// TestBuildParams_ToolCallBothNil verifies graceful handling when both
+// Arguments and Function.Arguments are empty (edge case).
+func TestBuildParams_ToolCallBothNil(t *testing.T) {
+	messages := []Message{
+		{Role: "user", Content: "test"},
+		{
+			Role: "assistant",
+			ToolCalls: []ToolCall{
+				{
+					ID:   "toolu_02",
+					Type: "function",
+					// Both nil — edge case
+				},
+			},
+		},
+		{Role: "tool", Content: "ok", ToolCallID: "toolu_02"},
+	}
+
+	params, err := buildParams(messages, nil, "claude-sonnet-4.6", map[string]any{})
+	if err != nil {
+		t.Fatalf("buildParams() error: %v", err)
+	}
+
+	b, err := json.Marshal(params)
+	if err != nil {
+		t.Fatalf("json.Marshal(params) error: %v", err)
+	}
+	// Should produce empty object, not null
+	if contains(string(b), `"input":null`) {
+		t.Errorf("expected empty object for input, not null")
+	}
+}
+
+func contains(s, substr string) bool {
+	return len(s) >= len(substr) && (s == substr || len(s) > 0 && containsHelper(s, substr))
+}
+
+func containsHelper(s, substr string) bool {
+	for i := 0; i <= len(s)-len(substr); i++ {
+		if s[i:i+len(substr)] == substr {
+			return true
+		}
+	}
+	return false
+}
+
+func truncate(s string, n int) string {
+	if len(s) <= n {
+		return s
+	}
+	return s[:n] + "..."
+}
+
 func createAnthropicTestClient(baseURL, token string) *anthropic.Client {
 	c := anthropic.NewClient(
 		anthropicoption.WithAuthToken(token),

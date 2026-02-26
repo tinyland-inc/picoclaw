@@ -144,13 +144,27 @@ func buildParams(
 					blocks = append(blocks, anthropic.NewTextBlock(msg.Content))
 				}
 				for _, tc := range msg.ToolCalls {
-					// Marshal arguments to json.RawMessage so the SDK's custom
-					// serializer emits a raw JSON object, not a Go map.
-					inputJSON, err := json.Marshal(tc.Arguments)
-					if err != nil {
-						return anthropic.MessageNewParams{}, fmt.Errorf("marshal tool_use input: %w", err)
+					// Use Function.Arguments (string, always populated) as the
+					// canonical source. The top-level Arguments map may be nil
+					// when the message was built by the agent loop (loop.go)
+					// which only sets Function.Arguments, not the map field.
+					var inputJSON []byte
+					if tc.Function != nil && tc.Function.Arguments != "" {
+						inputJSON = []byte(tc.Function.Arguments)
+					} else if tc.Arguments != nil {
+						var err error
+						inputJSON, err = json.Marshal(tc.Arguments)
+						if err != nil {
+							return anthropic.MessageNewParams{}, fmt.Errorf("marshal tool_use input: %w", err)
+						}
+					} else {
+						inputJSON = []byte("{}")
 					}
-					blocks = append(blocks, anthropic.NewToolUseBlock(tc.ID, json.RawMessage(inputJSON), tc.Name))
+					name := tc.Name
+					if name == "" && tc.Function != nil {
+						name = tc.Function.Name
+					}
+					blocks = append(blocks, anthropic.NewToolUseBlock(tc.ID, json.RawMessage(inputJSON), name))
 				}
 				anthropicMessages = append(anthropicMessages, anthropic.NewAssistantMessage(blocks...))
 			} else {
