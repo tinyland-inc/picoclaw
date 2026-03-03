@@ -1,3 +1,5 @@
+//go:build !nochinese
+
 // TinyClaw - Ultra-lightweight personal AI agent
 // DingTalk channel implementation using Stream Mode
 

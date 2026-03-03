@@ -15,7 +15,7 @@ func DefaultConfig() *Config {
 				Workspace:           "~/.tinyclaw/workspace",
 				RestrictToWorkspace: true,
 				Provider:            "",
-				Model:               "glm-4.7",
+				Model:               "claude-opus-4-6",
 				MaxTokens:           8192,
 				Temperature:         nil, // nil means use provider default
 				MaxToolIterations:   20,
@@ -115,6 +115,10 @@ func DefaultConfig() *Config {
 				AllowFrom:      FlexibleStringSlice{},
 				ReplyTimeout:   5,
 			},
+			XMPP: XMPPConfig{
+				Enabled:   false,
+				AllowFrom: FlexibleStringSlice{},
+			},
 		},
 		Providers: ProvidersConfig{
 			OpenAI: OpenAIProviderConfig{WebSearch: true},
@@ -141,6 +145,12 @@ func DefaultConfig() *Config {
 			},
 
 			// Anthropic Claude - https://console.anthropic.com/settings/keys
+			{
+				ModelName: "claude-opus-4-6",
+				Model:     "anthropic/claude-opus-4-6",
+				APIBase:   "https://api.anthropic.com/v1",
+				APIKey:    "",
+			},
 			{
 				ModelName: "claude-sonnet-4.6",
 				Model:     "anthropic/claude-sonnet-4.6",

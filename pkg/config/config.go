@@ -211,6 +211,7 @@ type ChannelsConfig struct {
 	OneBot   OneBotConfig   `json:"onebot"`
 	WeCom    WeComConfig    `json:"wecom"`
 	WeComApp WeComAppConfig `json:"wecom_app"`
+	XMPP     XMPPConfig     `json:"xmpp"`
 }
 
 type WhatsAppConfig struct {
@@ -313,6 +314,16 @@ type WeComAppConfig struct {
 	WebhookPath    string              `env:"TINYCLAW_CHANNELS_WECOM_APP_WEBHOOK_PATH"     json:"webhook_path"`
 	AllowFrom      FlexibleStringSlice `env:"TINYCLAW_CHANNELS_WECOM_APP_ALLOW_FROM"       json:"allow_from"`
 	ReplyTimeout   int                 `env:"TINYCLAW_CHANNELS_WECOM_APP_REPLY_TIMEOUT"    json:"reply_timeout"`
+}
+
+type XMPPConfig struct {
+	Enabled      bool                `env:"TINYCLAW_CHANNELS_XMPP_ENABLED"       json:"enabled"`
+	Server       string              `env:"TINYCLAW_CHANNELS_XMPP_SERVER"        json:"server"`
+	JID          string              `env:"TINYCLAW_CHANNELS_XMPP_JID"           json:"jid"`
+	Password     string              `env:"TINYCLAW_CHANNELS_XMPP_PASSWORD"      json:"password"`
+	OMEMOEnabled bool                `env:"TINYCLAW_CHANNELS_XMPP_OMEMO_ENABLED" json:"omemo_enabled"`
+	MUCRooms     []string            `env:"TINYCLAW_CHANNELS_XMPP_MUC_ROOMS"     json:"muc_rooms"`
+	AllowFrom    FlexibleStringSlice `env:"TINYCLAW_CHANNELS_XMPP_ALLOW_FROM"    json:"allow_from"`
 }
 
 type HeartbeatConfig struct {
@@ -501,6 +512,21 @@ type ToolsConfig struct {
 	Cron   CronToolsConfig   `json:"cron"`
 	Exec   ExecConfig        `json:"exec"`
 	Skills SkillsToolsConfig `json:"skills"`
+	MCP    MCPConfig         `json:"mcp"`
+}
+
+// MCPConfig configures MCP (Model Context Protocol) server integrations.
+type MCPConfig struct {
+	Servers []MCPServerConfig `json:"servers"`
+}
+
+// MCPServerConfig describes an MCP server subprocess that TinyClaw can spawn.
+type MCPServerConfig struct {
+	Name    string   `json:"name"`
+	Command string   `json:"command"`
+	Args    []string `json:"args"`
+	Prefix  string   `json:"prefix"`
+	Enabled bool     `json:"enabled"`
 }
 
 type SkillsToolsConfig struct {

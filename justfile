@@ -95,6 +95,13 @@ go-build-all: go-generate
     GOOS=windows GOARCH=amd64 {{go}} build -ldflags "{{ldflags}}" -o {{build_dir}}/{{binary_name}}-windows-amd64.exe ./{{cmd_dir}}
     @echo "All builds complete"
 
+# Build minimal binary without Chinese-only channels (Feishu, QQ, DingTalk, OneBot, WeCom, WeComApp)
+build-minimal: go-generate
+    @echo "Building minimal {{binary_name}} (no Chinese channels)..."
+    @mkdir -p {{build_dir}}
+    {{go}} build {{goflags}} -tags nochinese -ldflags "{{ldflags}}" -o {{build_dir}}/{{binary_name}}-minimal-{{platform}}-{{arch}} ./{{cmd_dir}}
+    @echo "Minimal build complete: {{build_dir}}/{{binary_name}}-minimal-{{platform}}-{{arch}}"
+
 # Run Go tests
 go-test:
     {{go}} test ./...

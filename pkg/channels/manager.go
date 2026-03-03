@@ -43,7 +43,7 @@ func NewManager(cfg *config.Config, messageBus *bus.MessageBus) (*Manager, error
 	return m, nil
 }
 
-//nolint:funlen,gocognit,gocyclo // initializes all channel types; one branch per channel kind
+//nolint:gocognit,gocyclo // initializes all channel types; one branch per channel kind
 func (m *Manager) initChannels() error { //nolint:unparam // error return kept for future use
 	logger.InfoC("channels", "Initializing channel manager")
 
@@ -73,18 +73,9 @@ func (m *Manager) initChannels() error { //nolint:unparam // error return kept f
 		}
 	}
 
-	if m.config.Channels.Feishu.Enabled {
-		logger.DebugC("channels", "Attempting to initialize Feishu channel")
-		feishu, err := NewFeishuChannel(m.config.Channels.Feishu, m.bus)
-		if err != nil {
-			logger.ErrorCF("channels", "Failed to initialize Feishu channel", map[string]any{
-				"error": err.Error(),
-			})
-		} else {
-			m.channels["feishu"] = feishu
-			logger.InfoC("channels", "Feishu channel enabled successfully")
-		}
-	}
+	// Chinese-only channels: Feishu, QQ, DingTalk, OneBot, WeCom, WeComApp
+	// Excluded from build with -tags nochinese
+	initChineseChannels(m.config, m.bus, m.channels)
 
 	if m.config.Channels.Discord.Enabled && m.config.Channels.Discord.Token != "" {
 		logger.DebugC("channels", "Attempting to initialize Discord channel")
@@ -109,32 +100,6 @@ func (m *Manager) initChannels() error { //nolint:unparam // error return kept f
 		} else {
 			m.channels["maixcam"] = maixcam
 			logger.InfoC("channels", "MaixCam channel enabled successfully")
-		}
-	}
-
-	if m.config.Channels.QQ.Enabled {
-		logger.DebugC("channels", "Attempting to initialize QQ channel")
-		qq, err := NewQQChannel(m.config.Channels.QQ, m.bus)
-		if err != nil {
-			logger.ErrorCF("channels", "Failed to initialize QQ channel", map[string]any{
-				"error": err.Error(),
-			})
-		} else {
-			m.channels["qq"] = qq
-			logger.InfoC("channels", "QQ channel enabled successfully")
-		}
-	}
-
-	if m.config.Channels.DingTalk.Enabled && m.config.Channels.DingTalk.ClientID != "" {
-		logger.DebugC("channels", "Attempting to initialize DingTalk channel")
-		dingtalk, err := NewDingTalkChannel(m.config.Channels.DingTalk, m.bus)
-		if err != nil {
-			logger.ErrorCF("channels", "Failed to initialize DingTalk channel", map[string]any{
-				"error": err.Error(),
-			})
-		} else {
-			m.channels["dingtalk"] = dingtalk
-			logger.InfoC("channels", "DingTalk channel enabled successfully")
 		}
 	}
 
@@ -164,42 +129,16 @@ func (m *Manager) initChannels() error { //nolint:unparam // error return kept f
 		}
 	}
 
-	if m.config.Channels.OneBot.Enabled && m.config.Channels.OneBot.WSUrl != "" {
-		logger.DebugC("channels", "Attempting to initialize OneBot channel")
-		onebot, err := NewOneBotChannel(m.config.Channels.OneBot, m.bus)
+	if m.config.Channels.XMPP.Enabled && m.config.Channels.XMPP.JID != "" {
+		logger.DebugC("channels", "Attempting to initialize XMPP channel")
+		xmppCh, err := NewXMPPChannel(m.config.Channels.XMPP, m.bus)
 		if err != nil {
-			logger.ErrorCF("channels", "Failed to initialize OneBot channel", map[string]any{
+			logger.ErrorCF("channels", "Failed to initialize XMPP channel", map[string]any{
 				"error": err.Error(),
 			})
 		} else {
-			m.channels["onebot"] = onebot
-			logger.InfoC("channels", "OneBot channel enabled successfully")
-		}
-	}
-
-	if m.config.Channels.WeCom.Enabled && m.config.Channels.WeCom.Token != "" {
-		logger.DebugC("channels", "Attempting to initialize WeCom channel")
-		wecom, err := NewWeComBotChannel(m.config.Channels.WeCom, m.bus)
-		if err != nil {
-			logger.ErrorCF("channels", "Failed to initialize WeCom channel", map[string]any{
-				"error": err.Error(),
-			})
-		} else {
-			m.channels["wecom"] = wecom
-			logger.InfoC("channels", "WeCom channel enabled successfully")
-		}
-	}
-
-	if m.config.Channels.WeComApp.Enabled && m.config.Channels.WeComApp.CorpID != "" {
-		logger.DebugC("channels", "Attempting to initialize WeCom App channel")
-		wecomApp, err := NewWeComAppChannel(m.config.Channels.WeComApp, m.bus)
-		if err != nil {
-			logger.ErrorCF("channels", "Failed to initialize WeCom App channel", map[string]any{
-				"error": err.Error(),
-			})
-		} else {
-			m.channels["wecom_app"] = wecomApp
-			logger.InfoC("channels", "WeCom App channel enabled successfully")
+			m.channels["xmpp"] = xmppCh
+			logger.InfoC("channels", "XMPP channel enabled successfully")
 		}
 	}
 

@@ -1,3 +1,5 @@
+//go:build !nochinese
+
 // TinyClaw - Ultra-lightweight personal AI agent
 // WeCom Bot (企业微信智能机器人) channel implementation
 // Uses webhook callback mode for receiving messages and webhook API for sending replies
