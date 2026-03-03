@@ -1,3 +1,5 @@
+//go:build !nochinese
+
 package channels
 
 import (
