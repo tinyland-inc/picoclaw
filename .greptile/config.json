@@ -1,0 +1,26 @@
+{
+  "strictness": 2,
+  "commentTypes": ["logic", "syntax", "style"],
+  "triggerOnUpdates": true,
+  "triggerOnDrafts": false,
+  "ignorePatterns": "build/**\ntarget/**\n*.o\n*.lock\ndist/**\nnode_modules/**",
+  "statusCheck": true,
+  "fixWithAI": true,
+  "shouldUpdateDescription": true,
+  "summarySection": { "included": true, "collapsible": false, "defaultOpen": true },
+  "issuesTableSection": { "included": true, "collapsible": true, "defaultOpen": true },
+  "sequenceDiagramSection": { "included": false, "collapsible": true, "defaultOpen": false },
+  "instructions": "Small utility project. Review for correctness, edge case handling, and clean error messages. Keep scope tight -- flag scope creep in PRs.",
+  "patternRepositories": [],
+  "customContext": {
+    "rules": [
+      "Keep the utility focused -- flag feature creep",
+      "Error messages must be user-facing friendly, not raw panics or stack traces",
+      "CLI argument parsing must handle missing/invalid inputs gracefully",
+      "Add tests for any new functionality"
+    ],
+    "files": [
+      { "path": "CLAUDE.md", "description": "Project conventions and context", "scope": ["**"] }
+    ]
+  }
+}
